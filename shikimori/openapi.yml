@@ -85,7 +85,7 @@ paths:
                   summary: Example of the GraphQL Playground HTML response
                   value: '<html>...</html>'
 
-# api/v1
+  # api/v1
 
   /api/users:
     description: List users
@@ -123,7 +123,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/UserId'
       responses:
-        '200':
+        200:
           description: Successful response
           content:
             application/json:
@@ -138,11 +138,11 @@ paths:
     get:
       tags:
         - users
-      security:
-        - oauth2: []
       responses:
         200:
           $ref: '#/components/responses/UserResponse'
+      security:
+        - oauth2: []
 
   /api/users/sign_out:
     description: Sign out the user
@@ -151,48 +151,47 @@ paths:
         - users
       security:
         - oauth2: []
-      deprecated: false
 
-  /api/user_rates:
-    description: Create an user rate
-    post:
-      tags:
-        - user_rates
-      deprecated: true
-
-  /api/user_rates/{id}:
-    description: 'User Rates'
-    parameters:
-      - $ref: '#/components/parameters/id'
-    get:
-      tags:
-        - user_rates
-      description: Show an user rate
-      deprecated: true
-    put:
-      tags:
-        - user_rates
-      description: Update an user rate
-      deprecated: true
-    patch:
-      tags:
-        - user_rates
-      description: Update an user rate
-      deprecated: true
-    delete:
-      tags:
-        - user_rates
-      description: Destroy an user rate
-      deprecated: true
-
-  /api/user_rates/{id}/increment:
-    description: Increment episodes/chapters by 1
-    parameters:
-      - $ref: '#/components/parameters/id'
-    post:
-      tags:
-        - user_rates
-      deprecated: true
+  # /api/user_rates:
+  #   description: Create an user rate
+  #   post:
+  #     tags:
+  #       - user_rates
+  #     deprecated: true
+  #
+  # /api/user_rates/{id}:
+  #   description: 'User Rates'
+  #   parameters:
+  #     - $ref: '#/components/parameters/id'
+  #   get:
+  #     tags:
+  #       - user_rates
+  #     description: Show an user rate
+  #     deprecated: true
+  #   put:
+  #     tags:
+  #       - user_rates
+  #     description: Update an user rate
+  #     deprecated: true
+  #   patch:
+  #     tags:
+  #       - user_rates
+  #     description: Update an user rate
+  #     deprecated: true
+  #   delete:
+  #     tags:
+  #       - user_rates
+  #     description: Destroy an user rate
+  #     deprecated: true
+  #
+  # /api/user_rates/{id}/increment:
+  #   description: Increment episodes/chapters by 1
+  #   parameters:
+  #     - $ref: '#/components/parameters/id'
+  #   post:
+  #     tags:
+  #       - user_rates
+  #     deprecated: true
 
   /api/user_rates/{type}/cleanup:
     description: Delete entire user rates and history
@@ -216,7 +215,8 @@ paths:
         200:
           $ref: '#/components/responses/UserRatesResponse'
 
-# api/v2
+  # api/v2
+
   /api/v2/user_rates:
     get:
       summary: List user rates
@@ -248,7 +248,13 @@ paths:
           required: false
           schema:
             type: string
-            enum: [planned, watching, rewatching, completed, on_hold, dropped]
+            enum:
+              - planned
+              - watching
+              - rewatching
+              - completed
+              - on_hold
+              - dropped
           description: |
             Validations:
             - Must be one of: planned, watching, rewatching, completed, on_hold, dropped.
@@ -274,7 +280,7 @@ paths:
             maximum: 1000
           description: '1000 maximum. This field is ignored when user_id is set. Validations: Must be a number'
       responses:
-        '200':
+        200:
           description: Successful response
           content:
             application/json:
@@ -285,6 +291,199 @@ paths:
               examples:
                 UserRatesExample:
                   $ref: '#/components/examples/UserRatesExample'
+    post:
+      summary: Create an user rate
+      description: Creates a new user rate. Requires `user_rates` OAuth scope
+      tags:
+        - user_rates_v2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user_rate:
+                  type: object
+                  properties:
+                    user_id:
+                      type: integer
+                      description: 'Validations: Must be a number'
+                    target_id:
+                      type: integer
+                      description: 'Validations: Must be a number'
+                    target_type:
+                      type: string
+                      enum: [Anime, Manga]
+                      description: 'Validations: Must be one of: Anime, Manga'
+                    status:
+                      type: string
+                      enum:
+                        - planned
+                        - watching
+                        - rewatching
+                        - completed
+                        - on_hold
+                        - dropped
+                      description: 'Validations: Must be one of: planned, watching, rewatching, completed, on_hold, dropped'
+                    score:
+                      type: integer
+                    chapters:
+                      type: integer
+                    episodes:
+                      type: integer
+                    volumes:
+                      type: integer
+                    rewatches:
+                      type: integer
+                    text:
+                      type: string
+                      description: 'Validations: Must be a String'
+                  required:
+                    - user_id
+                    - target_id
+                    - target_type
+              required:
+                - user_rate
+      responses:
+        201:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRate'
+              examples:
+                UserRateExample:
+                  $ref: '#/components/examples/UserRateExample'
+      security:
+        - oauth2:
+            - user_rates
+
+  /api/v2/user_rates/{id}:
+    get:
+      summary: Show an user rate
+      description: Retrieves a specific user rate by ID.
+      tags:
+        - user_rates_v2
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: The ID of the user rate
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRate'
+              examples:
+                UserRateExample:
+                  $ref: '#/components/examples/UserRateExample'
+    put:
+      summary: Update an user rate
+      description: Updates a specific user rate by ID. Requires `user_rates` OAuth scope.
+      tags:
+        - user_rates_v2
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRateUpdate'
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRate'
+              examples:
+                UpdateUserRateExample:
+                  $ref: '#/components/examples/UserRateExample'
+      security:
+        - oauth2:
+            - user_rates
+    patch:
+      summary: Update an user rate
+      description: Updates a specific user rate by ID.
+      tags:
+        - user_rates_v2
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRateUpdate'
+      responses:
+        200:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRate'
+              examples:
+                UpdateUserRateExample:
+                  $ref: '#/components/examples/UserRateExample'
+      security:
+        - oauth2:
+            - user_rates
+    delete:
+      summary: Destroy an user rate
+      description: Deletes a specific user rate by ID. Requires `user_rates` OAuth scope.
+      tags:
+        - user_rates_v2
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        204:
+          description: Successful response
+      security:
+        - oauth2:
+            - user_rates
+
+  /api/v2/user_rates/{id}/increment:
+    post:
+      summary: Increment episodes/chapters by 1
+      description: Increments the episodes or chapters by 1 for a specific user rate by ID. Requires `user_rates` OAuth scope.
+      tags:
+        - user_rates_v2
+      parameters:
+        - $ref: '#/components/parameters/UserId'
+      responses:
+        201:
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRate'
+              examples:
+                IncrementUserRateExample:
+                  summary: Example of incrementing a user rate
+                  value:
+                    id: 11
+                    user_id: 23456789
+                    target_id: 10
+                    target_type: 'Anime'
+                    score: 0
+                    status: 'planned'
+                    rewatches: 0
+                    episodes: 2
+                    volumes: 0
+                    chapters: 0
+                    text: null
+                    text_html: ''
+                    created_at: '2022-11-26T17:19:28.620+03:00'
+                    updated_at: '2022-11-26T17:19:28.620+03:00'
+      security:
+        - oauth2:
+            - user_rates
 
 components:
   securitySchemes:
@@ -342,7 +541,7 @@ components:
         id:
           type: integer
           minimum: 1
-          example: 23456815
+          example: 406192
         nickname:
           type: string
         avatar:
@@ -364,6 +563,14 @@ components:
               type: string
             x16:
               type: string
+          required:
+            - x160
+            - x148
+            - x80
+            - x64
+            - x48
+            - x32
+            - x16
         last_online_at:
           type: string
           format: date-time
@@ -386,6 +593,13 @@ components:
           nullable: true
         locale:
           type: string
+      required:
+        - id
+        - nickname
+        - avatar
+        - image
+        - last_online_at
+        - url
 
     UserRate:
       type: object
@@ -403,7 +617,13 @@ components:
           type: integer
         status:
           type: string
-          enum: [planned, watching, rewatching, completed, on_hold, dropped]
+          enum:
+            - planned
+            - watching
+            - rewatching
+            - completed
+            - on_hold
+            - dropped
         rewatches:
           type: integer
         episodes:
@@ -423,6 +643,40 @@ components:
         updated_at:
           type: string
           format: date-time
+
+    UserRateUpdate:
+      type: object
+      properties:
+        user_rate:
+          type: object
+          properties:
+            status:
+              type: string
+              enum:
+                - planned
+                - watching
+                - rewatching
+                - completed
+                - on_hold
+                - dropped
+              description: 'Validations: Must be one of: planned, watching, rewatching, completed, on_hold, dropped'
+            score:
+              type: integer
+            chapters:
+              type: integer
+            episodes:
+              type: integer
+            volumes:
+              type: integer
+            rewatches:
+              type: integer
+            text:
+              type: string
+              description: 'Validations: Must be a String'
+          required:
+            - user_id
+            - target_id
+            - target_type
 
     user:
       type: object
@@ -536,34 +790,38 @@ components:
         full_years: null
         locale: 'ru'
 
+    UserRateExample:
+      summary: Example of a user rate
+      value:
+        id: 9
+        user_id: 23456789
+        target_id: 8
+        target_type: 'Anime'
+        score: 0
+        status: 'planned'
+        rewatches: 0
+        episodes: 0
+        volumes: 0
+        chapters: 0
+        text: null
+        text_html: ''
+        created_at: '2022-11-26T17:19:28.554+03:00'
+        updated_at: '2022-11-26T17:19:28.554+03:00'
+
     UserRatesExample:
       summary: Example of user rates
       value:
         - id: 13
           user_id: 23456789
           target_id: 12
-          target_type: "Anime"
+          target_type: 'Anime'
           score: 0
-          status: "completed"
+          status: 'completed'
           rewatches: 0
           episodes: 0
           volumes: 0
           chapters: 0
           text: null
-          text_html: ""
-          created_at: "2022-11-26T17:19:28.708+03:00"
-          updated_at: "2022-11-26T17:19:28.708+03:00"
-        - id: 14
-          user_id: 23456789
-          target_id: 13
-          target_type: "Anime"
-          score: 0
-          status: "planned"
-          rewatches: 0
-          episodes: 0
-          volumes: 0
-          chapters: 0
-          text: null
-          text_html: ""
-          created_at: "2022-11-26T17:19:28.708+03:00"
-          updated_at: "2022-11-26T17:19:28.708+03:00"
+          text_html: ''
+          created_at: '2022-11-26T17:19:28.708+03:00'
+          updated_at: '2022-11-26T17:19:28.708+03:00'
