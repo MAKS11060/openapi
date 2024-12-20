@@ -2,13 +2,7 @@
   "lock": true,
   "tasks": {
     "build": {
-      "command": "echo build",
-      "dependencies": [
-        "build:shikimori"
-      ]
-    },
-    "build:shikimori": {
-      "command": "deno run -A src/shikimori/generate.ts -r"
+      "command": "deno run -A main.ts"
     },
     "openapi-gen": {
       "command": "echo generate d.ts",
