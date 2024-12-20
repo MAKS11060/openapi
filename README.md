@@ -23,7 +23,7 @@ deno run -A npm:openapi-typescript gen/shikimori/openapi.yml -o ./shikimori/open
 ```ts
 // shikimori/shikimori.ts
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './shikimori/openapi.d.ts'
+import type {paths} from './openapi.d.ts'
 
 const shikimoriUserAgent = ''
 
@@ -57,7 +57,7 @@ deno run -A npm:openapi-typescript gen/danbooru/openapi.yml -o ./danbooru/openap
 // danbooru/danbooru.ts
 import {encodeBase64} from 'jsr:@std/encoding/base64'
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './danbooru/openapi.d.ts'
+import type {paths} from './openapi.d.ts'
 
 const login = ''
 const apiKey = ''
