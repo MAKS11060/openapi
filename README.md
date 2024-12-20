@@ -1,21 +1,33 @@
 # OpenAPI
 
+Auto generated OpenAPI from [zod schema](https://zod.dev/)
+
 - [OpenAPI](#openapi)
   - [Shikimori](#shikimori)
-
+    - [Example](#example-openapi-fetch)
+<!--   - [Danbooru](#danbooru)
+    - [Example](#example-openapi-fetch-1) -->
 
 ## Shikimori
 
+- [Delevoper API](https://shikimori.one/api/doc)
+
 ```sh
-deno run -A npm:openapi-typescript src/shikimori/openapi.yml -o ./gen/shikimori/openapi.d.ts
+deno run -A https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori/openapi.d.ts
+# or
+deno run -A npm:openapi-typescript gen/shikimori/openapi.yml -o ./shikimori/openapi.d.ts
 ```
 
+### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
+
 ```ts
+// shikimori/shikimori.ts
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './gen/shikimori/openapi.d.ts'
+import type {paths} from './shikimori/openapi.d.ts'
 
 const shikimoriUserAgent = ''
-const shikimoriApi = createClient<paths>({baseUrl: 'https://shikimori.one'})
+
+export const shikimoriApi = createClient<paths>({baseUrl: 'https://shikimori.one'})
 
 shikimoriApi.use({
   onRequest({request}) {
@@ -26,6 +38,38 @@ shikimoriApi.use({
     request.headers.set('user-agent', shikimoriUserAgent)
   },
 })
-
-
 ```
+
+<!-- ## Danbooru (TODO)
+
+- [Api Wiki](https://danbooru.donmai.us/wiki_pages/help:api)
+- [Danbooru Help](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
+
+```sh
+deno run -A https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru/openapi.d.ts
+# or
+deno run -A npm:openapi-typescript gen/danbooru/openapi.yml -o ./danbooru/openapi.d.ts
+```
+
+### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
+
+```ts
+// danbooru/danbooru.ts
+import {encodeBase64} from 'jsr:@std/encoding/base64'
+import createClient from 'npm:openapi-fetch'
+import type {paths} from './danbooru/openapi.d.ts'
+
+const login = ''
+const apiKey = ''
+const authorization = encodeBase64(`${login}:${apiKey}`)
+
+export const danbooruApi = createClient<paths>({baseUrl: 'https://danbooru.donmai.us'})
+
+// for authorized requests
+danbooruApi.use({
+  onRequest({request}) {
+    request.headers.set('authorization', authorization)
+  },
+})
+```
+ -->

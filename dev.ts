@@ -6,9 +6,7 @@ import {Hono} from 'npm:hono'
 import {cors} from 'npm:hono/cors'
 import {logger} from 'npm:hono/logger'
 import {YAML} from './src/deps.ts'
-import {openapi} from './src/shikimori/generate.ts'
-// import {serveStatic} from 'npm:hono/deno'
-// import {swaggerEditor} from "./editor/dev-editor.ts"
+import {openapi} from './src/shikimori/mod.ts'
 
 const app = new Hono()
 
@@ -16,19 +14,6 @@ app.use(logger())
 app.use(cors())
 
 app.get('/doc', swaggerUI({url: '/openapi.yml'}))
-// app.get(
-//   '/editor/*',
-//   serveStatic({
-//     root: './editor/dist/umd',
-//     rewriteRequestPath(path) {
-//       const n = path.replace('/editor', '')
-//       console.log(path,n)
-//       return n
-//     },
-//   })
-// )
-// app.get('/editor', swaggerEditor({url: '/openapi.yml'}))
-
 app.get('/openapi.yml', async (c) => {
   return c.text(YAML.stringify(openapi), {
     headers: {'Content-Type': 'application/yaml'},
@@ -42,7 +27,6 @@ if (Deno.env.has('KEY') && Deno.env.has('CERT')) {
   const key = Deno.readTextFileSync(Deno.env.get('KEY')!)
   const cert = Deno.readTextFileSync(Deno.env.get('CERT')!)
   Deno.serve({port: 443, key, cert}, app.fetch)
-  Deno.serve({port: 80}, app.fetch)
 } else {
   Deno.serve({port: 80}, app.fetch)
 }

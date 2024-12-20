@@ -5,6 +5,7 @@
     "jsr:@std/cli@^1.0.9": "1.0.9",
     "jsr:@std/fs@*": "1.0.8",
     "jsr:@std/fs@^1.0.8": "1.0.8",
+    "jsr:@std/path@*": "1.0.8",
     "jsr:@std/path@^1.0.8": "1.0.8",
     "jsr:@std/yaml@*": "1.0.5",
     "jsr:@std/yaml@^1.0.5": "1.0.5",
@@ -22,7 +23,7 @@
     "@std/fs@1.0.8": {
       "integrity": "161c721b6f9400b8100a851b6f4061431c538b204bb76c501d02c508995cffe0",
       "dependencies": [
-        "jsr:@std/path"
+        "jsr:@std/path@^1.0.8"
       ]
     },
     "@std/path@1.0.8": {

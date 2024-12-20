@@ -1,7 +1,13 @@
-#!/usr/bin/env -S deno run -A --watch-hmr
-
-import {z} from 'npm:zod'
+import {OpenApiGeneratorV31} from '@asteasolutions/zod-to-openapi'
+import {z} from 'zod'
 import {registry} from './registry.ts'
+import {
+  UserIdParamSchema,
+  UserInfoSchema,
+  UserSchema,
+  UsersSchema,
+  usersQueryParams,
+} from './schema.ts'
 
 // Security
 const bearerAuth = registry.registerComponent('securitySchemes', 'bearerAuth', {
@@ -27,52 +33,14 @@ const bearerAuth = registry.registerComponent('securitySchemes', 'bearerAuth', {
 })
 const auth = {[bearerAuth.name]: []}
 
-//
+// Examples
 const exampleUserID = registry.registerComponent('examples', 'UserID', {
   description: 'User ID',
   value: 406192,
 })
 
-// Schemas
-const UserSchema = z
-  .object({
-    id: z.number().positive().openapi({example: 406192}),
-    nickname: z.string(),
-    avatar: z.string(),
-    image: z.record(
-      z.enum(['x160', 'x148', 'x80', 'x64', 'x48', 'x32', 'x16']),
-      z.string()
-    ),
-    last_online_at: z.string().datetime(),
-    url: z.string(),
-  })
-  .openapi('User')
-
-const UsersSchema = z.array(UserSchema).openapi('Users')
-
-const UserInfoSchema = UserSchema.merge(
-  z.object({
-    name: z.string().nullable(),
-    sex: z.string().nullable(),
-    full_years: z.number().nullable(),
-    last_online: z.string().nullable(),
-    website: z.string().nullable(),
-  })
-).openapi('UserInfo')
-
-const usersQueryParams = z
-  .object({
-    page: z.number().min(1).max(100000).optional(),
-    limit: z.number().min(1).max(100).optional(),
-    search: z.string().optional(),
-  })
-  .openapi('UsersQuery', {
-    param: {
-      in: 'query',
-      name: 'UsersQuery',
-    },
-  })
-
+// Schema
+registry.register('User', UserSchema)
 registry.register('Users', UsersSchema)
 
 // Parameters
@@ -80,17 +48,7 @@ registry.registerParameter('UsersQuery', usersQueryParams)
 
 const UserIdSchema = registry.registerParameter(
   'UserId',
-  z
-    .number()
-    .positive()
-    .openapi('UserID',{
-      param: {
-        in: 'path',
-        name: 'id',
-      },
-      example: 406192,
-      default: 406192,
-    })
+  UserIdParamSchema
 )
 
 // Paths
@@ -134,19 +92,39 @@ registry.registerPath({
   },
 })
 
-// registry.registerPath({
-//   tags: ['users'],
-//   path: '/api/users/whoami',
-//   method: 'get',
-//   security: [auth],
-//   responses: {
-//     200: {
-//       description: 'Show an user',
-//       content: {
-//         'application/json': {
-//           schema: UserInfoSchema,
-//         },
-//       },
-//     },
-//   },
-// })
+registry.registerPath({
+  tags: ['users'],
+  path: '/api/users/whoami',
+  method: 'get',
+  security: [auth],
+  responses: {
+    200: {
+      description: 'Show an user',
+      content: {
+        'application/json': {
+          schema: UserSchema,
+        },
+      },
+    },
+  },
+})
+
+const generator = new OpenApiGeneratorV31(registry.definitions)
+
+export const openapi = generator.generateDocument({
+  openapi: '3.1.0',
+  info: {
+    version: '0.0.1',
+    title: 'Shikimori API',
+  },
+  externalDocs: {
+    url: 'https://shikimori.one/api/doc',
+    description: 'Official Shikimori API',
+  },
+  servers: [
+    {
+      url: 'https://shikimori.one',
+      description: 'Main server',
+    },
+  ],
+})
