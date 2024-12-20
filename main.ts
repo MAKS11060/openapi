@@ -1,10 +1,10 @@
 #!/usr/bin/env -S deno run -A --watch-hmr
 
-import {extendZodWithOpenApi} from "@asteasolutions/zod-to-openapi"
+import {extendZodWithOpenApi} from '@asteasolutions/zod-to-openapi'
 import {parseArgs} from 'jsr:@std/cli/parse-args'
 import {ensureDirSync, expandGlobSync} from 'jsr:@std/fs'
 import {dirname, toFileUrl} from 'jsr:@std/path'
-import {z} from "zod"
+import {z} from 'zod'
 import {YAML} from './src/deps.ts'
 
 extendZodWithOpenApi(z)
@@ -19,14 +19,14 @@ const args = parseArgs(Deno.args, {
   },
 })
 
+if (!args['dry-run']) ensureDirSync('./gen')
+
 for (const item of expandGlobSync('./src/**/mod.ts')) {
   const mod = await import(toFileUrl(item.path).toString())
   const filename =
     Deno.build.os === 'windows'
       ? dirname(item.path).split('\\').at(-1)
       : dirname(item.path).split('/').at(-1)
-
-  if (!args['dry-run']) ensureDirSync('./gen')
 
   if ((args.release || args.yaml) && !args['dry-run']) {
     Deno.writeTextFileSync(

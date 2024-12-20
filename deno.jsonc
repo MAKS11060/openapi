@@ -1,9 +1,7 @@
 {
   "lock": true,
   "tasks": {
-    "build": {
-      "command": "deno run -A main.ts"
-    },
+    "build": "deno run -A main.ts -r",
     "openapi-gen": {
       "command": "echo generate d.ts",
       "dependencies": [
