@@ -1,0 +1,23 @@
+{
+  "lock": true,
+  "tasks": {
+    "build": {
+      "command": "echo build",
+      "dependencies": [
+        "build:shikimori"
+      ]
+    },
+    "build:shikimori": {
+      "command": "deno run -A src/shikimori/generate.ts > gen/shikimori.openapi.yml && deno run -A src/shikimori/generate.ts --json > gen/shikimori.openapi.json"
+    },
+    "openapi-gen": {
+      "command": "echo generate d.ts",
+      "dependencies": [
+        "openapi:shikimori"
+      ]
+    },
+    "openapi:shikimori": {
+      "command": "deno run -A npm:openapi-typescript src/shikimori/openapi.yml -o ./gen/shikimori/openapi.d.ts"
+    }
+  }
+}
