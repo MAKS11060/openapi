@@ -1,5 +1,6 @@
 #!/usr/bin/env -S deno run -A --watch-hmr
 
+import {ensureDirSync} from 'jsr:@std/fs/ensure-dir'
 import {parseArgs} from 'jsr:@std/cli/parse-args'
 import {OpenApiGeneratorV31} from 'npm:@asteasolutions/zod-to-openapi'
 import {YAML} from '../deps.ts'
@@ -38,18 +39,22 @@ export const openapi = generator.generateDocument({
 
 const filename = 'shikimori'
 
-if (args.yaml && !args['dry-run']) {
+if (!args["dry-run"]) ensureDirSync('./gen')
+
+if (args.release || args.yaml && !args['dry-run']) {
   Deno.writeTextFileSync(
     `./gen/${filename}.openapi.yml`,
     YAML.stringify(openapi)
   )
 }
-if (args.json && !args['dry-run']) {
+
+if (args.release || args.json && !args['dry-run']) {
   Deno.writeTextFileSync(
     `./gen/${filename}.openapi.json`,
     JSON.stringify(openapi, null, 2)
   )
 }
+
 if (args.verbose) {
   if (args.yaml) console.log(YAML.stringify(openapi))
   else console.log(JSON.stringify(openapi, null, 2))
