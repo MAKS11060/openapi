@@ -13,7 +13,7 @@ Auto generated OpenAPI from [zod schema](https://zod.dev/)
 - [Delevoper API](https://shikimori.one/api/doc)
 
 ```sh
-deno run -A https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori/openapi.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori/openapi.d.ts
 # or
 deno run -A npm:openapi-typescript gen/shikimori/openapi.yml -o ./shikimori/openapi.d.ts
 ```
@@ -46,7 +46,7 @@ shikimoriApi.use({
 - [Danbooru Help](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
 ```sh
-deno run -A https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru/openapi.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru/openapi.d.ts
 # or
 deno run -A npm:openapi-typescript gen/danbooru/openapi.yml -o ./danbooru/openapi.d.ts
 ```
