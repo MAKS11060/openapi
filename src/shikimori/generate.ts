@@ -7,13 +7,14 @@ import {YAML} from '../deps.ts'
 import {registry} from './registry.ts'
 import './shikimori.ts'
 
+const filename = 'shikimori'
 const args = parseArgs(Deno.args, {
   boolean: ['json', 'yaml', 'release', 'verbose', 'dry-run'],
   default: {},
   alias: {
     v: 'verbose',
     d: 'dry-run',
-    r: 'release'
+    r: 'release',
   },
 })
 
@@ -37,18 +38,16 @@ export const openapi = generator.generateDocument({
   ],
 })
 
-const filename = 'shikimori'
+if (!args['dry-run']) ensureDirSync('./gen')
 
-if (!args["dry-run"]) ensureDirSync('./gen')
-
-if (args.release || args.yaml && !args['dry-run']) {
+if ((args.release || args.yaml) && !args['dry-run']) {
   Deno.writeTextFileSync(
     `./gen/${filename}.openapi.yml`,
     YAML.stringify(openapi)
   )
 }
 
-if (args.release || args.json && !args['dry-run']) {
+if ((args.release || args.json) && !args['dry-run']) {
   Deno.writeTextFileSync(
     `./gen/${filename}.openapi.json`,
     JSON.stringify(openapi, null, 2)

@@ -1,12 +1,17 @@
 name: generate-openapi
 
 on:
-  workflow_dispatch:
+  push:
+    tags:
+      - 'v*.*.*'
 
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    permissions:
+      contents: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,8 +26,8 @@ jobs:
       - name: Set up Deno
         uses: denoland/setup-deno@v2
 
-      # - name: Install deps
-      #   run: deno install
+      - name: Install deps
+        run: deno install
 
       - name: Build
         run: deno task build
