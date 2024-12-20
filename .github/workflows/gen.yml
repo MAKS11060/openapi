@@ -26,8 +26,8 @@ jobs:
       - name: Set up Deno
         uses: denoland/setup-deno@v2
 
-      - name: Install deps
-        run: deno install
+      # - name: Install deps
+      #   run: deno install -q
 
       - name: Build
         run: deno task build
