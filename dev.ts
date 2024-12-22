@@ -5,8 +5,8 @@ import {swaggerUI} from 'npm:@hono/swagger-ui'
 import {Hono} from 'npm:hono'
 import {cors} from 'npm:hono/cors'
 import {logger} from 'npm:hono/logger'
+import {openapi} from "./devSchema.ts"
 import {YAML} from './src/deps.ts'
-import {openapi} from './src/shikimori/mod.ts'
 
 const app = new Hono()
 

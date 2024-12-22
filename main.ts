@@ -45,7 +45,7 @@ for (const item of expandGlobSync(args.input ? `./src/${args.input}/mod.ts` : '.
   }
 
   if (args.verbose) {
-    console.log(`filename: ${filename}`)
+    console.log(`filename: %c${filename}`, 'color: orange')
     if (args.yaml) console.log(YAML.stringify(mod.openapi))
     else console.log(JSON.stringify(mod.openapi, null, 2))
   }
