@@ -25,18 +25,15 @@ deno run -A npm:openapi-typescript gen/shikimori/openapi.yml -o ./shikimori/open
 import createClient from 'npm:openapi-fetch'
 import type {paths} from './openapi.d.ts'
 
+// Requirements
+// Add your Oauth2 Application name to User-Agent requests header.
+// Don’t mimic a browser.
+// Your IP address may be banned if you use API without properly set User-Agent header.
 const shikimoriUserAgent = ''
 
-export const shikimoriApi = createClient<paths>({baseUrl: 'https://shikimori.one'})
-
-shikimoriApi.use({
-  onRequest({request}) {
-    // Requirements
-    // Add your Oauth2 Application name to User-Agent requests header.
-    // Don’t mimic a browser.
-    // Your IP address may be banned if you use API without properly set User-Agent header.
-    request.headers.set('user-agent', shikimoriUserAgent)
-  },
+export const shikimoriApi = createClient<paths>({
+  baseUrl: 'https://shikimori.one',
+  headers: {'user-agent': shikimoriUserAgent},
 })
 ```
 
@@ -57,18 +54,14 @@ deno run -A npm:openapi-typescript gen/danbooru/openapi.yml -o ./danbooru/openap
 // danbooru/danbooru.ts
 import {encodeBase64} from 'jsr:@std/encoding/base64'
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './openapi.d.ts'
+import type {paths} from './danbooru/openapi.d.ts'
 
 const login = ''
 const apiKey = ''
 const authorization = encodeBase64(`${login}:${apiKey}`)
 
-export const danbooruApi = createClient<paths>({baseUrl: 'https://danbooru.donmai.us'})
-
-// for authorized requests
-danbooruApi.use({
-  onRequest({request}) {
-    request.headers.set('authorization', authorization)
-  },
+export const danbooruApi = createClient<paths>({
+  baseUrl: 'https://danbooru.donmai.us',
+  headers: {authorization},
 })
 ```
