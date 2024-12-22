@@ -11,17 +11,19 @@ extendZodWithOpenApi(z)
 
 const args = parseArgs(Deno.args, {
   boolean: ['json', 'yaml', 'release', 'verbose', 'dry-run'],
+  string: ['input'],
   default: {},
   alias: {
     v: 'verbose',
     d: 'dry-run',
     r: 'release',
+    i: 'input'
   },
 })
 
 if (!args['dry-run']) ensureDirSync('./gen')
 
-for (const item of expandGlobSync('./src/**/mod.ts')) {
+for (const item of expandGlobSync(args.input ? `./src/${args.input}/mod.ts` : './src/**/mod.ts')) {
   const mod = await import(toFileUrl(item.path).toString())
   const filename =
     Deno.build.os === 'windows'
@@ -43,6 +45,7 @@ for (const item of expandGlobSync('./src/**/mod.ts')) {
   }
 
   if (args.verbose) {
+    console.log(`filename: ${filename}`)
     if (args.yaml) console.log(YAML.stringify(mod.openapi))
     else console.log(JSON.stringify(mod.openapi, null, 2))
   }

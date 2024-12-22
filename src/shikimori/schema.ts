@@ -1,5 +1,16 @@
 import {z} from 'zod'
 
+export const shikimoriKind = z.enum(['anime', 'manga'])
+export const shikimoriTargetType = z.enum(['Anime', 'Mange'])
+export const shikimoriStatus = z.enum([
+  'planned',
+  'watching',
+  'rewatching',
+  'completed',
+  'on_hold',
+  'dropped',
+])
+
 export const UserSchema = z
   .object({
     id: z.number().positive().openapi({example: 406192}),
