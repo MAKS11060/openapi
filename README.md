@@ -5,8 +5,8 @@ Auto generated OpenAPI from [zod schema](https://zod.dev/)
 - [OpenAPI](#openapi)
   - [Shikimori](#shikimori)
     - [Example](#example-openapi-fetch)
-<!--   - [Danbooru](#danbooru)
-    - [Example](#example-openapi-fetch-1) -->
+  - [Danbooru](#danbooru)
+    - [Example](#example-openapi-fetch-1)
 
 ## Shikimori
 
@@ -40,7 +40,7 @@ shikimoriApi.use({
 })
 ```
 
-<!-- ## Danbooru (TODO)
+## Danbooru
 
 - [Api Wiki](https://danbooru.donmai.us/wiki_pages/help:api)
 - [Danbooru Help](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
@@ -72,4 +72,3 @@ danbooruApi.use({
   },
 })
 ```
- -->
