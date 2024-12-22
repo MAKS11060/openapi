@@ -9,10 +9,34 @@ const basicAuth = registry.registerComponent('securitySchemes', 'basicAuth', {
 })
 const auth = {[basicAuth.name]: []}
 
+//
+const ParametersQueryTags = registry.registerComponent('parameters', 'tags', {
+  in: 'query',
+  name: 'tags',
+  style: 'spaceDelimited',
+  required: false,
+  schema: {
+    type: 'string',
+    examples: ['search:all', 'ordfav:username'],
+  },
+})
+
+const ParametersQueryLimit = registry.registerComponent('parameters', 'limit', {
+  in: 'query',
+  name: 'limit',
+  required: false,
+  schema: {
+    type: 'integer',
+    maximum: 200,
+  },
+})
+
 // Paths
 registry.registerPath({
+  tags: ['posts'],
   method: 'get',
   path: '/posts.json',
+  parameters: [ParametersQueryTags.ref, ParametersQueryLimit.ref],
   responses: {
     200: {
       description: 'Posts list',
@@ -26,8 +50,10 @@ registry.registerPath({
 })
 
 registry.registerPath({
+  tags: ['posts'],
   method: 'get',
   path: '/posts/random.json',
+  parameters: [ParametersQueryTags.ref, ParametersQueryLimit.ref],
   responses: {
     200: {
       description: 'Get random posts',
