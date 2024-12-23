@@ -10,7 +10,8 @@ Auto generated OpenAPI from [zod schema](https://zod.dev/)
 
 ## Shikimori
 
-- [Delevoper API](https://shikimori.one/api/doc)
+- [Redoc](https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml)
+- [Developer API](https://shikimori.one/api/doc)
 
 ```sh
 deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori/openapi.d.ts
@@ -39,6 +40,7 @@ export const shikimoriApi = createClient<paths>({
 
 ## Danbooru
 
+- [Redoc](https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml)
 - [Api Wiki](https://danbooru.donmai.us/wiki_pages/help:api)
 - [Danbooru Help](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
