@@ -10,7 +10,8 @@ Auto generated OpenAPI from [zod schema](https://zod.dev/)
 
 ## Shikimori
 
-- [Redoc](https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml)
+- [Redoc][shikimori.redoc]
+- [Swagger Editor][shikimori.swagger]
 - [Developer API](https://shikimori.one/api/doc)
 
 ```sh
@@ -40,7 +41,8 @@ export const shikimoriApi = createClient<paths>({
 
 ## Danbooru
 
-- [Redoc](https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml)
+- [Redoc][danbooru.redoc]
+- [Swagger Editor][danbooru.swagger]
 - [Api Wiki](https://danbooru.donmai.us/wiki_pages/help:api)
 - [Danbooru Help](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
@@ -67,3 +69,9 @@ export const danbooruApi = createClient<paths>({
   headers: {authorization},
 })
 ```
+
+[shikimori.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml
+[shikimori.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml
+
+[danbooru.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml
+[danbooru.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml
