@@ -1,6 +1,7 @@
 import {registry} from './registry.ts'
 import {BadRequestSchema, ForbiddenSchema, NotFoundSchema, UnauthorizedSchema} from './schema.ts'
 
+// 400
 export const BadRequestResponse = registry.registerComponent('responses', 'BadRequest', {
   description: 'The given parameters could not be parsed',
   content: {
@@ -10,6 +11,7 @@ export const BadRequestResponse = registry.registerComponent('responses', 'BadRe
   },
 })
 
+// 401
 export const UnauthorizedResponse = registry.registerComponent('responses', 'Unauthorized', {
   description: 'Authentication failed',
   content: {
@@ -19,6 +21,7 @@ export const UnauthorizedResponse = registry.registerComponent('responses', 'Una
   },
 })
 
+// 403
 export const ForbiddenResponse = registry.registerComponent('responses', 'Forbidden', {
   description: 'Access denied',
   content: {
@@ -28,6 +31,7 @@ export const ForbiddenResponse = registry.registerComponent('responses', 'Forbid
   },
 })
 
+// 404
 export const NotFoundResponse = registry.registerComponent('responses', 'NotFound', {
   description: 'Not Found',
   content: {

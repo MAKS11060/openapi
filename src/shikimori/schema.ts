@@ -1,19 +1,15 @@
 import {z} from 'zod'
 import {registry} from './registry.ts'
+import {registerComponentSchemas} from '../helper.ts'
 
-// Errors
+// 400
 export const BadRequestSchema = registry.registerComponent('schemas', 'BadRequest', {
   description: 'The given parameters could not be parsed',
 })
-export const UnauthorizedSchema = registry.registerComponent('schemas', 'Unauthorized', {
-  description: 'Authentication failed',
-})
-export const ForbiddenSchema = registry.registerComponent('schemas', 'Forbidden', {
-  description: 'Access denied',
-})
-export const NotFoundSchema = registry.registerComponent('schemas', 'NotFound', {})
 
-registry.register(
+// 401
+export const UnauthorizedSchema = registerComponentSchemas(
+  registry,
   'Unauthorized',
   z
     .object({
@@ -23,8 +19,16 @@ registry.register(
     })
     .describe('Authentication failed')
 )
-registry.register(
-  'Not Found',
+
+// 403
+export const ForbiddenSchema = registry.registerComponent('schemas', 'Forbidden', {
+  description: 'Access denied',
+})
+
+// 404
+export const NotFoundSchema = registerComponentSchemas(
+  registry,
+  'NotFound',
   z
     .object({
       message: z.string(),

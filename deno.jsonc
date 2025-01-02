@@ -2,14 +2,24 @@
   "lock": true,
   "tasks": {
     "build": "deno run -Aq main.ts -r",
-    "openapi-gen": {
+    "openapi": {
       "command": "echo generate d.ts",
       "dependencies": [
-        "openapi:shikimori"
+        "openapi:shikimori",
+        "openapi:danbooru",
       ]
     },
     "openapi:shikimori": {
-      "command": "deno run -A npm:openapi-typescript src/shikimori/openapi.yml -o ./gen/shikimori/openapi.d.ts"
+      "command": "deno run -A npm:openapi-typescript ./gen/shikimori.openapi.yml -o ./example/shikimori.d.ts",
+      "dependencies": [
+        "build"
+      ],
+    },
+    "openapi:danbooru": {
+      "command": "deno run -A npm:openapi-typescript ./gen/danbooru.openapi.yml -o ./example/danbooru.d.ts",
+      "dependencies": [
+        "build"
+      ],
     }
   },
   "imports": {

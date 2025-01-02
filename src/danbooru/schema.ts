@@ -1,19 +1,25 @@
 import {z} from 'zod'
+import {registerComponentSchemas} from '../helper.ts'
 import {registry} from './registry.ts'
 
-// Errors
+// 400
 export const BadRequestSchema = registry.registerComponent('schemas', 'BadRequest', {
   description: 'The given parameters could not be parsed',
 })
+
+// 401
 export const UnauthorizedSchema = registry.registerComponent('schemas', 'Unauthorized', {
   description: 'Authentication failed',
 })
+
+// 403
 export const ForbiddenSchema = registry.registerComponent('schemas', 'Forbidden', {
   description: 'Access denied',
 })
-export const NotFoundSchema = registry.registerComponent('schemas', 'NotFound', {})
 
-registry.register(
+// 404
+export const NotFoundSchema = registerComponentSchemas(
+  registry,
   'NotFound',
   z
     .object({
@@ -24,7 +30,27 @@ registry.register(
     .describe('Not found')
 )
 
+//
+export const LimitSchema = z
+  .number()
+  .int()
+  .positive()
+  .max(1000)
+  .optional()
+  .describe('The number of results to show per page')
+
+export const PageSchema = z.number().int().positive().optional().describe('The number of results to show per page')
+export const OnlySchema = z
+  .string()
+  .optional()
+  .describe('Determines the list of attributes that will be returned')
+  .openapi({
+    examples: ['id,created_at,file_url'],
+  })
+
 // Posts
+const fileType = z.enum(['png', 'jpg', 'gif', 'swf', 'webm', 'mp4', 'zip'])
+
 const rating = z.enum(['g', 's', 'q', 'e']).nullable().describe('The rating of the post')
 
 const mediaAssetVariantSchema = z.object({
@@ -69,7 +95,8 @@ export const PostSchema = z
     parent_id: z.number().int().nullable().optional().describe('The ID of the parent post'),
     source: z.string().url().describe('The source of the post'),
     md5: z.string().describe('The MD5 hash of the file'),
-    file_ext: z.string().describe('The file extension'),
+    // file_ext: z.string().describe('The file extension'),
+    file_ext: fileType.describe('The file extension'),
     file_size: z.number().int().describe('The size of the file'),
     file_url: z.string().url().describe('The URL of the file'),
     large_file_url: z.string().url().describe('The URL of the large file'),
@@ -102,26 +129,37 @@ export const PostSchema = z
       .nullable()
       .optional()
       .describe('The timestamp when the last comment was added'),
+    last_noted_at: z.string().datetime().nullable().optional().describe('The timestamp when the last note was added'),
 
     media_asset: mediaAssetSchema.describe('The media asset associated with the post'),
 
-    bit_flags: z.number().int().describe('The bit flags of the post'),
+    up_score: z.number().int().describe('The up score of the post'),
     down_score: z.number().int().describe('The down score of the post'),
+
+    pixiv_id: z.number().int().nullable().optional().describe('The Pixiv ID of the post'),
+    bit_flags: z.number().int().describe('The bit flags of the post'),
+
     has_active_children: z.boolean().describe('Indicates whether the post has active children'),
     has_children: z.boolean().describe('Indicates whether the post has children'),
     has_large: z.boolean().describe('Indicates whether the post has a large version'),
     has_visible_children: z.boolean().describe('Indicates whether the post has visible children'),
+
     is_banned: z.boolean().describe('Indicates whether the post is banned'),
     is_deleted: z.boolean().describe('Indicates whether the post is deleted'),
     is_flagged: z.boolean().describe('Indicates whether the post is flagged'),
     is_pending: z.boolean().describe('Indicates whether the post is pending'),
-    last_noted_at: z.string().datetime().nullable().optional().describe('The timestamp when the last note was added'),
-    pixiv_id: z.number().int().nullable().optional().describe('The Pixiv ID of the post'),
-    up_score: z.number().int().describe('The up score of the post'),
   })
   .openapi('Post')
 
 export const PostsSchema = z.array(PostSchema).openapi('Posts')
+
+export const PostsLimitSchema = z
+  .number()
+  .int()
+  .positive()
+  .max(200)
+  .optional()
+  .describe('The number of results to show per page')
 
 // Users
 export const UserSchema = z
@@ -154,3 +192,56 @@ export const UserSchema = z
   .openapi('User')
 
 export const UsersSchema = z.array(UserSchema).openapi('Users')
+
+// Autocomplete
+const AutocompleteArtistSchema = z.array(
+  z
+    .object({
+      type: z.literal('tag').describe('The type of the autocomplete item, must be "tag"'),
+      label: z.string().describe('The label of the autocomplete item'),
+      value: z.string().describe('The value of the autocomplete item'),
+      category: z.literal(1).describe('The category of the autocomplete item, must be 1 for artists'),
+    })
+    .describe('Schema for autocomplete artist items')
+)
+
+const AutocompleteTagsSchema = z.array(
+  z
+    .object({
+      type: z.literal('tag-word').describe('The type of the autocomplete item, must be "tag-word"'),
+      label: z.string().describe('The label of the autocomplete item'),
+      value: z.string().describe('The value of the autocomplete item'),
+      category: z
+        .union([
+          z.literal(0).describe('General category'),
+          z.literal(1).describe('Artist category'),
+          z.literal(3).describe('Copyright category'),
+          z.literal(4).describe('Character category'),
+          z.literal(5).describe('Meta category'),
+        ])
+        .describe('The category of the autocomplete item, includes [0, 1, 3, 4, 5]'),
+      post_count: z.number().int().nonnegative().describe('The count of posts associated with the tag, must be >= 0'),
+    })
+    .describe('Schema for autocomplete tag items')
+)
+
+const AutocompleteUsersSchema = z.array(
+  z
+    .object({
+      type: z.literal('user').describe('The type of the autocomplete item, must be "user"'),
+      label: z.string().describe('The label of the autocomplete item'),
+      value: z.string().describe('The value of the autocomplete item'),
+      id: z.number().int().positive().describe('The ID of the user, must be greater than 0'),
+      level: z.enum(['member', 'gold', 'platinum', 'builder', 'admin']).describe('The level of the user'),
+    })
+    .describe('Schema for autocomplete user items')
+)
+
+export const AutocompleteSchema = z
+  .union([
+    //
+    AutocompleteArtistSchema,
+    AutocompleteTagsSchema,
+    AutocompleteUsersSchema,
+  ])
+  .openapi('Autocomplete')

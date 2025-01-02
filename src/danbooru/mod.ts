@@ -1,8 +1,8 @@
 import {OpenApiGeneratorV31} from '@asteasolutions/zod-to-openapi'
-import {z} from "zod"
+import {z} from 'zod'
 import {registry} from './registry.ts'
 import {BadRequestResponse, NotFoundResponse, UnauthorizedResponse} from './responses.ts'
-import {PostSchema, PostsSchema, UserSchema, UsersSchema} from './schema.ts'
+import {AutocompleteSchema, LimitSchema, OnlySchema, PageSchema, PostSchema, PostsLimitSchema, PostsSchema, UserSchema, UsersSchema} from './schema.ts'
 
 // Security
 const basicAuth = registry.registerComponent('securitySchemes', 'basicAuth', {
@@ -11,45 +11,39 @@ const basicAuth = registry.registerComponent('securitySchemes', 'basicAuth', {
 })
 const auth = {[basicAuth.name]: []}
 
-// Parameters
-const ParametersParamId = registry.registerComponent('parameters', 'id', {
-  in: 'path',
-  name: 'id',
-  schema: {
-    type: 'integer',
-    minimum: 1,
-    description: 'The post ID',
-  },
-})
 
+// Parameters
 const ParametersQueryTags = registry.registerComponent('parameters', 'tags', {
   in: 'query',
   name: 'tags',
   style: 'spaceDelimited',
   required: false,
   schema: {
+    additionalProperties: true,
     type: 'string',
-    examples: ['search:all', 'ordfav:username'],
+    examples: ['order:favcount -rating:e,q age:<7d'],
+    externalDocs: {
+      url: 'https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet',
+      description: 'This cheatsheet describes how to search and tag posts',
+    },
   },
 })
 
-const ParametersQueryLimit = registry.registerComponent('parameters', 'limit', {
-  in: 'query',
-  name: 'limit',
-  required: false,
-  schema: {
-    type: 'integer',
-    maximum: 200,
-  },
-})
 
-// Paths
+// Posts
 registry.registerPath({
   tags: ['posts'],
   method: 'get',
   path: '/posts.json',
   security: [auth],
-  parameters: [ParametersQueryTags.ref, ParametersQueryLimit.ref],
+  parameters: [ParametersQueryTags.ref],
+  request: {
+    query: z.object({
+      limit: PostsLimitSchema,
+      page: PageSchema,
+      only: OnlySchema,
+    }),
+  },
   responses: {
     200: {
       description: 'Posts list',
@@ -70,7 +64,11 @@ registry.registerPath({
   method: 'get',
   path: '/posts/{id}.json',
   security: [auth],
-  parameters: [ParametersParamId.ref],
+  request: {
+    params: z.object({
+      id: z.number().int().positive().describe('The post ID'),
+    }),
+  },
   responses: {
     200: {
       description: 'Show post',
@@ -107,12 +105,13 @@ registry.registerPath({
   },
 })
 
+// Users
 registry.registerPath({
   tags: ['users'],
   method: 'get',
   path: '/users.json',
   security: [auth],
-  parameters: [],
+  parameters: [ParametersQueryTags.ref],
   responses: {
     200: {
       description: 'Get list of users',
@@ -135,8 +134,8 @@ registry.registerPath({
   security: [auth],
   request: {
     query: z.object({
-      id: z.number().describe('The user ID')
-    })
+      id: z.number().describe('The user ID'),
+    }),
   },
   responses: {
     200: {
@@ -153,12 +152,45 @@ registry.registerPath({
   },
 })
 
+// Autocomplete
+registry.registerPath({
+  tags: ['autocomplete'],
+  method: 'get',
+  path: '/autocomplete.json',
+  security: [],
+  request: {
+    query: z
+      .object({
+        'search[type]': z.enum(['tag', 'user', 'artist']).openapi({
+          default: 'tag',
+        }),
+        'search[query]': z.string().openapi({
+          example: 'zenless zone zero',
+        }),
+        limit: LimitSchema.openapi({
+          default: 10,
+        }),
+      })
+      .openapi('Autocomplete'),
+  },
+  responses: {
+    200: {
+      description: 'Get Autocomplete',
+      content: {
+        'application/json': {
+          schema: AutocompleteSchema,
+        },
+      },
+    },
+  },
+})
+
 const generator = new OpenApiGeneratorV31(registry.definitions)
 
 export const openapi = generator.generateDocument({
   openapi: '3.1.0',
   info: {
-    version: '0.0.3',
+    version: '0.0.4',
     title: 'Danbooru API',
   },
   externalDocs: {
@@ -174,5 +206,10 @@ export const openapi = generator.generateDocument({
       url: 'https://testbooru.donmai.us/',
       description: 'Test server',
     },
+  ],
+  tags: [
+    {name: 'posts', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api%3Aposts'}},
+    {name: 'users', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api%3Ausers'}},
+    {name: 'autocomplete'},
   ],
 })

@@ -1,28 +1,22 @@
 #!/usr/bin/env -S deno run -A --watch-hmr
 
-import {
-  extendZodWithOpenApi,
-  OpenApiGeneratorV31,
-  OpenAPIRegistry,
-} from '@asteasolutions/zod-to-openapi'
+import {extendZodWithOpenApi, OpenApiGeneratorV31, OpenAPIRegistry} from '@asteasolutions/zod-to-openapi'
 import {z} from 'zod'
 import {YAML} from './src/deps.ts'
+import {registerComponentSchemas} from './src/helper.ts'
 
 extendZodWithOpenApi(z)
 
 const registry = new OpenAPIRegistry()
 
-
-registry.register(
+const NotFoundSchema = registerComponentSchemas(
+  registry,
   'NotFound',
-  z
-    .object({
-      error: z.string(),
-      message: z.string(),
-    })
+  z.object({
+    error: z.string(),
+    message: z.string(),
+  })
 )
-
-const NotFoundSchema = registry.registerComponent('schemas', 'NotFound', {})
 
 const NotFoundResponse = registry.registerComponent('responses', 'NotFound', {
   description: 'Not Found',
@@ -33,7 +27,6 @@ const NotFoundResponse = registry.registerComponent('responses', 'NotFound', {
   },
 })
 
-// Paths
 registry.registerPath({
   method: 'get',
   path: '/posts',
