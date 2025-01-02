@@ -15,17 +15,17 @@ Auto generated OpenAPI from [zod schema](https://zod.dev/)
 - [Developer API](https://shikimori.one/api/doc)
 
 ```sh
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori/openapi.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
 # or
-deno run -A npm:openapi-typescript gen/shikimori/openapi.yml -o ./shikimori/openapi.d.ts
+deno run -A npm:openapi-typescript gen/shikimori/openapi.yml -o ./shikimori.d.ts
 ```
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
 ```ts
-// shikimori/shikimori.ts
+// shikimori.ts
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './openapi.d.ts'
+import type {paths} from './shikimori.d.ts'
 
 // Requirements
 // Add your Oauth2 Application name to User-Agent requests header.
@@ -44,29 +44,32 @@ export const shikimoriApi = createClient<paths>({
 - [Redoc][danbooru.redoc]
 - [Swagger Editor][danbooru.swagger]
 - [Api Wiki](https://danbooru.donmai.us/wiki_pages/help:api)
-- [Danbooru Help](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
+- [Search Cheatsheet](https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet)
+- [Danbooru Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
 ```sh
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru/openapi.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
 # or
-deno run -A npm:openapi-typescript gen/danbooru/openapi.yml -o ./danbooru/openapi.d.ts
+deno run -A npm:openapi-typescript gen/danbooru/openapi.yml -o ./danbooru.d.ts
 ```
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
 ```ts
-// danbooru/danbooru.ts
+// danbooru.ts
 import {encodeBase64} from 'jsr:@std/encoding/base64'
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './danbooru/openapi.d.ts'
+import type {paths} from './danbooru.d.ts'
 
+// Many API endpoints do not require authentication.
+// Register api key: https://danbooru.donmai.us/profile => API Key
 const login = ''
 const apiKey = ''
 const authorization = encodeBase64(`${login}:${apiKey}`)
 
 export const danbooruApi = createClient<paths>({
   baseUrl: 'https://danbooru.donmai.us',
-  headers: {authorization},
+  // headers: {authorization},
 })
 ```
 
