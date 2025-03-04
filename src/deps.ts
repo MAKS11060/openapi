@@ -1,1 +1,1 @@
-export * as YAML from 'jsr:@std/yaml'
+export * as YAML from '@std/yaml'

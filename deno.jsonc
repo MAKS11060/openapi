@@ -3,7 +3,6 @@
   "tasks": {
     "build": "deno run -Aq main.ts -r",
     "openapi": {
-      "command": "echo generate d.ts",
       "dependencies": [
         "openapi:shikimori",
         "openapi:danbooru",
@@ -24,10 +23,10 @@
   },
   "imports": {
     "@asteasolutions/zod-to-openapi": "npm:@asteasolutions/zod-to-openapi@^7.3.0",
-    "@std/cli": "jsr:@std/cli@^1.0.9",
-    "@std/fs": "jsr:@std/fs@^1.0.8",
+    "@std/cli": "jsr:@std/cli@^1.0.13",
+    "@std/fs": "jsr:@std/fs@^1.0.13",
     "@std/yaml": "jsr:@std/yaml@^1.0.5",
-    "openapi-typescript": "npm:openapi-typescript@^7.4.4",
-    "zod": "npm:zod@^3.24.1"
+    "openapi-typescript": "npm:openapi-typescript@^7.6.1",
+    "zod": "npm:zod@^3.24.2"
   }
 }
