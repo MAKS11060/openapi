@@ -1,12 +1,18 @@
 # OpenAPI
 
-Auto generated OpenAPI from [zod schema](https://zod.dev/)
+Unofficial OpenAPI schemes for some public APIs
 
 - [OpenAPI](#openapi)
   - [Shikimori](#shikimori)
     - [Example](#example-openapi-fetch)
   - [Danbooru](#danbooru)
     - [Example](#example-openapi-fetch-1)
+
+> [!NOTE]
+> - OpenAPI Spec
+>   - Version `3.1`
+> - Schema generated from [`/src`](src) using [Zod Schema](https://zod.dev/)
+> - Code examples [`/example`](example)
 
 ## Shikimori
 
@@ -15,9 +21,9 @@ Auto generated OpenAPI from [zod schema](https://zod.dev/)
 - [Developer API](https://shikimori.one/api/doc)
 
 ```sh
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
+npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
 # or
-deno run -A npm:openapi-typescript gen/shikimori/openapi.yml -o ./shikimori.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
 ```
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
@@ -48,9 +54,9 @@ export const shikimoriApi = createClient<paths>({
 - [Danbooru Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
 ```sh
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
+npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
 # or
-deno run -A npm:openapi-typescript gen/danbooru/openapi.yml -o ./danbooru.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
 ```
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
