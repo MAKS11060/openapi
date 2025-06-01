@@ -1,7 +1,7 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@maks11060/openapi@^0.0.2": "0.0.2",
+    "jsr:@maks11060/openapi@^0.0.4": "0.0.4",
     "jsr:@std/cli@*": "1.0.19",
     "jsr:@std/cli@^1.0.19": "1.0.19",
     "jsr:@std/dotenv@*": "0.225.3",
@@ -13,7 +13,7 @@
     "jsr:@std/yaml@*": "1.0.5",
     "jsr:@std/yaml@^1.0.5": "1.0.7",
     "jsr:@std/yaml@^1.0.7": "1.0.7",
-    "npm:@asteasolutions/zod-to-openapi@^7.3.2": "7.3.2_zod@3.25.45",
+    "npm:@asteasolutions/zod-to-openapi@^7.3.2": "7.3.2_zod@3.25.46",
     "npm:@hono/swagger-ui@*": "0.4.1_hono@4.6.14",
     "npm:@standard-schema/spec@*": "1.0.0",
     "npm:@standard-schema/spec@1": "1.0.0",
@@ -25,18 +25,18 @@
     "npm:openapi3-ts@*": "4.4.0",
     "npm:openapi3-ts@^4.4.0": "4.4.0",
     "npm:valibot@1.1.0": "1.1.0",
-    "npm:zod-to-json-schema@*": "3.24.5_zod@3.25.45",
-    "npm:zod@^3.25.45": "3.25.45"
+    "npm:zod@^3.25.45": "3.25.46",
+    "npm:zod@^3.25.46": "3.25.46"
   },
   "jsr": {
-    "@maks11060/openapi@0.0.2": {
-      "integrity": "1f1cf53b52b3f306faeedfff2c5d135696b0000e94e518793fb6febc0f335a04",
+    "@maks11060/openapi@0.0.4": {
+      "integrity": "59de6cc1295ea3bae4962c76888a1b12b6e93686a9f6d72f2a9891e918cef1c6",
       "dependencies": [
         "jsr:@std/yaml@^1.0.5",
         "npm:@valibot/to-json-schema",
         "npm:arktype",
         "npm:valibot",
-        "npm:zod"
+        "npm:zod@^3.25.45"
       ]
     },
     "@std/cli@1.0.19": {
@@ -74,7 +74,7 @@
     "@ark/util@0.46.0": {
       "integrity": "sha512-JPy/NGWn/lvf1WmGCPw2VGpBg5utZraE84I7wli18EDF3p3zc/e9WolT35tINeZO3l7C77SjqRJeAUoT0CvMRg=="
     },
-    "@asteasolutions/zod-to-openapi@7.3.2_zod@3.25.45": {
+    "@asteasolutions/zod-to-openapi@7.3.2_zod@3.25.46": {
       "integrity": "sha512-Wvl+jHwSgYrRc3tQLMG7Qxq6wn0WjDk8E9ZA0lAyW73FqK18XPHVIKpk0lA6L0S+zmzzNKTndeV2v/Or0LyfHQ==",
       "dependencies": [
         "openapi3-ts",
@@ -282,14 +282,8 @@
     "yargs-parser@21.1.1": {
       "integrity": "sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw=="
     },
-    "zod-to-json-schema@3.24.5_zod@3.25.45": {
-      "integrity": "sha512-/AuWwMP+YqiPbsJx5D6TfgRTc4kTLjsh5SOcd4bLsfUg2RcEXrFMJl1DGgdHy2aCfsIA/cr/1JM0xcB2GZji8g==",
-      "dependencies": [
-        "zod"
-      ]
-    },
-    "zod@3.25.45": {
-      "integrity": "sha512-kv1swJBZqv98NQibL0oVvkQE8rXT+6qGNM1FpZkFcJG2jnz4vbtu48bgaitp85CaBPLSKXibrEsU7MzJoVoZAA=="
+    "zod@3.25.46": {
+      "integrity": "sha512-IqRxcHEIjqLd4LNS/zKffB3Jzg3NwqJxQQ0Ns7pdrvgGkwQsEBdEQcOHaBVqvvZArShRzI39+aMST3FBGmTrLQ=="
     }
   },
   "remote": {
@@ -308,14 +302,14 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@maks11060/openapi@^0.0.2",
+      "jsr:@maks11060/openapi@^0.0.4",
       "jsr:@std/cli@^1.0.19",
       "jsr:@std/fs@^1.0.18",
       "jsr:@std/yaml@^1.0.7",
       "npm:@asteasolutions/zod-to-openapi@^7.3.2",
       "npm:openapi-typescript@^7.8.0",
       "npm:openapi3-ts@^4.4.0",
-      "npm:zod@^3.25.45"
+      "npm:zod@^3.25.46"
     ]
   }
 }

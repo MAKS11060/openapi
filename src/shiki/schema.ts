@@ -14,7 +14,7 @@ export const NotFoundSchema = z
   .describe('Page Not Found')
 
 ////////////////
-const ID = z.int().positive().describe('The ID')
+export const ID = z.int().positive().describe('The ID')
 
 //////////////// User
 export const userAnimeStatus = z.enum(['planned', 'watching', 'rewatching', 'completed', 'on_hold', 'dropped'])
@@ -188,6 +188,39 @@ export const animeList = z.array(animeShort)
 export const manga = z.object({})
 
 ////////
+export const characterFull = z.object({
+  id: ID,
+  name: z.string(),
+  russian: z.string(),
+  image,
+  url: z.string(),
+  altname: z.string().nullable(),
+  japanese: z.string().nullable(),
+  description: z.string().nullable(),
+  description_html: z.string().nullable(),
+  description_source: z.string().nullable(),
+  favoured: z.boolean(),
+  thread_id: ID,
+  topic_id: ID,
+  updated_at: z.iso.datetime(),
+  // seyu: z.array(person),
+  get seyu() {
+    return z.array(person)
+  },
+  animes: z.array(
+    animeShort.extend({
+      roles: z.array(z.string()),
+      role: z.string(),
+    })
+  ),
+  mangas: z.array(
+    animeShort.extend({
+      roles: z.array(z.string()),
+      role: z.string(),
+    })
+  ),
+})
+
 export const character = z.object({
   id: ID,
   name: z.string(),
@@ -197,6 +230,8 @@ export const character = z.object({
 })
 
 export const person = character.clone()
+
+export const seyu = person.clone()
 
 export const role = z.object({
   roles: z.array(z.string()),
@@ -266,13 +301,13 @@ export const topic = z.object({
   html_footer: z.string(),
   created_at: z.iso.datetime(),
   comments_count: z.number().positive(),
-  forum: {
+  forum: z.object({
     id: z.number().positive(),
     position: z.number().positive(),
-    name:z.string(),
-    permalink:z.string(),
-    url:z.string(),
-  },
+    name: z.string(),
+    permalink: z.string(),
+    url: z.string(),
+  }),
   user: user,
   type: z.string(),
   linked_id: ID,
@@ -285,12 +320,14 @@ export const topic = z.object({
 })
 export const topics = z.array(topic)
 
-export const topicQuery = z.object({
-  page: z.int().min(1).max(100000).describe('The page number'),
-  limit: z.int().max(30).describe('The limit of results per page'),
-  kind: z.enum(['anons', 'ongoing', 'released', 'episode']),
-  episodes: z.int().positive()
-})
+export const topicsQuery = z
+  .object({
+    page: z.int().min(1).max(100000).describe('The page number'),
+    limit: z.int().max(30).describe('The limit of results per page'),
+    kind: z.enum(['anons', 'ongoing', 'released', 'episode']),
+    episodes: z.int().positive(),
+  })
+  .partial()
 
 //////////////// Anime Search
 export const animeSearchQuery_order = z.enum([
@@ -394,3 +431,44 @@ export const achievement = z.object({
   updated_at: z.iso.datetime(),
 })
 export const achievements = z.array(achievement)
+
+//
+export const videoKind = z.enum([
+  'pv',
+  'character_trailer',
+  'cm',
+  'op',
+  'ed',
+  'op_ed_clip',
+  'clip',
+  'other',
+  'episode_preview',
+])
+export const videoHosting = z.enum([
+  'youtube',
+  'youtube_shorts',
+  'rutube',
+  'rutube_shorts',
+  'vk',
+  'ok',
+  'coub',
+  'vimeo',
+  'sibnet',
+  'yandex',
+  'streamable',
+  'smotret_anime',
+  'myvi',
+  'youmite',
+  'viuly',
+  'mediafile',
+])
+export const video = z.object({
+  id: ID,
+  url: z.string(),
+  image_url: z.string(),
+  player_url: z.string(),
+  name: z.string().nullable(),
+  kind: videoKind,
+  hosting: videoHosting,
+})
+export const videos = z.array(video)

@@ -16,16 +16,27 @@ export const doc = createDoc({
   tags: [
     //
     {name: 'anime'},
+    // {name: 'manga'},
+    // {name: 'ranobe'},
+
     {name: 'v1_user'},
     {name: 'v2_user'},
 
     {name: 'achievements'},
+
+    {name: 'characters'},
+    {name: 'people'},
+
     {name: 'constants'},
     {name: 'genres'},
     {name: 'studios'},
+
+    {name: 'videos'},
+
+    {name: 'manga', description: 'WIP'},
+    {name: 'ranobe', description: 'WIP'},
   ],
 })
-
 
 doc.server({
   url: 'https://shikimori.one/',
