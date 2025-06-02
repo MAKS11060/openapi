@@ -1,5 +1,3 @@
-#!/usr/bin/env -S deno run -A --watch
-
 import z from 'zod/v4'
 import {doc} from './openapi.ts'
 import {

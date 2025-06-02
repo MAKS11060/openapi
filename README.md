@@ -2,6 +2,9 @@
 
 Unofficial OpenAPI schemes for some public APIs
 
+The OpenAPI Schema is generated based on the code in [`src`](src) and
+  the library '[jsr:@maks11060/openapi](https://jsr.io/@maks11060/openapi)'
+
 - [OpenAPI](#openapi)
   - [Shikimori](#shikimori)
     - [Example](#example-openapi-fetch)
@@ -9,10 +12,14 @@ Unofficial OpenAPI schemes for some public APIs
     - [Example](#example-openapi-fetch-1)
 
 > [!NOTE]
-> - OpenAPI Spec
->   - Version `3.1`
-> - Schema generated from [`/src`](src) using [Zod Schema](https://zod.dev/)
+> - **OpenAPI 3.1**
 > - Code examples [`/example`](example)
+>
+> **Project structure**
+> - `src/{service}/`
+>   - `mod.ts` - Entry point
+>   - `openapi.ts` - Config
+>   - `schema.ts` - Data models
 
 ## Shikimori
 
