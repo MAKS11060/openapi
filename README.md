@@ -3,7 +3,7 @@
 Unofficial OpenAPI schemes for some public APIs
 
 The OpenAPI Schema is generated based on the code in [`src`](src) and
-  the library '[jsr:@maks11060/openapi](https://jsr.io/@maks11060/openapi)'
+  the library [`jsr:@maks11060/openapi`](https://jsr.io/@maks11060/openapi)
 
 - [OpenAPI](#openapi)
   - [Shikimori](#shikimori)
