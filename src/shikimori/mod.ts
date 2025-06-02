@@ -1,7 +1,4 @@
-#!/usr/bin/env -S deno run -A --watch
-
 import z from 'zod/v4'
-import {serve} from '../serve.ts'
 import {doc, oauth2} from './openapi.ts'
 import {
   achievements,
@@ -37,15 +34,7 @@ import {
   videos,
 } from './schema.ts'
 
-//////////////////////////////// Test
-if (import.meta.main) {
-  setTimeout(() => {
-    let oas = doc.toYAML()
-    console.log(oas)
-    console.log(`lines: %c${oas.split('\n').length}`, 'color:orange')
-  })
-  serve(doc)
-}
+export {doc}
 
 //////////////////////////////// Schemas
 // doc.addSchema()

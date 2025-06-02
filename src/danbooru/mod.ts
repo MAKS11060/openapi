@@ -1,215 +1,210 @@
-import {OpenApiGeneratorV31} from '@asteasolutions/zod-to-openapi'
-import {z} from 'zod'
-import {registry} from './registry.ts'
-import {BadRequestResponse, NotFoundResponse, UnauthorizedResponse} from './responses.ts'
-import {AutocompleteSchema, LimitSchema, OnlySchema, PageSchema, PostSchema, PostsLimitSchema, PostsSchema, UserSchema, UsersSchema} from './schema.ts'
+#!/usr/bin/env -S deno run -A --watch
 
-// Security
-const basicAuth = registry.registerComponent('securitySchemes', 'basicAuth', {
-  type: 'http',
-  scheme: 'basic',
+import z from 'zod/v4'
+import {doc} from './openapi.ts'
+import {
+  autocomplete,
+  forbidden,
+  limit,
+  notFound,
+  only,
+  page,
+  post,
+  postID,
+  posts,
+  postsLimit,
+  unauthorized,
+  user,
+  userID,
+  users,
+} from './schema.ts'
+
+export {doc}
+
+//////////////////////////////// Schemas
+// doc.addSchema()
+doc.addSchema('autocomplete', autocomplete)
+doc.addSchema('forbidden', forbidden)
+doc.addSchema('limit', limit)
+doc.addSchema('notFound', notFound)
+doc.addSchema('only', only)
+doc.addSchema('page', page)
+doc.addSchema('post', post)
+doc.addSchema('postID', postID)
+doc.addSchema('posts', posts)
+doc.addSchema('postsLimit', postsLimit)
+doc.addSchema('unauthorized', unauthorized)
+doc.addSchema('user', user)
+doc.addSchema('users', users)
+doc.addSchema('userID', userID)
+
+//////////////////////////////// Responses
+const BadRequest = doc.addResponse('BadRequest', (t) => {
+  t.describe('The given parameters could not be parsed')
+  t.content('application/json', z.any())
 })
-const auth = {[basicAuth.name]: []}
+const Unauthorized = doc.addResponse('Unauthorized', (t) => {
+  t.describe('Authentication failed')
+  t.content('application/json', unauthorized) //
+  // .example('OAuth2 token invalid', (t) => {
+  //   t.value({
+  //     error: 'invalid_token',
+  //     error_description: 'The access token is invalid',
+  //     state: 'unauthorized',
+  //   })
+  // })
+})
+const ForbiddenResponse = doc.addResponse('Forbidden', (t) => {
+  t.describe('Access denied')
+  t.content('application/json', forbidden)
+})
+const NotFound = doc.addResponse('NotFound', (t) => {
+  t.describe('Not Found')
+  t.content('application/json', notFound)
+})
 
+//////////////////////////////// Parameters
+const pageQueryParam = doc.addParameter('Page', 'query', 'page', (t) => t.schema(page))
+const onlyQueryParam = doc.addParameter('Only', 'query', 'only', (t) => {
+  t.schema(only) //
+    .example('Get all fields', (t) => t.value(''))
+    .example('Get id,created_at,file_url', (t) => t.value('id,created_at,file_url'))
+})
 
-// Parameters
-const ParametersQueryTags = registry.registerComponent('parameters', 'tags', {
-  in: 'query',
-  name: 'tags',
-  style: 'spaceDelimited',
-  required: false,
-  schema: {
-    additionalProperties: true,
-    type: 'string',
-    examples: ['order:favcount -rating:e,q age:<7d'],
-    externalDocs: {
+const tagQueryParam = doc.addParameter('Tags', 'query', 'tags', (t) => {
+  t.schema(z.string())
+    .style('spaceDelimited') //
+    .example('No tags', (t) => t.value(''))
+    .example('Daily top', (t) => t.value('order:rank'))
+    .example('Weekly top by score', (t) => t.value('order:score -rating:e,q age:<7d'))
+    .example('Weekly top by favorites', (t) => t.value('order:favcount -rating:e,q age:<7d'))
+    .example('Saved searches', (t) => t.value('search:all'))
+})
+
+//////////////////////////////// Paths
+//////////////// Posts
+doc
+  .addPath('/posts.json') //
+  // .parameter('query', 'tags', (t) => {
+  //   t.schema(z.string())
+  //     .style('spaceDelimited') //
+  //     .example('No tags', (t) => t.value(''))
+  //     .example('Daily top', (t) => t.value('order:rank'))
+  //     .example('Weekly top by score', (t) => t.value('order:score -rating:e,q age:<7d'))
+  //     .example('Weekly top by favorites', (t) => t.value('order:favcount -rating:e,q age:<7d'))
+  //     .example('Saved searches', (t) => t.value('search:all'))
+  // })
+  .parameter('query', 'limit', (t) => t.schema(postsLimit))
+  .parameter(tagQueryParam)
+  .parameter(pageQueryParam)
+  .parameter(onlyQueryParam)
+  .get((t) => {
+    t.tag('posts')
+    t.describe('Posts list')
+    t.externalDocs({
       url: 'https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet',
       description: 'This cheatsheet describes how to search and tag posts',
-    },
-  },
-})
+    })
 
+    t.response(200, (t) => {
+      t.content('application/json', posts)
+    })
+    t.response(400, BadRequest)
+    t.response(401, Unauthorized)
+    t.response(404, NotFound)
+  })
 
-// Posts
-registry.registerPath({
-  tags: ['posts'],
-  method: 'get',
-  path: '/posts.json',
-  security: [auth],
-  parameters: [ParametersQueryTags.ref],
-  request: {
-    query: z.object({
-      limit: PostsLimitSchema,
-      page: PageSchema,
-      only: OnlySchema,
-    }),
-  },
-  responses: {
-    200: {
-      description: 'Posts list',
-      content: {
-        'application/json': {
-          schema: PostsSchema,
-        },
-      },
-    },
-    400: BadRequestResponse.ref,
-    401: UnauthorizedResponse.ref,
-    404: NotFoundResponse.ref,
-  },
-})
+doc
+  .addPath('/posts/{id}.json', {id: (t) => t.schema(postID)}) //
+  .parameter(onlyQueryParam)
+  .get((t) => {
+    t.tag('posts')
+    t.describe('Show post')
 
-registry.registerPath({
-  tags: ['posts'],
-  method: 'get',
-  path: '/posts/{id}.json',
-  security: [auth],
-  request: {
-    params: z.object({
-      id: z.number().int().positive().describe('The post ID'),
-    }),
-  },
-  responses: {
-    200: {
-      description: 'Show post',
-      content: {
-        'application/json': {
-          schema: PostSchema,
-        },
-      },
-    },
-    400: BadRequestResponse.ref,
-    401: UnauthorizedResponse.ref,
-    404: NotFoundResponse.ref,
-  },
-})
+    t.response(200, (t) => {
+      t.content('application/json', post)
+    })
+    t.response(400, BadRequest)
+    t.response(401, Unauthorized)
+    t.response(404, NotFound)
+  })
 
-registry.registerPath({
-  tags: ['posts'],
-  method: 'get',
-  path: '/posts/random.json',
-  security: [auth],
-  parameters: [ParametersQueryTags.ref],
-  responses: {
-    200: {
-      description: 'Get random post',
-      content: {
-        'application/json': {
-          schema: PostSchema,
-        },
-      },
-    },
-    400: BadRequestResponse.ref,
-    401: UnauthorizedResponse.ref,
-    404: NotFoundResponse.ref,
-  },
-})
+doc
+  .addPath('/posts/random.json') //
+  .parameter(onlyQueryParam)
+  .get((t) => {
+    t.tag('posts')
+    t.describe('Get random post')
 
-// Users
-registry.registerPath({
-  tags: ['users'],
-  method: 'get',
-  path: '/users.json',
-  security: [auth],
-  parameters: [ParametersQueryTags.ref],
-  responses: {
-    200: {
-      description: 'Get list of users',
-      content: {
-        'application/json': {
-          schema: UsersSchema,
-        },
-      },
-    },
-    400: BadRequestResponse.ref,
-    401: UnauthorizedResponse.ref,
-    404: NotFoundResponse.ref,
-  },
-})
+    t.response(200, (t) => {
+      t.content('application/json', post)
+    })
+    t.response(400, BadRequest)
+    t.response(401, Unauthorized)
+    t.response(404, NotFound)
+  })
 
-registry.registerPath({
-  tags: ['users'],
-  method: 'get',
-  path: '/users/{id}.json',
-  security: [auth],
-  request: {
-    query: z.object({
-      id: z.number().describe('The user ID'),
-    }),
-  },
-  responses: {
-    200: {
-      description: 'Get user',
-      content: {
-        'application/json': {
-          schema: UserSchema,
-        },
-      },
-    },
-    400: BadRequestResponse.ref,
-    401: UnauthorizedResponse.ref,
-    404: NotFoundResponse.ref,
-  },
-})
+//////////////// Users
 
-// Autocomplete
-registry.registerPath({
-  tags: ['autocomplete'],
-  method: 'get',
-  path: '/autocomplete.json',
-  security: [],
-  request: {
-    query: z
-      .object({
-        'search[type]': z.enum(['tag', 'user', 'artist']).openapi({
-          default: 'tag',
-        }),
-        'search[query]': z.string().openapi({
-          example: 'zenless zone zero',
-        }),
-        limit: LimitSchema.openapi({
-          default: 10,
-        }),
-      })
-      .openapi('Autocomplete'),
-  },
-  responses: {
-    200: {
-      description: 'Get Autocomplete',
-      content: {
-        'application/json': {
-          schema: AutocompleteSchema,
-        },
-      },
-    },
-  },
-})
+doc
+  .addPath('/users.json') //
+  .parameter(tagQueryParam)
+  .get((t) => {
+    t.tag('users')
+    t.describe('Get list of users')
 
-const generator = new OpenApiGeneratorV31(registry.definitions)
+    t.response(200, (t) => {
+      t.content('application/json', users)
+    })
+    t.response(400, BadRequest)
+    t.response(401, Unauthorized)
+    t.response(404, NotFound)
+  })
 
-export const openapi = generator.generateDocument({
-  openapi: '3.1.0',
-  info: {
-    version: '0.0.4',
-    title: 'Danbooru API',
-  },
-  externalDocs: {
-    url: 'https://danbooru.donmai.us/wiki_pages/help:api',
-    description: 'Api Wiki',
-  },
-  servers: [
-    {
-      url: 'https://danbooru.donmai.us/',
-      description: 'Main server',
-    },
-    {
-      url: 'https://testbooru.donmai.us/',
-      description: 'Test server',
-    },
-  ],
-  tags: [
-    {name: 'posts', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api%3Aposts'}},
-    {name: 'users', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api%3Ausers'}},
-    {name: 'autocomplete'},
-  ],
-})
+doc
+  .addPath('/users/{id}.json', {id: (t) => t.schema(userID)}) //
+  .parameter(tagQueryParam)
+  .get((t) => {
+    t.tag('users')
+    t.describe('Get user')
+
+    t.response(200, (t) => {
+      t.content('application/json', user)
+    })
+    t.response(400, BadRequest)
+    t.response(401, Unauthorized)
+    t.response(404, NotFound)
+  })
+
+//////////////// Autocomplete
+doc
+  .addPath('/autocomplete.json') //
+  .parameter('query', 'search[type]', (t) => {
+    t.schema(z.enum(['tag', 'user', 'artist']))
+  })
+  .parameter('query', 'search[query]', (t) => {
+    t.schema(z.string()) //
+      .example('Example', (t) => t.value('zenless zone zero'))
+  })
+  // .parameter('query', 'search', (t) => {
+  //   t.style('form')
+  //   t.content(
+  //     'application/x-www-form-urlencoded',
+  //     z.object({
+  //       type: z.enum(['tag', 'user', 'artist']),
+  //       query: z.string(),
+  //     })
+  //   ) //
+  // })
+  .parameter('query', 'limit', (t) => t.schema(limit))
+  .get((t) => {
+    t.tag('autocomplete')
+    t.describe('Get autocomplete')
+
+    t.response(200, (t) => {
+      t.content('application/json', autocomplete)
+    })
+    t.response(400, BadRequest)
+    t.response(401, Unauthorized)
+    t.response(404, NotFound)
+  })

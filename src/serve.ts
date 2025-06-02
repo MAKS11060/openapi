@@ -1,6 +1,6 @@
+import {OpenAPI} from '@maks11060/openapi'
 import {Hono} from 'npm:hono'
 import {cors} from 'npm:hono/cors'
-import {OpenAPI} from '@maks11060/openapi'
 
 export const serve = (doc: OpenAPI) => {
   const app = new Hono() //
