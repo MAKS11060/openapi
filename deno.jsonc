@@ -9,13 +9,13 @@
       ]
     },
     "client:danbooru": {
-      "command": "deno run -A npm:openapi-typescript ./gen/danbooru.openapi.yml -o ./example/danbooru.d.ts",
+      "command": "deno run -Aq npm:openapi-typescript ./gen/danbooru.openapi.yml -o ./example/danbooru.d.ts",
       "dependencies": [
         "build"
       ],
     },
     "client:shikimori": {
-      "command": "deno run -A npm:openapi-typescript ./gen/shikimori.openapi.yml -o ./example/shikimori.d.ts",
+      "command": "deno run -Aq npm:openapi-typescript ./gen/shikimori.openapi.yml -o ./example/shikimori.d.ts",
       "dependencies": [
         "build"
       ],
