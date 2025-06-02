@@ -6,21 +6,24 @@
 export interface paths {
     "/posts.json": {
         parameters: {
-            query?: never;
+            query?: {
+                limit?: components["schemas"]["postsLimit"];
+                tags?: components["parameters"]["Tags"];
+                page?: components["parameters"]["Page"];
+                only?: components["parameters"]["Only"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /** @description Posts list */
         get: {
             parameters: {
                 query?: {
-                    tags?: components["parameters"]["tags"];
-                    /** @description The number of results to show per page */
-                    limit?: number;
-                    /** @description The number of results to show per page */
-                    page?: number;
-                    /** @description Determines the list of attributes that will be returned */
-                    only?: string;
+                    limit?: components["schemas"]["postsLimit"];
+                    tags?: components["parameters"]["Tags"];
+                    page?: components["parameters"]["Page"];
+                    only?: components["parameters"]["Only"];
                 };
                 header?: never;
                 path?: never;
@@ -28,13 +31,13 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Posts list */
+                /** @description Response 200 */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["Posts"];
+                        "application/json": components["schemas"]["posts"];
                     };
                 };
                 400: components["responses"]["BadRequest"];
@@ -52,30 +55,36 @@ export interface paths {
     };
     "/posts/{id}.json": {
         parameters: {
-            query?: never;
+            query?: {
+                only?: components["parameters"]["Only"];
+            };
             header?: never;
-            path?: never;
+            path: {
+                id: components["schemas"]["postID"];
+            };
             cookie?: never;
         };
+        /** @description Show post */
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    only?: components["parameters"]["Only"];
+                };
                 header?: never;
                 path: {
-                    /** @description The post ID */
-                    id: number;
+                    id: components["schemas"]["postID"];
                 };
                 cookie?: never;
             };
             requestBody?: never;
             responses: {
-                /** @description Show post */
+                /** @description Response 200 */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["Post"];
+                        "application/json": components["schemas"]["post"];
                     };
                 };
                 400: components["responses"]["BadRequest"];
@@ -93,15 +102,18 @@ export interface paths {
     };
     "/posts/random.json": {
         parameters: {
-            query?: never;
+            query?: {
+                only?: components["parameters"]["Only"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /** @description Get random post */
         get: {
             parameters: {
                 query?: {
-                    tags?: components["parameters"]["tags"];
+                    only?: components["parameters"]["Only"];
                 };
                 header?: never;
                 path?: never;
@@ -109,13 +121,13 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Get random post */
+                /** @description Response 200 */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["Post"];
+                        "application/json": components["schemas"]["post"];
                     };
                 };
                 400: components["responses"]["BadRequest"];
@@ -133,15 +145,18 @@ export interface paths {
     };
     "/users.json": {
         parameters: {
-            query?: never;
+            query?: {
+                tags?: components["parameters"]["Tags"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /** @description Get list of users */
         get: {
             parameters: {
                 query?: {
-                    tags?: components["parameters"]["tags"];
+                    tags?: components["parameters"]["Tags"];
                 };
                 header?: never;
                 path?: never;
@@ -149,13 +164,13 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Get list of users */
+                /** @description Response 200 */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["Users"];
+                        "application/json": components["schemas"]["users"];
                     };
                 };
                 400: components["responses"]["BadRequest"];
@@ -173,30 +188,36 @@ export interface paths {
     };
     "/users/{id}.json": {
         parameters: {
-            query?: never;
+            query?: {
+                tags?: components["parameters"]["Tags"];
+            };
             header?: never;
-            path?: never;
+            path: {
+                id: components["schemas"]["userID"];
+            };
             cookie?: never;
         };
+        /** @description Get user */
         get: {
             parameters: {
-                query: {
-                    /** @description The user ID */
-                    id: number;
+                query?: {
+                    tags?: components["parameters"]["Tags"];
                 };
                 header?: never;
-                path?: never;
+                path: {
+                    id: components["schemas"]["userID"];
+                };
                 cookie?: never;
             };
             requestBody?: never;
             responses: {
-                /** @description Get user */
+                /** @description Response 200 */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["User"];
+                        "application/json": components["schemas"]["user"];
                     };
                 };
                 400: components["responses"]["BadRequest"];
@@ -214,18 +235,22 @@ export interface paths {
     };
     "/autocomplete.json": {
         parameters: {
-            query?: never;
+            query?: {
+                "search[type]"?: "tag" | "user" | "artist";
+                "search[query]"?: string;
+                limit?: components["schemas"]["limit"];
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
+        /** @description Get autocomplete */
         get: {
             parameters: {
-                query: {
-                    "search[type]": "tag" | "user" | "artist";
-                    "search[query]": string;
-                    /** @description The number of results to show per page */
-                    limit?: number;
+                query?: {
+                    "search[type]"?: "tag" | "user" | "artist";
+                    "search[query]"?: string;
+                    limit?: components["schemas"]["limit"];
                 };
                 header?: never;
                 path?: never;
@@ -233,15 +258,18 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description Get Autocomplete */
+                /** @description Response 200 */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": components["schemas"]["Autocomplete"];
+                        "application/json": components["schemas"]["autocomplete"];
                     };
                 };
+                400: components["responses"]["BadRequest"];
+                401: components["responses"]["Unauthorized"];
+                404: components["responses"]["NotFound"];
             };
         };
         put?: never;
@@ -256,21 +284,69 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
-        /** @description The given parameters could not be parsed */
-        BadRequest: unknown;
-        /** @description Authentication failed */
-        Unauthorized: unknown;
+        autocomplete: {
+            /**
+             * @description The type of the autocomplete item, must be "tag"
+             * @constant
+             */
+            type: "tag";
+            /** @description The label of the autocomplete item */
+            label: string;
+            /** @description The value of the autocomplete item */
+            value: string;
+            /**
+             * @description The category of the autocomplete item, must be 1 for artists
+             * @constant
+             */
+            category: 1;
+        }[] | {
+            /**
+             * @description The type of the autocomplete item, must be "tag-word"
+             * @constant
+             */
+            type: "tag-word";
+            /** @description The label of the autocomplete item */
+            label: string;
+            /** @description The value of the autocomplete item */
+            value: string;
+            /** @description The category of the autocomplete item, includes [0, 1, 3, 4, 5] */
+            category: 0 | 1 | 3 | 4 | 5;
+            /** @description The count of posts associated with the tag, must be >= 0 */
+            post_count: number;
+        }[] | {
+            /**
+             * @description The type of the autocomplete item, must be "user"
+             * @constant
+             */
+            type: "user";
+            /** @description The label of the autocomplete item */
+            label: string;
+            /** @description The value of the autocomplete item */
+            value: string;
+            /** @description The ID of the user, must be greater than 0 */
+            id: number;
+            /**
+             * @description The level of the user
+             * @enum {string}
+             */
+            level: "member" | "gold" | "platinum" | "builder" | "admin";
+        }[];
         /** @description Access denied */
-        Forbidden: unknown;
+        forbidden: unknown;
+        /** @description The number of results to show per page */
+        limit: number;
         /** @description Not found */
-        NotFound: {
+        notFound: {
             success: boolean;
             error: string;
             message: string;
         };
-        Post: {
-            /** @description The post ID */
-            id: number;
+        /** @description Determines the list of attributes that will be returned */
+        only: string;
+        /** @description The number of results to show per page */
+        page: number;
+        post: {
+            id: components["schemas"]["postID"];
             /** @description The ID of the user who uploaded the post */
             uploader_id: number;
             /** @description The ID of the user who approved the post */
@@ -287,11 +363,8 @@ export interface components {
             tag_string_character: string;
             /** @description The meta tags associated with the post */
             tag_string_meta: string;
-            /**
-             * @description The rating of the post
-             * @enum {string|null}
-             */
-            rating: "g" | "s" | "q" | "e" | null;
+            /** @description The rating of the post */
+            rating: ("g" | "s" | "q" | "e") | null;
             /** @description The ID of the parent post */
             parent_id?: number | null;
             /**
@@ -353,20 +426,11 @@ export interface components {
              * @description The timestamp when the post was last updated
              */
             updated_at: string;
-            /**
-             * Format: date-time
-             * @description The timestamp when the last comment was bumped
-             */
+            /** @description The timestamp when the last comment was bumped */
             last_comment_bumped_at?: string | null;
-            /**
-             * Format: date-time
-             * @description The timestamp when the last comment was added
-             */
+            /** @description The timestamp when the last comment was added */
             last_commented_at?: string | null;
-            /**
-             * Format: date-time
-             * @description The timestamp when the last note was added
-             */
+            /** @description The timestamp when the last note was added */
             last_noted_at?: string | null;
             /** @description The media asset associated with the post */
             media_asset: {
@@ -419,11 +483,15 @@ export interface components {
             /** @description Indicates whether the post is pending */
             is_pending: boolean;
         };
-        Posts: components["schemas"]["Post"][];
-        User: {
-            /** @description The record ID, must be greater than 0 */
-            id: number;
-            /** @description The name of the record */
+        /** @description The post ID */
+        postID: number;
+        posts: components["schemas"]["post"][];
+        postsLimit: number;
+        /** @description Authentication failed */
+        unauthorized: unknown;
+        user: {
+            id: components["schemas"]["userID"];
+            /** @description The name of the user */
             name: string;
             /**
              * @description The level of the record
@@ -491,54 +559,9 @@ export interface components {
              */
             updated_at: string;
         };
-        Users: components["schemas"]["User"][];
-        Autocomplete: {
-            /**
-             * @description The type of the autocomplete item, must be "tag"
-             * @enum {string}
-             */
-            type: "tag";
-            /** @description The label of the autocomplete item */
-            label: string;
-            /** @description The value of the autocomplete item */
-            value: string;
-            /**
-             * @description The category of the autocomplete item, must be 1 for artists
-             * @enum {number}
-             */
-            category: 1;
-        }[] | {
-            /**
-             * @description The type of the autocomplete item, must be "tag-word"
-             * @enum {string}
-             */
-            type: "tag-word";
-            /** @description The label of the autocomplete item */
-            label: string;
-            /** @description The value of the autocomplete item */
-            value: string;
-            /** @description The category of the autocomplete item, includes [0, 1, 3, 4, 5] */
-            category: 0 | 1 | 3 | 4 | 5;
-            /** @description The count of posts associated with the tag, must be >= 0 */
-            post_count: number;
-        }[] | {
-            /**
-             * @description The type of the autocomplete item, must be "user"
-             * @enum {string}
-             */
-            type: "user";
-            /** @description The label of the autocomplete item */
-            label: string;
-            /** @description The value of the autocomplete item */
-            value: string;
-            /** @description The ID of the user, must be greater than 0 */
-            id: number;
-            /**
-             * @description The level of the user
-             * @enum {string}
-             */
-            level: "member" | "gold" | "platinum" | "builder" | "admin";
-        }[];
+        users: components["schemas"]["user"][];
+        /** @description The user ID */
+        userID: number;
     };
     responses: {
         /** @description The given parameters could not be parsed */
@@ -547,7 +570,7 @@ export interface components {
                 [name: string]: unknown;
             };
             content: {
-                "application/json": components["schemas"]["BadRequest"];
+                "application/json": unknown;
             };
         };
         /** @description Authentication failed */
@@ -556,7 +579,7 @@ export interface components {
                 [name: string]: unknown;
             };
             content: {
-                "application/json": components["schemas"]["Unauthorized"];
+                "application/json": components["schemas"]["unauthorized"];
             };
         };
         /** @description Access denied */
@@ -565,7 +588,7 @@ export interface components {
                 [name: string]: unknown;
             };
             content: {
-                "application/json": components["schemas"]["Forbidden"];
+                "application/json": components["schemas"]["forbidden"];
             };
         };
         /** @description Not Found */
@@ -574,12 +597,14 @@ export interface components {
                 [name: string]: unknown;
             };
             content: {
-                "application/json": components["schemas"]["NotFound"];
+                "application/json": components["schemas"]["notFound"];
             };
         };
     };
     parameters: {
-        tags: string;
+        Page: components["schemas"]["page"];
+        Only: components["schemas"]["only"];
+        Tags: string;
     };
     requestBodies: never;
     headers: never;

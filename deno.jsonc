@@ -2,24 +2,24 @@
   "lock": true,
   "tasks": {
     "build": "deno run -Aq scripts/build.ts",
-    "openapi": {
+    "build:client": {
       "dependencies": [
-        "openapi:shikimori",
-        "openapi:danbooru",
+        "client:danbooru",
+        "client:shikimori",
       ]
     },
-    "openapi:shikimori": {
+    "client:danbooru": {
+      "command": "deno run -A npm:openapi-typescript ./gen/danbooru.openapi.yml -o ./example/danbooru.d.ts",
+      "dependencies": [
+        "build"
+      ],
+    },
+    "client:shikimori": {
       "command": "deno run -A npm:openapi-typescript ./gen/shikimori.openapi.yml -o ./example/shikimori.d.ts",
       "dependencies": [
         "build"
       ],
     },
-    "openapi:danbooru": {
-      "command": "deno run -A npm:openapi-typescript ./gen/danbooru.openapi.yml -o ./example/danbooru.d.ts",
-      "dependencies": [
-        "build"
-      ],
-    }
   },
   "imports": {
     "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.5",

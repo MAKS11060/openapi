@@ -6,10 +6,12 @@
     "jsr:@std/cli@^1.0.19": "1.0.19",
     "jsr:@std/dotenv@*": "0.225.3",
     "jsr:@std/encoding@*": "1.0.6",
+    "jsr:@std/fmt@*": "1.0.5",
     "jsr:@std/fs@*": "1.0.18",
     "jsr:@std/fs@^1.0.18": "1.0.18",
     "jsr:@std/path@*": "1.1.0",
     "jsr:@std/path@^1.1.0": "1.1.0",
+    "jsr:@std/semver@*": "1.0.5",
     "jsr:@std/yaml@*": "1.0.5",
     "jsr:@std/yaml@^1.0.5": "1.0.7",
     "jsr:@std/yaml@^1.0.7": "1.0.7",
@@ -20,6 +22,7 @@
     "npm:arktype@2.1.20": "2.1.20",
     "npm:hono@*": "4.6.14",
     "npm:openapi-fetch@*": "0.13.3",
+    "npm:openapi-typescript@*": "7.8.0_typescript@5.8.3",
     "npm:openapi-typescript@^7.8.0": "7.8.0_typescript@5.8.3",
     "npm:valibot@1.1.0": "1.1.0",
     "npm:zod-to-json-schema@*": "3.24.5_zod@3.25.46",
@@ -46,6 +49,9 @@
     "@std/encoding@1.0.6": {
       "integrity": "ca87122c196e8831737d9547acf001766618e78cd8c33920776c7f5885546069"
     },
+    "@std/fmt@1.0.5": {
+      "integrity": "0cfab43364bc36650d83c425cd6d99910fc20c4576631149f0f987eddede1a4d"
+    },
     "@std/fs@1.0.18": {
       "integrity": "24bcad99eab1af4fde75e05da6e9ed0e0dce5edb71b7e34baacf86ffe3969f3a",
       "dependencies": [
@@ -54,6 +60,9 @@
     },
     "@std/path@1.1.0": {
       "integrity": "ddc94f8e3c275627281cbc23341df6b8bcc874d70374f75fec2533521e3d6886"
+    },
+    "@std/semver@1.0.5": {
+      "integrity": "529f79e83705714c105ad0ba55bec0f9da0f24d2f726b6cc1c15e505cc2c0624"
     },
     "@std/yaml@1.0.5": {
       "integrity": "71ba3d334305ee2149391931508b2c293a8490f94a337eef3a09cade1a2a2742"
