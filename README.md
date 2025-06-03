@@ -27,13 +27,13 @@ The OpenAPI Schema is generated based on the code in [`src`](src) and
 - [Swagger Editor][shikimori.swagger]
 - [Developer API](https://shikimori.one/api/doc)
 
+
+### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 ```sh
 npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
 # or
 deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
 ```
-
-### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
 ```ts
 // shikimori.ts
@@ -60,13 +60,13 @@ export const shikimoriApi = createClient<paths>({
 - [Search Cheatsheet](https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet)
 - [Danbooru Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
+
+### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 ```sh
 npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
 # or
 deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
 ```
-
-### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
 ```ts
 // danbooru.ts
