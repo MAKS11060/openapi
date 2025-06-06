@@ -11,37 +11,8 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query: {
-                    user_id: components["schemas"]["userID"];
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["achievements"];
-                    };
-                };
-                /** @description Response 4XX */
-                "4XX": {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": unknown;
-                    };
-                };
-            };
-        };
+        /** @description List user achievements */
+        get: operations["list_user_achievements"];
         put?: never;
         post?: never;
         delete?: never;
@@ -58,46 +29,7 @@ export interface paths {
             cookie?: never;
         };
         /** @description List animes */
-        get: {
-            parameters: {
-                query?: {
-                    page?: number;
-                    limit?: number;
-                    order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "episodes" | "status" | "random" | "created_at" | "created_at_desc";
-                    kind?: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48";
-                    status?: "anons" | "ongoing" | "released";
-                    season?: string;
-                    score?: number;
-                    duration?: "S" | "D" | "F";
-                    rating?: "none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx";
-                    genre?: string;
-                    genre_v2?: string;
-                    studio?: string;
-                    franchise?: string;
-                    censored?: "true" | "false";
-                    mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                    ids?: string;
-                    exclude_ids?: string;
-                    search?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["animeList"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["list_anime"];
         put?: never;
         post?: never;
         delete?: never;
@@ -116,29 +48,7 @@ export interface paths {
             cookie?: never;
         };
         /** @description Show an anime */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["anime"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["get_anime"];
         put?: never;
         post?: never;
         delete?: never;
@@ -157,29 +67,7 @@ export interface paths {
             cookie?: never;
         };
         /** @description Show an anime roles */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["roles"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["get_anime_roles"];
         put?: never;
         post?: never;
         delete?: never;
@@ -197,29 +85,7 @@ export interface paths {
             };
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["similar"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["get_anime_similar"];
         put?: never;
         post?: never;
         delete?: never;
@@ -237,29 +103,7 @@ export interface paths {
             };
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["relatedList"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["get_anime_related"];
         put?: never;
         post?: never;
         delete?: never;
@@ -277,29 +121,7 @@ export interface paths {
             };
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["screenshots"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["get_anime_screenshots"];
         put?: never;
         post?: never;
         delete?: never;
@@ -317,29 +139,7 @@ export interface paths {
             };
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["franchise"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["get_anime_franchise"];
         put?: never;
         post?: never;
         delete?: never;
@@ -357,29 +157,7 @@ export interface paths {
             };
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["externalLinks"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
+        get: operations["get_anime_external_links"];
         put?: never;
         post?: never;
         delete?: never;
@@ -397,34 +175,327 @@ export interface paths {
             };
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    page?: number;
-                    limit?: number;
-                    kind?: "anons" | "ongoing" | "released" | "episode";
-                    episodes?: number;
-                };
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["topics"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
+        get: operations["get_anime_topics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
+        get: operations["list_manga"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga_roles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}/similar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga_similar"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}/related": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga_related"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}/screenshots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga_screenshots"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}/franchise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga_franchise"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}/external_links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga_external_links"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/mangas/{id}/topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_manga_topics"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["list_ranobe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}/roles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe_roles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}/similar": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe_similar"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}/related": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe_related"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}/screenshots": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe_screenshots"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}/franchise": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe_franchise"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}/external_links": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe_external_links"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/ranobe/{id}/topics": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        get: operations["get_ranobe_topics"];
         put?: never;
         post?: never;
         delete?: never;
@@ -443,28 +514,7 @@ export interface paths {
             cookie?: never;
         };
         /** @description Show a character */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["ID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["characterFull"];
-                    };
-                };
-            };
-        };
+        get: operations["get_characters"];
         put?: never;
         post?: never;
         delete?: never;
@@ -481,28 +531,43 @@ export interface paths {
             cookie?: never;
         };
         /** @description Search characters */
-        get: {
-            parameters: {
-                query?: {
-                    search?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
+        get: operations["find_characters"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/people/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["ID"];
             };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["character"];
-                    };
-                };
-            };
+            cookie?: never;
         };
+        /** @description Show a person */
+        get: operations["get_person"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/people/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Search people */
+        get: operations["find_person"];
         put?: never;
         post?: never;
         delete?: never;
@@ -518,29 +583,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            kind: string[];
-                            status: string[];
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["get_constants_anime"];
         put?: never;
         post?: never;
         delete?: never;
@@ -556,29 +599,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            kind: string[];
-                            status: string[];
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["get_constants_manga"];
         put?: never;
         post?: never;
         delete?: never;
@@ -594,28 +615,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            status: string[];
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["get_constants_user_rate"];
         put?: never;
         post?: never;
         delete?: never;
@@ -631,30 +631,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            join_policy: string[];
-                            comment_policy: string[];
-                            image_upload_policy: string[];
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["get_constants_club"];
         put?: never;
         post?: never;
         delete?: never;
@@ -670,29 +647,39 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            bbcode: string;
-                            path: string;
-                        }[];
-                    };
-                };
-            };
+        get: operations["get_constants_smileys"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/genres": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
+        get: operations["list_genres"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/studios": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["list_studios"];
         put?: never;
         post?: never;
         delete?: never;
@@ -712,30 +699,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    page?: number;
-                    limit?: number;
-                    search?: string;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description List users */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["users"];
-                    };
-                };
-            };
-        };
+        get: operations["get_users"];
         put?: never;
         post?: never;
         delete?: never;
@@ -753,28 +717,7 @@ export interface paths {
             };
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["userID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Show an user */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["userInfo"];
-                    };
-                };
-            };
-        };
+        get: operations["get_user"];
         put?: never;
         post?: never;
         delete?: never;
@@ -790,1019 +733,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Show an user */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["user"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/genres": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description List genres */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["genres"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/studios": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description List studios */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["studios"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/user_rates": {
-        parameters: {
-            query?: {
-                user_id?: components["schemas"]["userID"];
-                target_id?: number;
-                target_type?: "Anime" | "Mange";
-                status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                page?: number;
-                limit?: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** @description List user rates */
-        get: {
-            parameters: {
-                query?: {
-                    user_id?: components["schemas"]["userID"];
-                    target_id?: number;
-                    target_type?: "Anime" | "Mange";
-                    status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                    page?: number;
-                    limit?: number;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["userRatesList"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-                404: components["responses"]["NotFound"];
-            };
-        };
-        put?: never;
-        /** @description Create an user rate */
-        post: {
-            parameters: {
-                query?: {
-                    user_id?: components["schemas"]["userID"];
-                    target_id?: number;
-                    target_type?: "Anime" | "Mange";
-                    status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                    page?: number;
-                    limit?: number;
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["userRatesCreateParams"];
-                };
-            };
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["userRates"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/v2/user_rates/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        /** @description Show an user rate */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["userRates"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-                404: components["responses"]["NotFound"];
-            };
-        };
-        /** @description Update an user rate */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["userRatesUpdateParams"];
-                };
-            };
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["userRates"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
-        post?: never;
-        /** @description Destroy an user rate */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 204 */
-                204: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        /** @description Update an user rate */
-        patch: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": components["schemas"]["userRatesUpdateParams"];
-                };
-            };
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["userRates"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
-        trace?: never;
-    };
-    "/api/v2/user_rates/{id}/increment": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: number;
-            };
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        /** @description Increment episodes/chapters by 1 */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 201 */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["userRates"];
-                    };
-                };
-                401: components["responses"]["Unauthorized"];
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/animes/{anime_id}/videos": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                anime_id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        /** @description List videos */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    anime_id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["videos"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        /** @description Create a video */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    anime_id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: {
-                content: {
-                    "application/json": {
-                        /** @enum {string} */
-                        kind: "pv" | "character_trailer" | "cm" | "op" | "ed" | "op_ed_clip" | "clip" | "other" | "episode_preview";
-                        name: string | null;
-                        url: string;
-                    };
-                };
-            };
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["video"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/animes/{anime_id}/videos/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                anime_id: components["schemas"]["animeID"];
-                id: components["schemas"]["ID"];
-            };
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post?: never;
-        /** @description Destroy a video */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    anime_id: components["schemas"]["animeID"];
-                    id: components["schemas"]["ID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content?: never;
-                };
-            };
-        };
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}/roles": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}/similar": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}/related": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}/screenshots": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}/franchise": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}/external_links": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/mangas/{id}/topics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}/roles": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}/similar": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}/related": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}/screenshots": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}/franchise": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}/external_links": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/ranobe/{id}/topics": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["animeID"];
-            };
-            cookie?: never;
-        };
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["animeID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/people/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                id: components["schemas"]["ID"];
-            };
-            cookie?: never;
-        };
-        /** @description Show a person */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: components["schemas"]["ID"];
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/api/people/search": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** @description Search people */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: never;
-        };
+        get: operations["get_my_user"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1824,30 +755,7 @@ export interface paths {
         put?: never;
         post?: never;
         /** @description Delete entire user rates and history */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    type: "anime" | "manga";
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            notice: string;
-                        };
-                    };
-                };
-            };
-        };
+        delete: operations["delete_user_rates_cleanup"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1866,30 +774,113 @@ export interface paths {
         put?: never;
         post?: never;
         /** @description Reset all user scores to 0 */
-        delete: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    type: "anime" | "manga";
-                };
-                cookie?: never;
+        delete: operations["delete_user_rates_reset"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/user_rates": {
+        parameters: {
+            query?: {
+                user_id?: components["schemas"]["userID"];
+                target_id?: number;
+                target_type?: "Anime" | "Mange";
+                status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+                page?: number;
+                limit?: number;
             };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            notice: string;
-                        };
-                    };
-                };
-            };
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
+        /** @description List user rates */
+        get: operations["list_user_rates"];
+        put?: never;
+        /** @description Create an user rate */
+        post: operations["update_user_rates"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v2/user_rates/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description Show an user rate */
+        get: operations["list_user_rate"];
+        /** @description Update an user rate */
+        put: operations["update_user_rate"];
+        post?: never;
+        /** @description Destroy an user rate */
+        delete: operations["delete_user_rate"];
+        options?: never;
+        head?: never;
+        /** @description Update an user rate */
+        patch: operations["edit_user_rate"];
+        trace?: never;
+    };
+    "/api/v2/user_rates/{id}/increment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Increment episodes/chapters by 1 */
+        post: operations["increment_user_rates"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/animes/{anime_id}/videos": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                anime_id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        /** @description List videos */
+        get: operations["get_video"];
+        put?: never;
+        /** @description Create a video */
+        post: operations["add_video"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/animes/{anime_id}/videos/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                anime_id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
+            };
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** @description Destroy a video */
+        delete: operations["delete_video"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1912,199 +903,99 @@ export interface components {
         }[];
         anime: {
             id: components["schemas"]["animeID"];
-            /** @description The name of the anime */
             name: string;
-            /** @description The Russian name of the anime */
             russian: string;
-            /** @description The image details of the anime */
             image: {
-                /** @description The URL of the original image */
                 original: string;
-                /** @description The URL of the preview image */
                 preview: string;
-                /** @description The URL of the 96x96 image */
                 x96: string;
-                /** @description The URL of the 48x48 image */
                 x48: string;
             };
-            /** @description The URL of the anime */
             url: string;
-            /** @description The kind of the anime (e.g., tv) */
             kind: string;
-            /** @description The score of the anime */
             score: string;
-            /** @description The status of the anime (e.g., released) */
             status: string;
-            /** @description The total number of episodes */
             episodes: number;
-            /** @description The number of episodes aired */
             episodes_aired: number;
-            /**
-             * Format: date-time
-             * @description The date when the anime aired
-             */
+            /** Format: date-time */
             aired_on: string;
-            /** @description The date when the anime was released */
             released_on?: string | null;
-            /** @description The rating of the anime */
             rating: string;
-            /** @description The English names of the anime */
             english: (string | null)[];
-            /** @description The Japanese names of the anime */
             japanese: (string | null)[];
-            /** @description The synonyms of the anime */
             synonyms: string[];
-            /** @description The Russian license name of the anime */
             license_name_ru?: string | null;
-            /** @description The duration of the anime */
             duration: number;
-            /** @description The description of the anime */
             description?: string | null;
-            /** @description The HTML description of the anime */
             description_html: string;
-            /** @description The source of the description */
             description_source?: string | null;
-            /** @description The franchise of the anime */
             franchise?: string | null;
-            /** @description Indicates whether the anime is favoured */
             favoured: boolean;
-            /** @description Indicates whether the anime is anons */
             anons: boolean;
-            /** @description Indicates whether the anime is ongoing */
             ongoing: boolean;
-            /** @description The thread ID of the anime */
             thread_id: number;
-            /** @description The topic ID of the anime */
             topic_id: number;
-            /** @description The MyAnimeList ID of the anime */
             myanimelist_id: number;
-            /** @description The rates scores stats of the anime */
             rates_scores_stats: unknown[];
-            /** @description The rates statuses stats of the anime */
             rates_statuses_stats: unknown[];
-            /**
-             * Format: date-time
-             * @description The timestamp when the anime was last updated
-             */
+            /** Format: date-time */
             updated_at: string;
-            /** @description The timestamp when the next episode will air */
             next_episode_at?: string | null;
-            /** @description The fansubbers of the anime */
             fansubbers: unknown[];
-            /** @description The fandubbers of the anime */
             fandubbers: unknown[];
-            /** @description The licensors of the anime */
             licensors: unknown[];
-            /** @description The genres of the anime */
             genres: unknown[];
-            /** @description The studios of the anime */
             studios: unknown[];
-            /** @description The videos of the anime */
             videos: unknown[];
-            /** @description The screenshots of the anime */
             screenshots: unknown[];
-            /** @description The user rate of the anime */
             user_rate?: number | null;
         };
-        /**
-         * @description The ID of the anime
-         * @example 21
-         */
         animeID: number;
         animeList: {
             id: components["schemas"]["animeID"];
-            /** @description The name of the anime */
             name: string;
-            /** @description The Russian name of the anime */
             russian: string;
-            /** @description The image details of the anime */
             image: {
-                /** @description The URL of the original image */
                 original: string;
-                /** @description The URL of the preview image */
                 preview: string;
-                /** @description The URL of the 96x96 image */
                 x96: string;
-                /** @description The URL of the 48x48 image */
                 x48: string;
             };
-            /** @description The URL of the anime */
             url: string;
-            /** @description The kind of the anime (e.g., tv) */
             kind: string;
-            /** @description The score of the anime */
             score: string;
-            /** @description The status of the anime (e.g., released) */
             status: string;
-            /** @description The total number of episodes */
             episodes: number;
-            /** @description The number of episodes aired */
             episodes_aired: number;
-            /**
-             * Format: date-time
-             * @description The date when the anime aired
-             */
+            /** Format: date-time */
             aired_on: string;
-            /** @description The date when the anime was released */
             released_on?: string | null;
         }[];
         animeSearchQuery: {
-            /** @description The page number, must be a number between 1 and 100000 */
             page?: number;
-            /** @description The limit of results per page, must be a number and maximum 50 */
             limit?: number;
-            /**
-             * @description The order of the results
-             * @enum {string}
-             */
+            /** @enum {string} */
             order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "episodes" | "status" | "random" | "created_at" | "created_at_desc";
-            /**
-             * @description The kind of the anime
-             * @enum {string}
-             */
+            /** @enum {string} */
             kind?: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48";
-            /**
-             * @description The status of the anime
-             * @enum {string}
-             */
+            /** @enum {string} */
             status?: "anons" | "ongoing" | "released";
-            /** @description The season of the anime */
             season?: string;
-            /** @description The minimal anime score, must be a number */
             score?: number;
-            /**
-             * @description The duration of the anime
-             * @enum {string}
-             */
+            /** @enum {string} */
             duration?: "S" | "D" | "F";
-            /**
-             * @description The rating of the anime
-             * @enum {string}
-             */
+            /** @enum {string} */
             rating?: "none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx";
-            /** @description List of genre ids separated by comma */
             genre?: string;
-            /** @description List of genre v2 ids separated by comma */
             genre_v2?: string;
-            /** @description List of studio ids separated by comma */
             studio?: string;
-            /** @description List of franchises separated by comma */
             franchise?: string;
-            /**
-             * @description Set to false to allow hentai, yaoi and yuri
-             * @enum {string}
-             */
+            /** @enum {string} */
             censored?: "true" | "false";
-            /**
-             * @description Status of anime in current user list
-             * @enum {string}
-             */
+            /** @enum {string} */
             mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-            /** @description List of anime ids separated by comma */
             ids?: string;
-            /** @description List of anime ids separated by comma */
             exclude_ids?: string;
-            /** @description Search phrase to filter animes by name */
             search?: string;
         };
         character: {
@@ -2112,13 +1003,9 @@ export interface components {
             name: string;
             russian: string;
             image: {
-                /** @description The URL of the original image */
                 original: string;
-                /** @description The URL of the preview image */
                 preview: string;
-                /** @description The URL of the 96x96 image */
                 x96: string;
-                /** @description The URL of the 48x48 image */
                 x48: string;
             };
             url: string;
@@ -2128,13 +1015,9 @@ export interface components {
             name: string;
             russian: string;
             image: {
-                /** @description The URL of the original image */
                 original: string;
-                /** @description The URL of the preview image */
                 preview: string;
-                /** @description The URL of the 96x96 image */
                 x96: string;
-                /** @description The URL of the 48x48 image */
                 x48: string;
             };
             url: string;
@@ -2151,78 +1034,44 @@ export interface components {
             seyu: components["schemas"]["character"][];
             animes: {
                 id: components["schemas"]["animeID"];
-                /** @description The name of the anime */
                 name: string;
-                /** @description The Russian name of the anime */
                 russian: string;
-                /** @description The image details of the anime */
                 image: {
-                    /** @description The URL of the original image */
                     original: string;
-                    /** @description The URL of the preview image */
                     preview: string;
-                    /** @description The URL of the 96x96 image */
                     x96: string;
-                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
-                /** @description The URL of the anime */
                 url: string;
-                /** @description The kind of the anime (e.g., tv) */
                 kind: string;
-                /** @description The score of the anime */
                 score: string;
-                /** @description The status of the anime (e.g., released) */
                 status: string;
-                /** @description The total number of episodes */
                 episodes: number;
-                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /**
-                 * Format: date-time
-                 * @description The date when the anime aired
-                 */
+                /** Format: date-time */
                 aired_on: string;
-                /** @description The date when the anime was released */
                 released_on?: string | null;
                 roles: string[];
                 role: string;
             }[];
             mangas: {
                 id: components["schemas"]["animeID"];
-                /** @description The name of the anime */
                 name: string;
-                /** @description The Russian name of the anime */
                 russian: string;
-                /** @description The image details of the anime */
                 image: {
-                    /** @description The URL of the original image */
                     original: string;
-                    /** @description The URL of the preview image */
                     preview: string;
-                    /** @description The URL of the 96x96 image */
                     x96: string;
-                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
-                /** @description The URL of the anime */
                 url: string;
-                /** @description The kind of the anime (e.g., tv) */
                 kind: string;
-                /** @description The score of the anime */
                 score: string;
-                /** @description The status of the anime (e.g., released) */
                 status: string;
-                /** @description The total number of episodes */
                 episodes: number;
-                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /**
-                 * Format: date-time
-                 * @description The date when the anime aired
-                 */
+                /** Format: date-time */
                 aired_on: string;
-                /** @description The date when the anime was released */
                 released_on?: string | null;
                 roles: string[];
                 role: string;
@@ -2268,46 +1117,28 @@ export interface components {
             /** @enum {string} */
             kind: "anime" | "manga";
         }[];
-        /** @description The ID */
         ID: number;
         relatedList: {
             relation: string;
             relation_russian: string;
             anime: {
                 id: components["schemas"]["animeID"];
-                /** @description The name of the anime */
                 name: string;
-                /** @description The Russian name of the anime */
                 russian: string;
-                /** @description The image details of the anime */
                 image: {
-                    /** @description The URL of the original image */
                     original: string;
-                    /** @description The URL of the preview image */
                     preview: string;
-                    /** @description The URL of the 96x96 image */
                     x96: string;
-                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
-                /** @description The URL of the anime */
                 url: string;
-                /** @description The kind of the anime (e.g., tv) */
                 kind: string;
-                /** @description The score of the anime */
                 score: string;
-                /** @description The status of the anime (e.g., released) */
                 status: string;
-                /** @description The total number of episodes */
                 episodes: number;
-                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /**
-                 * Format: date-time
-                 * @description The date when the anime aired
-                 */
+                /** Format: date-time */
                 aired_on: string;
-                /** @description The date when the anime was released */
                 released_on?: string | null;
             };
             manga: Record<string, never>;
@@ -2319,51 +1150,31 @@ export interface components {
             person: components["schemas"]["character"] | null;
         }[];
         screenshots: {
-            /** @description The URL of the original image */
             original: string;
-            /** @description The URL of the preview image */
             preview: string;
         }[];
         similar: {
             id: components["schemas"]["animeID"];
-            /** @description The name of the anime */
             name: string;
-            /** @description The Russian name of the anime */
             russian: string;
-            /** @description The image details of the anime */
             image: {
-                /** @description The URL of the original image */
                 original: string;
-                /** @description The URL of the preview image */
                 preview: string;
-                /** @description The URL of the 96x96 image */
                 x96: string;
-                /** @description The URL of the 48x48 image */
                 x48: string;
             };
-            /** @description The URL of the anime */
             url: string;
-            /** @description The kind of the anime (e.g., tv) */
             kind: string;
-            /** @description The score of the anime */
             score: string;
-            /** @description The status of the anime (e.g., released) */
             status: string;
-            /** @description The total number of episodes */
             episodes: number;
-            /** @description The number of episodes aired */
             episodes_aired: number;
-            /**
-             * Format: date-time
-             * @description The date when the anime aired
-             */
+            /** Format: date-time */
             aired_on: string;
-            /** @description The date when the anime was released */
             released_on?: string | null;
         }[];
         studios: {
             id: number;
-            /** @description The name of the studio */
             name: string;
             filtered_name: string;
             real: boolean;
@@ -2391,39 +1202,22 @@ export interface components {
             linked_type: string;
             linked: {
                 id: components["schemas"]["animeID"];
-                /** @description The name of the anime */
                 name: string;
-                /** @description The Russian name of the anime */
                 russian: string;
-                /** @description The image details of the anime */
                 image: {
-                    /** @description The URL of the original image */
                     original: string;
-                    /** @description The URL of the preview image */
                     preview: string;
-                    /** @description The URL of the 96x96 image */
                     x96: string;
-                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
-                /** @description The URL of the anime */
                 url: string;
-                /** @description The kind of the anime (e.g., tv) */
                 kind: string;
-                /** @description The score of the anime */
                 score: string;
-                /** @description The status of the anime (e.g., released) */
                 status: string;
-                /** @description The total number of episodes */
                 episodes: number;
-                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /**
-                 * Format: date-time
-                 * @description The date when the anime aired
-                 */
+                /** Format: date-time */
                 aired_on: string;
-                /** @description The date when the anime was released */
                 released_on?: string | null;
             };
             viewed: boolean;
@@ -2432,9 +1226,7 @@ export interface components {
             episode: number | null;
         }[];
         topicsQuery: {
-            /** @description The page number */
             page?: number;
-            /** @description The limit of results per page */
             limit?: number;
             /** @enum {string} */
             kind?: "anons" | "ongoing" | "released" | "episode";
@@ -2456,10 +1248,6 @@ export interface components {
             last_online_at: string;
             url: string;
         };
-        /**
-         * @description The user ID
-         * @example 406192
-         */
         userID: number;
         userInfo: {
             id: components["schemas"]["userID"];
@@ -2478,7 +1266,6 @@ export interface components {
             website: string | null;
         };
         userRates: {
-            /** @description The user rate ID */
             id: number;
             user_id: components["schemas"]["userID"];
             target_id: number;
@@ -2520,9 +1307,7 @@ export interface components {
             target_type: "Anime" | "Mange";
             /** @enum {string} */
             status: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-            /** @description This field is ignored when user_id is set */
             page?: number;
-            /** @description This field is ignored when user_id is set */
             limit?: number;
         };
         userRatesUpdateParams: {
@@ -2598,4 +1383,1069 @@ export interface components {
     pathItems: never;
 }
 export type $defs = Record<string, never>;
-export type operations = Record<string, never>;
+export interface operations {
+    list_user_achievements: {
+        parameters: {
+            query: {
+                user_id: components["schemas"]["userID"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["achievements"];
+                };
+            };
+            /** @description Response 4XX */
+            "4XX": {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+        };
+    };
+    list_anime: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "episodes" | "status" | "random" | "created_at" | "created_at_desc";
+                kind?: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48";
+                status?: "anons" | "ongoing" | "released";
+                season?: string;
+                score?: number;
+                duration?: "S" | "D" | "F";
+                rating?: "none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx";
+                genre?: string;
+                genre_v2?: string;
+                studio?: string;
+                franchise?: string;
+                censored?: "true" | "false";
+                mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+                ids?: string;
+                exclude_ids?: string;
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["animeList"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["anime"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime_roles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["roles"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime_similar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["similar"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime_related: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["relatedList"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime_screenshots: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["screenshots"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime_franchise: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["franchise"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime_external_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["externalLinks"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_anime_topics: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                kind?: "anons" | "ongoing" | "released" | "episode";
+                episodes?: number;
+            };
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["topics"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    list_manga: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga_roles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga_similar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga_related: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga_screenshots: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga_franchise: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga_external_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_manga_topics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    list_ranobe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe_roles: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe_similar: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe_related: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe_screenshots: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe_franchise: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe_external_links: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_ranobe_topics: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_characters: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["ID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["characterFull"];
+                };
+            };
+        };
+    };
+    find_characters: {
+        parameters: {
+            query?: {
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["character"];
+                };
+            };
+        };
+    };
+    get_person: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["ID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    find_person: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: never;
+    };
+    get_constants_anime: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        kind: string[];
+                        status: string[];
+                    };
+                };
+            };
+        };
+    };
+    get_constants_manga: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        kind: string[];
+                        status: string[];
+                    };
+                };
+            };
+        };
+    };
+    get_constants_user_rate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        status: string[];
+                    };
+                };
+            };
+        };
+    };
+    get_constants_club: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        join_policy: string[];
+                        comment_policy: string[];
+                        image_upload_policy: string[];
+                    };
+                };
+            };
+        };
+    };
+    get_constants_smileys: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        bbcode: string;
+                        path: string;
+                    }[];
+                };
+            };
+        };
+    };
+    list_genres: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List genres */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["genres"];
+                };
+            };
+        };
+    };
+    list_studios: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List studios */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["studios"];
+                };
+            };
+        };
+    };
+    get_users: {
+        parameters: {
+            query?: {
+                page?: number;
+                limit?: number;
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description List users */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["users"];
+                };
+            };
+        };
+    };
+    get_user: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: components["schemas"]["userID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Show an user */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["userInfo"];
+                };
+            };
+        };
+    };
+    get_my_user: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Show an user */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["user"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    delete_user_rates_cleanup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type: "anime" | "manga";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        notice: string;
+                    };
+                };
+            };
+        };
+    };
+    delete_user_rates_reset: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                type: "anime" | "manga";
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        notice: string;
+                    };
+                };
+            };
+        };
+    };
+    list_user_rates: {
+        parameters: {
+            query?: {
+                user_id?: components["schemas"]["userID"];
+                target_id?: number;
+                target_type?: "Anime" | "Mange";
+                status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+                page?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["userRatesList"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    update_user_rates: {
+        parameters: {
+            query?: {
+                user_id?: components["schemas"]["userID"];
+                target_id?: number;
+                target_type?: "Anime" | "Mange";
+                status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+                page?: number;
+                limit?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["userRatesCreateParams"];
+            };
+        };
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["userRates"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    list_user_rate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["userRates"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+            404: components["responses"]["NotFound"];
+        };
+    };
+    update_user_rate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["userRatesUpdateParams"];
+            };
+        };
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["userRates"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    delete_user_rate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 204 */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+    edit_user_rate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["userRatesUpdateParams"];
+            };
+        };
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["userRates"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    increment_user_rates: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 201 */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["userRates"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
+    };
+    get_video: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                anime_id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["videos"];
+                };
+            };
+        };
+    };
+    add_video: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                anime_id: components["schemas"]["animeID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    /** @enum {string} */
+                    kind: "pv" | "character_trailer" | "cm" | "op" | "ed" | "op_ed_clip" | "clip" | "other" | "episode_preview";
+                    name: string | null;
+                    url: string;
+                };
+            };
+        };
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["video"];
+                };
+            };
+        };
+    };
+    delete_video: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                anime_id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+        };
+    };
+}
