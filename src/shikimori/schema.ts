@@ -361,7 +361,7 @@ export const animeSearchQuery_kind = z.enum([
 export const animeSearchQuery = z
   .object({
     page: z.int().min(1).max(100000).describe('The page number, must be a number between 1 and 100000'),
-    limit: z.int().max(50).describe('The limit of results per page, must be a number and maximum 50'),
+    limit: z.int().min(1).max(50).describe('The limit of results per page, must be a number and maximum 50'),
     order: animeSearchQuery_order.describe('The order of the results'),
     kind: animeSearchQuery_kind.describe('The kind of the anime'),
     status: animeStatus.describe('The status of the anime'),

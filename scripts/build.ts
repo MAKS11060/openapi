@@ -37,7 +37,7 @@ for (const entry of expandGlobSync(args.input ? `./src/${args.input}/mod.ts` : '
 
   if (!args['dry-run']) {
     Deno.writeTextFileSync(filenameJSON, mod.doc.toJSON(true))
-    Deno.writeTextFileSync(filenameYAML, mod.doc.toYAML())
+    Deno.writeTextFileSync(filenameYAML, mod.doc.toYAML({lineWidth: 100}))
   } else {
     console.log(`[dry-run] write %c${filenameJSON}`, c.green)
     console.log(`[dry-run] write %c${filenameYAML}`, c.green)

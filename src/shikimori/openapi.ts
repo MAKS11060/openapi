@@ -1,13 +1,16 @@
 import {createDoc} from '@maks11060/openapi'
 import {zodPlugin} from '@maks11060/openapi/zod'
 
+const README = Deno.readTextFileSync('./src/shikimori/README.md').replaceAll('\r\n', '\n')
+
 export const doc = createDoc({
   plugins: {
     schema: [zodPlugin()],
   },
   info: {
     title: 'Shikimori API',
-    version: '0.0.4',
+    version: '0.0.5',
+    description: README,
   },
   externalDocs: {
     url: 'https://shikimori.one/api/doc',
