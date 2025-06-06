@@ -2,7 +2,7 @@
 
 import {encodeBase64} from 'jsr:@std/encoding/base64'
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './danbooru.d.ts'
+import type {paths} from './danbooru.oas.ts'
 
 // Many API endpoints do not require authentication.
 // Register api key: https://danbooru.donmai.us/profile => API Key

@@ -30,15 +30,15 @@ The OpenAPI Schema is generated based on the code in [`src`](src) and
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 ```sh
-npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
+npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.oas.ts
 # or
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.oas.ts
 ```
 
 ```ts
 // shikimori.ts
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './shikimori.d.ts'
+import type {paths} from './shikimori.oas.ts'
 
 // Requirements
 // Add your Oauth2 Application name to User-Agent requests header.
@@ -63,16 +63,16 @@ export const shikimoriApi = createClient<paths>({
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 ```sh
-npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
+npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.oas.ts
 # or
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.d.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.oas.ts
 ```
 
 ```ts
 // danbooru.ts
 import {encodeBase64} from 'jsr:@std/encoding/base64'
 import createClient from 'npm:openapi-fetch'
-import type {paths} from './danbooru.d.ts'
+import type {paths} from './danbooru.oas.ts'
 
 // Many API endpoints do not require authentication.
 // Register api key: https://danbooru.donmai.us/profile => API Key
