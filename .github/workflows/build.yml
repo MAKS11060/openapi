@@ -65,11 +65,11 @@ jobs:
           set -eu
 
           OUTPUT=""
-          FILES=$(find gen -type f $ -name "*.openapi.yaml" -o -name "*.openapi.yml" -o -name "*.openapi.json" $)
+          FILES=$(find gen -type f -name "*.openapi.yaml")
 
           for FILE in $FILES; do
             FILENAME=$(basename "$FILE")
-            FILE_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${FINAL_TAG}/${FILE//  /%20}"
+            FILE_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${FINAL_TAG}/${FILENAME}"
             OUTPUT="$OUTPUT- [Open Swagger Editor ($FILENAME)](https://editor-next.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL})\n"
           done
 
