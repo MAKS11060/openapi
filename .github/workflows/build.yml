@@ -46,8 +46,6 @@ jobs:
 
       - name: Create and push Git tag
         run: |
-          git config --local user.email "github-actions@example.com"
-          git config --local user.name "GitHub Actions"
 
           git tag "$FINAL_TAG"
           git push origin "$FINAL_TAG"
