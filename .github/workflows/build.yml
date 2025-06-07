@@ -69,9 +69,11 @@ jobs:
 
           for FILE in $FILES; do
             FILENAME=$(basename "$FILE")
-            FILE_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${FINAL_TAG}/${FILENAME}"
+            FILE_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${FINAL_TAG}/${FILENAME}"
             OUTPUT="$OUTPUT- [Open Swagger Editor ($FILENAME)](https://editor-next.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL})\n"
           done
+
+          OUTPUT="$OUTPUT\n"
 
           echo -e "$OUTPUT" > release-body.md
           echo "release_body=$(echo -e "$OUTPUT")" >> $GITHUB_ENV
