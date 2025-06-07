@@ -19,14 +19,22 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Set up Deno
+        uses: denoland/setup-deno@v2
+        with:
+          cache: true
+
+      - name: Build
+        run: deno task build
+
+      - name: Fetch all tags
+        run: git fetch --tags
+
       - name: Get current date
         id: date
         run: |
           CURRENT_DATE=$(date +"%Y.%m.%d")
           echo "CURRENT_DATE=$CURRENT_DATE" >> $GITHUB_ENV
-
-      - name: Fetch all tags
-        run: git fetch --tags
 
       - name: Calculate tag version
         id: tag
@@ -46,24 +54,33 @@ jobs:
 
           echo "FINAL_TAG=$FINAL_TAG" >> $GITHUB_ENV
 
-      - name: Set up Deno
-        uses: denoland/setup-deno@v2
-        with:
-          cache: true
-
-      - name: Build
-        run: deno task build
-
       - name: Create and push Git tag
         run: |
           git tag "$FINAL_TAG"
           git push origin "$FINAL_TAG"
 
+      - name: Generate release body
+        id: generate_release_body
+        run: |
+          set -eu
+
+          OUTPUT=""
+          FILES=$(find gen -type f $ -name "*.openapi.yaml" -o -name "*.openapi.yml" -o -name "*.openapi.json" $)
+
+          for FILE in $FILES; do
+            FILENAME=$(basename "$FILE")
+            FILE_URL="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/${FINAL_TAG}/${FILE//  /%20}"
+            OUTPUT="$OUTPUT- [Open Swagger Editor ($FILENAME)](https://editor-next.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL})\n"
+          done
+
+          echo -e "$OUTPUT" > release-body.md
+          echo "release_body=$(echo -e "$OUTPUT")" >> $GITHUB_ENV
+
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
-          # tag_name: "$FINAL_TAG"
           tag_name: ${{ env.FINAL_TAG }}
+          body: ${{ env.release_body }}
           generate_release_notes: true
           files: |
             gen/**.openapi.*
