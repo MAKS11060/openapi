@@ -11,12 +11,12 @@ jobs:
   publish:
     if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     permissions:
       contents: write
 
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Get current date
@@ -46,24 +46,6 @@ jobs:
 
           echo "FINAL_TAG=$FINAL_TAG" >> $GITHUB_ENV
 
-      - name: Create and push Git tag
-        run: |
-          git tag "$FINAL_TAG"
-          git push origin "$FINAL_TAG"
-
-
-  build:
-    needs: publish
-    # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: write
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Set up Deno
         uses: denoland/setup-deno@v2
         with:
@@ -72,10 +54,44 @@ jobs:
       - name: Build
         run: deno task build
 
+      - name: Create and push Git tag
+        run: |
+          git tag "$FINAL_TAG"
+          git push origin "$FINAL_TAG"
+
       - name: Release
         uses: softprops/action-gh-release@v2
-        # if: startsWith(github.ref, 'refs/tags/')
         with:
+          # tag_name: "$FINAL_TAG"
+          tag_name: ${{ env.FINAL_TAG }}
           generate_release_notes: true
           files: |
             gen/**.openapi.*
+
+  # build:
+  #   needs: publish
+  #   # if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   permissions:
+  #     contents: write
+
+  #   steps:
+  #     - name: Checkout
+  #       uses: actions/checkout@v4
+
+  #     - name: Set up Deno
+  #       uses: denoland/setup-deno@v2
+  #       with:
+  #         cache: true
+
+  #     - name: Build
+  #       run: deno task build
+
+  #     - name: Release
+  #       uses: softprops/action-gh-release@v2
+  #       # if: startsWith(github.ref, 'refs/tags/')
+  #       with:
+  #         generate_release_notes: true
+  #         files: |
+  #           gen/**.openapi.*
