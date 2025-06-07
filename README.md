@@ -30,9 +30,9 @@ The OpenAPI Schema is generated based on the code in [`src`](src) and
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 ```sh
-npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.oas.ts
+npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml -o ./shikimori.oas.ts
 # or
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml -o ./shikimori.oas.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml -o ./shikimori.oas.ts
 ```
 
 ```ts
@@ -63,9 +63,9 @@ export const shikimoriApi = createClient<paths>({
 
 ### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 ```sh
-npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.oas.ts
+npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml -o ./danbooru.oas.ts
 # or
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml -o ./danbooru.oas.ts
+deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml -o ./danbooru.oas.ts
 ```
 
 ```ts
@@ -86,8 +86,8 @@ export const danbooruApi = createClient<paths>({
 })
 ```
 
-[shikimori.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml
-[shikimori.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yml
+[shikimori.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml
+[shikimori.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml
 
-[danbooru.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml
-[danbooru.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yml
+[danbooru.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml
+[danbooru.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml

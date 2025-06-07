@@ -1,5 +1,6 @@
 import {createDoc} from '@maks11060/openapi'
 import {zodPlugin} from '@maks11060/openapi/zod'
+import {currentDate} from '../helper.ts'
 
 export const doc = createDoc({
   plugins: {
@@ -7,7 +8,8 @@ export const doc = createDoc({
   },
   info: {
     title: 'Danbooru API',
-    version: '0.0.5',
+    // version: '0.0.5',
+    version: currentDate(),
   },
   externalDocs: {
     url: 'https://danbooru.donmai.us/wiki_pages/help:api',

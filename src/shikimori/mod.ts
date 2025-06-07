@@ -34,7 +34,7 @@ import {
   videos,
 } from './schema.ts'
 
-export {doc}
+export {doc} from './openapi.ts'
 
 //////////////////////////////// Schemas
 // doc.addSchema()

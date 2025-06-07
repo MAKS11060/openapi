@@ -17,7 +17,7 @@ import {
   users,
 } from './schema.ts'
 
-export {doc}
+export {doc} from './openapi.ts'
 
 //////////////////////////////// Schemas
 // doc.addSchema()
@@ -99,6 +99,8 @@ doc
   .get((t) => {
     t.tag('posts')
     t.describe('Posts list')
+    t.operationId('list_posts')
+
     t.externalDocs({
       url: 'https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet',
       description: 'This cheatsheet describes how to search and tag posts',
@@ -118,6 +120,7 @@ doc
   .get((t) => {
     t.tag('posts')
     t.describe('Show post')
+    t.operationId('get_post')
 
     t.response(200, (t) => {
       t.content('application/json', post)
@@ -133,6 +136,7 @@ doc
   .get((t) => {
     t.tag('posts')
     t.describe('Get random post')
+    t.operationId('get_random_post')
 
     t.response(200, (t) => {
       t.content('application/json', post)
@@ -150,6 +154,7 @@ doc
   .get((t) => {
     t.tag('users')
     t.describe('Get list of users')
+    t.operationId('list_users')
 
     t.response(200, (t) => {
       t.content('application/json', users)
@@ -165,6 +170,7 @@ doc
   .get((t) => {
     t.tag('users')
     t.describe('Get user')
+    t.operationId('get_user')
 
     t.response(200, (t) => {
       t.content('application/json', user)
@@ -198,6 +204,7 @@ doc
   .get((t) => {
     t.tag('autocomplete')
     t.describe('Get autocomplete')
+    t.operationId('get_autocomplete')
 
     t.response(200, (t) => {
       t.content('application/json', autocomplete)

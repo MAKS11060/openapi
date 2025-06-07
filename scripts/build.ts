@@ -29,11 +29,11 @@ console.time('Build')
 for (const entry of expandGlobSync(args.input ? `./src/${args.input}/mod.ts` : './src/**/mod.ts')) {
   const mod = (await import(toFileUrl(entry.path).toString())) as {doc: OpenAPI}
   const oas = mod.doc.toDoc()
-  console.error(`${oas.info.title} - %c${oas.info.version}`, c.orange)
+  console.log(`${oas.info.title} - %c${oas.info.version}`, c.orange)
 
   const name = basename(resolve(entry.path, './..')) // '/src/{name}/mod.ts' => '{name}'
   const filenameJSON = join(normalize(args.output), `${name}.openapi.json`)
-  const filenameYAML = join(normalize(args.output), `${name}.openapi.yml`)
+  const filenameYAML = join(normalize(args.output), `${name}.openapi.yaml`)
 
   if (!args['dry-run']) {
     Deno.writeTextFileSync(filenameJSON, mod.doc.toJSON(true))

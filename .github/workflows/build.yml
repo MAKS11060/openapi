@@ -4,9 +4,58 @@ on:
   push:
     tags:
       - 'v*.*.*'
+      - '*.*.*'
+  workflow_dispatch:
 
 jobs:
+  publish:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get current date
+        id: date
+        run: |
+          CURRENT_DATE=$(date +"%Y.%m.%d")
+          echo "CURRENT_DATE=$CURRENT_DATE" >> $GITHUB_ENV
+
+      - name: Fetch all tags
+        run: git fetch --tags
+
+      - name: Calculate tag version
+        id: tag
+        run: |
+          BASE_TAG="${CURRENT_DATE}"
+          COUNT=1
+
+          while git rev-parse "$BASE_TAG-$COUNT" >/dev/null 2>&1; do
+            COUNT=$((COUNT + 1))
+          done
+
+          if [ $COUNT -eq 1 ] && ! git rev-parse "$BASE_TAG" >/dev/null 2>&1; then
+            FINAL_TAG="$BASE_TAG"
+          else
+            FINAL_TAG="$BASE_TAG-$COUNT"
+          fi
+
+          echo "FINAL_TAG=$FINAL_TAG" >> $GITHUB_ENV
+
+      - name: Create and push Git tag
+        run: |
+          git config --local user.email "github-actions@example.com"
+          git config --local user.name "GitHub Actions"
+
+          git tag "$FINAL_TAG"
+          git push origin "$FINAL_TAG"
+
   build:
+    needs: publish
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/')
+
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
@@ -16,15 +65,10 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - uses: actions/cache@v4
-        with:
-          path: |
-            ~/.deno
-            ~/.cache/deno
-          key: ${{ runner.os }}-deno-${{ hashFiles('deno.lock') }}
-
       - name: Set up Deno
         uses: denoland/setup-deno@v2
+        with:
+          cache: true
 
       - name: Build
         run: deno task build

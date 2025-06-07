@@ -1,12 +1,12 @@
-import {OpenAPI} from '@maks11060/openapi'
-import {Hono} from 'npm:hono'
-import {cors} from 'npm:hono/cors'
+import { OpenAPI } from '@maks11060/openapi'
+import { Hono } from 'npm:hono'
+import { cors } from 'npm:hono/cors'
 
 export const serve = (doc: OpenAPI) => {
   const app = new Hono() //
     .use(cors())
     .get('/openapi.json', (c) => c.text(doc.toJSON(true), {headers: {'Content-Type': 'application/json'}}))
-    .get('/openapi.yml', (c) => c.text(doc.toYAML({lineWidth: 100})))
+    .get('/openapi.yaml', (c) => c.text(doc.toYAML({lineWidth: 100})))
 
   Deno.serve(app.fetch)
 
@@ -14,6 +14,8 @@ export const serve = (doc: OpenAPI) => {
     const oas = doc.toYAML()
     console.log(oas)
     console.log(`lines: %c${oas.split('\n').length}`, 'color:orange')
-    console.log('https://swagger-next.deno.dev/?url=http://localhost:8000/openapi.yml')
+    console.log('https://swagger-next.deno.dev/?url=http://localhost:8000/openapi.yaml')
+
+    // console.log(getPaths(doc))
   })
 }

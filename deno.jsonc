@@ -9,24 +9,24 @@
       ]
     },
     "client:danbooru": {
-      "command": "deno run -Aq npm:openapi-typescript ./gen/danbooru.openapi.yml -o ./example/danbooru.oas.ts",
+      "command": "deno run -Aq npm:openapi-typescript ./gen/danbooru.openapi.yaml -o ./example/danbooru.oas.ts",
       "dependencies": [
         "build"
       ],
     },
     "client:shikimori": {
-      "command": "deno run -Aq npm:openapi-typescript ./gen/shikimori.openapi.yml -o ./example/shikimori.oas.ts",
+      "command": "deno run -Aq npm:openapi-typescript ./gen/shikimori.openapi.yaml -o ./example/shikimori.oas.ts",
       "dependencies": [
         "build"
       ],
     },
   },
   "imports": {
-    "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.5",
+    "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.7",
     "@std/cli": "jsr:@std/cli@^1.0.19",
     "@std/fs": "jsr:@std/fs@^1.0.18",
     "@std/yaml": "jsr:@std/yaml@^1.0.7",
     "openapi-typescript": "npm:openapi-typescript@^7.8.0",
-    "zod": "npm:zod@^3.25.55"
+    "zod": "npm:zod@^3.25.56"
   }
 }
