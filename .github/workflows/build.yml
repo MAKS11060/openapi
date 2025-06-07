@@ -73,16 +73,14 @@ jobs:
             OUTPUT="$OUTPUT- [Open Swagger Editor ($FILENAME)](https://editor-next.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL})\n"
           done
 
-          OUTPUT="$OUTPUT\n"
-
-          echo -e "$OUTPUT" > release-body.md
-          echo "release_body=$(echo -e "$OUTPUT")" >> $GITHUB_ENV
+          echo -e "$OUTPUT\n" > ${{ github.workspace }}-RELEASE.md
 
       - name: Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: ${{ env.FINAL_TAG }}
-          body: ${{ env.release_body }}
+          # body: ${{ env.release_body }}
+          body_path: ${{ github.workspace }}-RELEASE.md
           generate_release_notes: true
           files: |
             gen/**.openapi.*
