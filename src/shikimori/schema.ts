@@ -125,49 +125,87 @@ export const screenshot = image.pick({
 })
 export const screenshots = z.array(screenshot)
 
-const ratesScoresStats = z.array(
-  z.object({
-    name: z.union([
-      z.literal(1),
-      z.literal(2),
-      z.literal(3),
-      z.literal(4),
-      z.literal(5),
-      z.literal(6),
-      z.literal(7),
-      z.literal(8),
-      z.literal(9),
-      z.literal(10),
-    ]),
-    value: z.int().positive(),
-  }).optional(),
-)
-/*
-  {
-      "name": "Запланировано",
-      "value": 20946
-    },
-    {
-      "name": "Просмотрено",
-      "value": 20375
-    },
-    {
-      "name": "Смотрю",
-      "value": 66169
-    },
-    {
-      "name": "Брошено",
-      "value": 12478
-    },
-    {
-      "name": "Отложено",
-      "value": 10402
-    }
-*/
+export const videoKind = z.enum([
+  'pv',
+  'character_trailer',
+  'cm',
+  'op',
+  'ed',
+  'op_ed_clip',
+  'clip',
+  'other',
+  'episode_preview',
+])
+export const videoHosting = z.enum([
+  'youtube',
+  'youtube_shorts',
+  'rutube',
+  'rutube_shorts',
+  'vk',
+  'ok',
+  'coub',
+  'vimeo',
+  'sibnet',
+  'yandex',
+  'streamable',
+  'smotret_anime',
+  'myvi',
+  'youmite',
+  'viuly',
+  'mediafile',
+])
+export const video = z.object({
+  id: ID,
+  url: z.string(),
+  image_url: z.string(),
+  player_url: z.string(),
+  name: z.string().nullable(),
+  kind: videoKind,
+  hosting: videoHosting,
+})
+export const videos = z.array(video)
+
+export const ratesScoresStats = z.object({
+  name: z.union([
+    z.literal(1),
+    z.literal(2),
+    z.literal(3),
+    z.literal(4),
+    z.literal(5),
+    z.literal(6),
+    z.literal(7),
+    z.literal(8),
+    z.literal(9),
+    z.literal(10),
+  ]),
+  value: z.int().positive(),
+}).optional().array()
+
 export const ratesStatusesStatsType_RU = z.enum(['Запланировано', 'Просмотрено', 'Смотрю', 'Брошено', 'Отложено'])
-export const ratesStatusesStats = z.array(
-  z.object({name: ratesStatusesStatsType_RU, value: z.int().positive()}).optional(),
-)
+export const ratesStatusesStats = z.object({
+  name: ratesStatusesStatsType_RU,
+  value: z.int().positive(),
+}).optional().array()
+
+export const studio = z
+  .object({
+    id: z.int().positive(),
+    name: z.string().describe('The name of the studio'),
+    filtered_name: z.string(),
+    real: z.boolean(),
+    image: z.string().nullable(),
+  })
+  .meta({
+    example: {
+      id: 2,
+      name: 'Kyoto Animation',
+      filtered_name: 'Kyoto',
+      real: true,
+      image: '/system/studios/original/2.png',
+    },
+  })
+
+export const studios = z.array(studio)
 
 export const anime = z.object({
   id: animeID,
@@ -196,15 +234,13 @@ export const anime = z.object({
   favoured: z.boolean().describe('Indicates whether the anime is favoured'),
   anons: z.boolean().describe('Indicates whether the anime is anons'),
   ongoing: z.boolean().describe('Indicates whether the anime is ongoing'),
-  thread_id: z.int().describe('The thread ID of the anime'),
-  topic_id: z.int().describe('The topic ID of the anime'),
-  myanimelist_id: z.int().describe('The MyAnimeList ID of the anime'),
-
+  thread_id: ID.describe('The thread ID of the anime'),
+  topic_id: ID.describe('The topic ID of the anime'),
+  myanimelist_id: ID.describe('The MyAnimeList ID of the anime'),
   rates_scores_stats: ratesScoresStats.describe('The rates scores stats of the anime'),
   rates_statuses_stats: ratesStatusesStats.describe('The rates statuses stats of the anime'),
   updated_at: z.iso.datetime().describe('The timestamp when the anime was last updated'),
   next_episode_at: z.iso.datetime().nullish().describe('The timestamp when the next episode will air'),
-
   fansubbers: z.array(z.string()).describe('The fansubbers of the anime'),
   fandubbers: z.array(z.string()).describe('The fandubbers of the anime'),
   licensors: z.array(z.string()).describe('The licensors of the anime'),
@@ -213,11 +249,11 @@ export const anime = z.object({
     name: z.string(),
     russian: z.string(),
     kind: z.enum(['genre']),
-    entry_type: z.enum(['anime', 'mange']), // TODO check enum
+    entry_type: z.literal('anime'),
   })).describe('The genres of the anime'),
-  studios: z.array(z.unknown()).describe('The studios of the anime'),
-  videos: z.array(z.unknown()).describe('The videos of the anime'),
-  screenshots: z.array(z.unknown()).describe('The screenshots of the anime'),
+  studios: studios.describe('The studios of the anime'),
+  videos: videos.describe('The videos of the anime'),
+  screenshots: screenshots.describe('The screenshots of the anime'),
   user_rate: z.number().nullish().describe('The user rate of the anime'),
 })
 export const animeShort = anime.pick({
@@ -452,26 +488,6 @@ export const genre = z.object({
 })
 export const genres = z.array(genre)
 
-export const studio = z
-  .object({
-    id: z.int().positive(),
-    name: z.string().describe('The name of the studio'),
-    filtered_name: z.string(),
-    real: z.boolean(),
-    image: z.string().nullable(),
-  })
-  .meta({
-    example: {
-      id: 2,
-      name: 'Kyoto Animation',
-      filtered_name: 'Kyoto',
-      real: true,
-      image: '/system/studios/original/2.png',
-    },
-  })
-
-export const studios = z.array(studio)
-
 //
 export const achievement = z.object({
   user_id: userID,
@@ -483,44 +499,3 @@ export const achievement = z.object({
   updated_at: z.iso.datetime(),
 })
 export const achievements = z.array(achievement)
-
-//
-export const videoKind = z.enum([
-  'pv',
-  'character_trailer',
-  'cm',
-  'op',
-  'ed',
-  'op_ed_clip',
-  'clip',
-  'other',
-  'episode_preview',
-])
-export const videoHosting = z.enum([
-  'youtube',
-  'youtube_shorts',
-  'rutube',
-  'rutube_shorts',
-  'vk',
-  'ok',
-  'coub',
-  'vimeo',
-  'sibnet',
-  'yandex',
-  'streamable',
-  'smotret_anime',
-  'myvi',
-  'youmite',
-  'viuly',
-  'mediafile',
-])
-export const video = z.object({
-  id: ID,
-  url: z.string(),
-  image_url: z.string(),
-  player_url: z.string(),
-  name: z.string().nullable(),
-  kind: videoKind,
-  hosting: videoHosting,
-})
-export const videos = z.array(video)
