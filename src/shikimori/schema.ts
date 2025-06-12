@@ -1,4 +1,4 @@
-import {z} from 'zod/v4'
+import { z } from 'zod/v4'
 
 //////////////////////////////// Error
 export const UnauthorizedSchema = z.object({
@@ -125,6 +125,50 @@ export const screenshot = image.pick({
 })
 export const screenshots = z.array(screenshot)
 
+const ratesScoresStats = z.array(
+  z.object({
+    name: z.union([
+      z.literal(1),
+      z.literal(2),
+      z.literal(3),
+      z.literal(4),
+      z.literal(5),
+      z.literal(6),
+      z.literal(7),
+      z.literal(8),
+      z.literal(9),
+      z.literal(10),
+    ]),
+    value: z.int().positive(),
+  }).optional(),
+)
+/*
+  {
+      "name": "Запланировано",
+      "value": 20946
+    },
+    {
+      "name": "Просмотрено",
+      "value": 20375
+    },
+    {
+      "name": "Смотрю",
+      "value": 66169
+    },
+    {
+      "name": "Брошено",
+      "value": 12478
+    },
+    {
+      "name": "Отложено",
+      "value": 10402
+    }
+*/
+export const ratesStatusesStatsType_RU = z.enum(['Запланировано', 'Просмотрено', 'Смотрю', 'Брошено', 'Отложено'])
+export const ratesStatusesStats = z.array(
+  z.object({name: ratesStatusesStatsType_RU, value: z.int().positive()}).optional(),
+)
+
 export const anime = z.object({
   id: animeID,
   name: z.string().describe('The name of the anime'),
@@ -134,17 +178,17 @@ export const anime = z.object({
   kind: z.string().describe('The kind of the anime (e.g., tv)'),
   score: z.string().describe('The score of the anime'),
   status: z.string().describe('The status of the anime (e.g., released)'),
-  episodes: z.int().nonnegative().describe('The total number of episodes'),
-  episodes_aired: z.int().nonnegative().describe('The number of episodes aired'),
-  aired_on: z.iso.datetime().describe('The date when the anime aired'),
-  released_on: z.iso.datetime().nullish().describe('The date when the anime was released'),
+  episodes: z.int().positive().describe('The total number of episodes'),
+  episodes_aired: z.int().positive().describe('The number of episodes aired'),
+  aired_on: z.iso.date().describe('The date when the anime aired'),
+  released_on: z.iso.date().nullish().describe('The date when the anime was released'),
   // full
   rating: z.string().describe('The rating of the anime'),
   english: z.array(z.string().nullish()).describe('The English names of the anime'),
   japanese: z.array(z.string().nullish()).describe('The Japanese names of the anime'),
   synonyms: z.array(z.string()).describe('The synonyms of the anime'),
   license_name_ru: z.string().nullish().describe('The Russian license name of the anime'),
-  duration: z.int().nonnegative().describe('The duration of the anime'),
+  duration: z.int().positive().describe('The duration of the anime'),
   description: z.string().nullish().describe('The description of the anime'),
   description_html: z.string().describe('The HTML description of the anime'),
   description_source: z.string().nullish().describe('The source of the description'),
@@ -155,14 +199,22 @@ export const anime = z.object({
   thread_id: z.int().describe('The thread ID of the anime'),
   topic_id: z.int().describe('The topic ID of the anime'),
   myanimelist_id: z.int().describe('The MyAnimeList ID of the anime'),
-  rates_scores_stats: z.array(z.unknown()).describe('The rates scores stats of the anime'),
-  rates_statuses_stats: z.array(z.unknown()).describe('The rates statuses stats of the anime'),
+
+  rates_scores_stats: ratesScoresStats.describe('The rates scores stats of the anime'),
+  rates_statuses_stats: ratesStatusesStats.describe('The rates statuses stats of the anime'),
   updated_at: z.iso.datetime().describe('The timestamp when the anime was last updated'),
   next_episode_at: z.iso.datetime().nullish().describe('The timestamp when the next episode will air'),
-  fansubbers: z.array(z.unknown()).describe('The fansubbers of the anime'),
-  fandubbers: z.array(z.unknown()).describe('The fandubbers of the anime'),
-  licensors: z.array(z.unknown()).describe('The licensors of the anime'),
-  genres: z.array(z.unknown()).describe('The genres of the anime'),
+
+  fansubbers: z.array(z.string()).describe('The fansubbers of the anime'),
+  fandubbers: z.array(z.string()).describe('The fandubbers of the anime'),
+  licensors: z.array(z.string()).describe('The licensors of the anime'),
+  genres: z.array(z.object({
+    id: ID,
+    name: z.string(),
+    russian: z.string(),
+    kind: z.enum(['genre']),
+    entry_type: z.enum(['anime', 'mange']), // TODO check enum
+  })).describe('The genres of the anime'),
   studios: z.array(z.unknown()).describe('The studios of the anime'),
   videos: z.array(z.unknown()).describe('The videos of the anime'),
   screenshots: z.array(z.unknown()).describe('The screenshots of the anime'),
@@ -211,13 +263,13 @@ export const characterFull = z.object({
     animeShort.extend({
       roles: z.array(z.string()),
       role: z.string(),
-    })
+    }),
   ),
   mangas: z.array(
     animeShort.extend({
       roles: z.array(z.string()),
       role: z.string(),
-    })
+    }),
   ),
 })
 
