@@ -23,11 +23,11 @@
   },
   "imports": {
     "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.7",
-    "@std/cli": "jsr:@std/cli@^1.0.19",
+    "@std/cli": "jsr:@std/cli@^1.0.20",
     "@std/fs": "jsr:@std/fs@^1.0.18",
-    "@std/yaml": "jsr:@std/yaml@^1.0.7",
+    "@std/yaml": "jsr:@std/yaml@^1.0.8",
     "openapi-typescript": "npm:openapi-typescript@^7.8.0",
-    "zod": "npm:zod@^3.25.56"
+    "zod": "npm:zod@^3.25.63"
   },
   "fmt": {
     "exclude": [
