@@ -1,5 +1,4 @@
-import {z} from 'zod/v4'
-
+import { z } from 'zod/v4'
 
 //////////////// Error
 export const BadRequest = z.any().describe('The given parameters could not be parsed')

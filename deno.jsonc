@@ -5,21 +5,21 @@
     "build:client": {
       "dependencies": [
         "client:danbooru",
-        "client:shikimori",
+        "client:shikimori"
       ]
     },
     "client:danbooru": {
       "command": "deno run -Aq npm:openapi-typescript ./gen/danbooru.openapi.yaml -o ./example/danbooru.oas.ts",
       "dependencies": [
         "build"
-      ],
+      ]
     },
     "client:shikimori": {
       "command": "deno run -Aq npm:openapi-typescript ./gen/shikimori.openapi.yaml -o ./example/shikimori.oas.ts",
       "dependencies": [
         "build"
-      ],
-    },
+      ]
+    }
   },
   "imports": {
     "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.7",
@@ -30,11 +30,15 @@
     "zod": "npm:zod@^3.25.56"
   },
   "fmt": {
-    "exclude": ["gen", "**/*.oas.ts"],
+    "exclude": [
+      "gen",
+      "**/*.oas.ts"
+    ],
+    "newLineKind": "system",
     "lineWidth": 120,
     "quoteProps": "asNeeded",
     "semiColons": false,
     "singleQuote": true,
-    "spaceSurroundingProperties": false,
-  },
+    "spaceSurroundingProperties": false
+  }
 }

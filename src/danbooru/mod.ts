@@ -1,5 +1,5 @@
 import z from 'zod/v4'
-import {doc} from './openapi.ts'
+import { doc } from './openapi.ts'
 import {
   autocomplete,
   forbidden,
@@ -17,7 +17,7 @@ import {
   users,
 } from './schema.ts'
 
-export {doc} from './openapi.ts'
+export { doc } from './openapi.ts'
 
 //////////////////////////////// Schemas
 // doc.addSchema()

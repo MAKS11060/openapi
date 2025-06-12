@@ -1,6 +1,6 @@
-import {createDoc} from '@maks11060/openapi'
-import {zodPlugin} from '@maks11060/openapi/zod'
-import {currentDate} from '../helper.ts'
+import { createDoc } from '@maks11060/openapi'
+import { zodPlugin } from '@maks11060/openapi/zod'
+import { currentDate } from '../helper.ts'
 
 const README = Deno.readTextFileSync('./src/shikimori/README.md').replaceAll('\r\n', '\n')
 

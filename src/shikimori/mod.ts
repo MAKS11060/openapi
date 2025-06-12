@@ -1,5 +1,5 @@
 import z from 'zod/v4'
-import {doc, oauth2} from './openapi.ts'
+import { doc, oauth2 } from './openapi.ts'
 import {
   achievements,
   anime,
@@ -34,7 +34,7 @@ import {
   videos,
 } from './schema.ts'
 
-export {doc} from './openapi.ts'
+export { doc } from './openapi.ts'
 
 //////////////////////////////// Schemas
 // doc.addSchema()
@@ -345,7 +345,7 @@ doc.addPath('/api/constants/anime').get((t) => {
       z.object({
         kind: z.array(z.string()),
         status: z.array(z.string()),
-      })
+      }),
     )
   })
 })
@@ -359,7 +359,7 @@ doc.addPath('/api/constants/manga').get((t) => {
       z.object({
         kind: z.array(z.string()),
         status: z.array(z.string()),
-      })
+      }),
     )
   })
 })
@@ -372,7 +372,7 @@ doc.addPath('/api/constants/user_rate').get((t) => {
       'application/json',
       z.object({
         status: z.array(z.string()),
-      })
+      }),
     )
   })
 })
@@ -387,7 +387,7 @@ doc.addPath('/api/constants/club').get((t) => {
         join_policy: z.array(z.string()),
         comment_policy: z.array(z.string()),
         image_upload_policy: z.array(z.string()),
-      })
+      }),
     )
   })
 })
@@ -402,8 +402,8 @@ doc.addPath('/api/constants/smileys').get((t) => {
         z.object({
           bbcode: z.string(),
           path: z.string(),
-        })
-      )
+        }),
+      ),
     )
   })
 })
@@ -651,7 +651,7 @@ doc
           kind: true,
           name: true,
           url: true,
-        })
+        }),
       )
     })
     t.response(200, (t) => {
