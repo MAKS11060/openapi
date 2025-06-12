@@ -40,6 +40,7 @@ jobs:
           fi
 
           echo "FINAL_TAG=$FINAL_TAG" >> $GITHUB_ENV
+          echo "$FINAL_TAG"
 
       - name: Create and push Git tag
         run: |
