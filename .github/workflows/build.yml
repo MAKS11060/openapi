@@ -27,13 +27,15 @@ jobs:
         run: |
           CURRENT_DATE=$(date +"%Y.%m.%d")
           BASE_TAG="${CURRENT_DATE}"
-          COUNT=0
+          COUNT=1
+
+          git fetch --tags
 
           while git rev-parse "$BASE_TAG-$COUNT" >/dev/null 2>&1; do
             COUNT=$((COUNT + 1))
           done
 
-          if [ $COUNT -eq 0 ] && ! git rev-parse "$BASE_TAG" >/dev/null 2>&1; then
+          if [ $COUNT -eq 1 ] && ! git rev-parse "$BASE_TAG" >/dev/null 2>&1; then
             FINAL_TAG="$BASE_TAG"
           else
             FINAL_TAG="$BASE_TAG-$COUNT"
