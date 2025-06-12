@@ -63,7 +63,9 @@ jobs:
 
           echo -e "$OUTPUT\n" > ${{ github.workspace }}-RELEASE.md
           echo "${{ github.workspace }}-RELEASE.md\n"
-          echo "$OUTPUT\n"
+          echo -e "$OUTPUT\n"
+
+          cat ${{ github.workspace }}-RELEASE.md
 
       - name: Release
         uses: softprops/action-gh-release@v2
