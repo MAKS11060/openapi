@@ -47,7 +47,7 @@ jobs:
           git tag "$FINAL_TAG"
           git push origin "$FINAL_TAG"
 
-      - name: Generate release body
+      - name: Generate RELEASE.md
         id: generate_release_body
         run: |
           set -eu
@@ -59,13 +59,10 @@ jobs:
             FILENAME=$(basename "$FILE")
             FILE_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${FINAL_TAG}/${FILENAME}"
             SWAGGER_URL="https://editor-next.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL}"
-            OUTPUT="$OUTPUT- [Swagger Editor ($FILENAME)](SWAGGER_URL)\n"
+            OUTPUT="$OUTPUT- [Swagger Editor ($FILENAME)]($SWAGGER_URL)\n"
           done
 
-          echo -e "$OUTPUT\n" > ${{ github.workspace }}-RELEASE.md
-          echo "${{ github.workspace }}-RELEASE.md\n"
-          echo -e "$OUTPUT\n"
-
+          echo -e "$OUTPUT" > ${{ github.workspace }}-RELEASE.md
           cat ${{ github.workspace }}-RELEASE.md
 
       - name: Release
