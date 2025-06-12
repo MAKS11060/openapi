@@ -23,20 +23,11 @@ jobs:
       - name: Build
         run: deno task build
 
-      - name: Fetch all tags
-        run: git fetch --tags
-
-      - name: Get current date
-        id: date
+      - name: Calculate tag version
         run: |
           CURRENT_DATE=$(date +"%Y.%m.%d")
-          echo "CURRENT_DATE=$CURRENT_DATE" >> $GITHUB_ENV
-
-      - name: Calculate tag version
-        id: tag
-        run: |
           BASE_TAG="${CURRENT_DATE}"
-          COUNT=1
+          COUNT=0
 
           while git rev-parse "$BASE_TAG-$COUNT" >/dev/null 2>&1; do
             COUNT=$((COUNT + 1))
@@ -71,6 +62,8 @@ jobs:
           done
 
           echo -e "$OUTPUT\n" > ${{ github.workspace }}-RELEASE.md
+          echo "${{ github.workspace }}-RELEASE.md\n"
+          echo "$OUTPUT\n"
 
       - name: Release
         uses: softprops/action-gh-release@v2
