@@ -20,21 +20,22 @@ import {
 export { doc } from './openapi.ts'
 
 //////////////////////////////// Schemas
-// doc.addSchema()
-doc.addSchema('autocomplete', autocomplete)
-doc.addSchema('forbidden', forbidden)
-doc.addSchema('limit', limit)
-doc.addSchema('notFound', notFound)
-doc.addSchema('only', only)
-doc.addSchema('page', page)
-doc.addSchema('post', post)
-doc.addSchema('postID', postID)
-doc.addSchema('posts', posts)
-doc.addSchema('postsLimit', postsLimit)
-doc.addSchema('unauthorized', unauthorized)
-doc.addSchema('user', user)
-doc.addSchema('users', users)
-doc.addSchema('userID', userID)
+doc.addSchemas({
+  autocomplete,
+  forbidden,
+  limit,
+  notFound,
+  only,
+  page,
+  post,
+  postID,
+  posts,
+  postsLimit,
+  unauthorized,
+  user,
+  userID,
+  users,
+})
 
 //////////////////////////////// Responses
 const BadRequest = doc.addResponse('BadRequest', (t) => {

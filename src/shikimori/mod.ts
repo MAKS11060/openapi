@@ -37,38 +37,39 @@ import {
 export { doc } from './openapi.ts'
 
 //////////////////////////////// Schemas
-// doc.addSchema()
-doc.addSchema('achievements', achievements)
-doc.addSchema('anime', anime)
-doc.addSchema('animeID', animeID)
-doc.addSchema('animeList', animeList)
-doc.addSchema('animeSearchQuery', animeSearchQuery)
-doc.addSchema('character', character)
-doc.addSchema('characterFull', characterFull)
-doc.addSchema('externalLinks', externalLinks)
-doc.addSchema('franchise', franchise)
-doc.addSchema('genres', genres)
-doc.addSchema('ID', ID)
-doc.addSchema('relatedList', relatedList)
-doc.addSchema('roles', roles)
-doc.addSchema('screenshots', screenshots)
-doc.addSchema('similar', similar)
-doc.addSchema('studios', studios)
-doc.addSchema('topics', topics)
-doc.addSchema('topicsQuery', topicsQuery)
-doc.addSchema('UnauthorizedSchema', UnauthorizedSchema)
-doc.addSchema('user', user)
-doc.addSchema('userID', userID)
-doc.addSchema('userInfo', userInfo)
-doc.addSchema('userRates', userRates)
-doc.addSchema('userRatesCreateParams', userRatesCreateParams)
-doc.addSchema('userRatesList', userRatesList)
-doc.addSchema('userRatesQuery', userRatesQuery)
-doc.addSchema('userRatesUpdateParams', userRatesUpdateParams)
-doc.addSchema('users', users)
-doc.addSchema('usersSearchQuery', usersSearchQuery)
-doc.addSchema('video', video)
-doc.addSchema('videos', videos)
+doc.addSchemas({
+  achievements,
+  anime,
+  animeID,
+  animeList,
+  animeSearchQuery,
+  character,
+  characterFull,
+  externalLinks,
+  franchise,
+  genres,
+  ID,
+  relatedList,
+  roles,
+  screenshots,
+  similar,
+  studios,
+  topics,
+  topicsQuery,
+  UnauthorizedSchema,
+  user,
+  userID,
+  userInfo,
+  userRates,
+  userRatesCreateParams,
+  userRatesList,
+  userRatesQuery,
+  userRatesUpdateParams,
+  users,
+  usersSearchQuery,
+  video,
+  videos,
+})
 
 //////////////////////////////// Responses
 const BadRequestResponse = doc.addResponse('BadRequest', (t) => {

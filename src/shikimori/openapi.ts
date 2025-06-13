@@ -1,6 +1,6 @@
 import { createDoc } from '@maks11060/openapi'
 import { zodPlugin } from '@maks11060/openapi/zod'
-import { currentDate } from '../helper.ts'
+import { format } from '@std/datetime/format'
 
 const README = Deno.readTextFileSync('./src/shikimori/README.md').replaceAll('\r\n', '\n')
 
@@ -10,8 +10,7 @@ export const doc = createDoc({
   },
   info: {
     title: 'Shikimori API',
-    // version: '0.0.5',
-    version: currentDate(),
+    version: format(new Date(), 'yyyy.MM.dd'),
     description: README,
   },
   externalDocs: {

@@ -1,7 +1,9 @@
 {
   "lock": true,
   "tasks": {
+    "dev": "deno run -A scripts/dev.ts",
     "build": "deno run -Aq scripts/build.ts",
+    "build:check": "deno run -Aq scripts/build.ts -d",
     "build:client": {
       "dependencies": [
         "client:danbooru",
@@ -22,12 +24,13 @@
     }
   },
   "imports": {
-    "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.7",
+    "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.8",
     "@std/cli": "jsr:@std/cli@^1.0.20",
+    "@std/datetime": "jsr:@std/datetime@^0.225.5",
     "@std/fs": "jsr:@std/fs@^1.0.18",
     "@std/yaml": "jsr:@std/yaml@^1.0.8",
     "openapi-typescript": "npm:openapi-typescript@^7.8.0",
-    "zod": "npm:zod@^3.25.63"
+    "zod": "npm:zod@^3.25.64"
   },
   "fmt": {
     "exclude": [
