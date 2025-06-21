@@ -18,10 +18,9 @@ export const doc = createDoc({
     description: 'Official Shikimori API',
   },
   tags: [
-    //
     {name: 'anime'},
-    // {name: 'manga'},
-    // {name: 'ranobe'},
+    {name: 'manga'},
+    {name: 'ranobe'},
 
     {name: 'v1_user'},
     {name: 'v2_user'},
@@ -34,11 +33,7 @@ export const doc = createDoc({
     {name: 'constants'},
     {name: 'genres'},
     {name: 'studios'},
-
     {name: 'videos'},
-
-    {name: 'manga', description: 'WIP'},
-    {name: 'ranobe', description: 'WIP'},
   ],
 })
 

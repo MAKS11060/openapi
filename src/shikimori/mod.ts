@@ -12,10 +12,15 @@ import {
   franchise,
   genres,
   ID,
+  manga,
+  mangaList,
+  mangaSearchQuery,
+  related,
   relatedList,
   roles,
   screenshots,
-  similar,
+  similarAnime,
+  similarManga,
   studios,
   topics,
   topicsQuery,
@@ -36,7 +41,6 @@ import {
 
 export { doc } from './openapi.ts'
 
-//////////////////////////////// Schemas
 doc.addSchemas({
   achievements,
   anime,
@@ -49,10 +53,15 @@ doc.addSchemas({
   franchise,
   genres,
   ID,
+  manga,
+  mangaList,
+  mangaSearchQuery,
+  related,
   relatedList,
   roles,
   screenshots,
-  similar,
+  similarAnime,
+  similarManga,
   studios,
   topics,
   topicsQuery,
@@ -72,10 +81,10 @@ doc.addSchemas({
 })
 
 //////////////////////////////// Responses
-const BadRequestResponse = doc.addResponse('BadRequest', (t) => {
-  t.describe('The given parameters could not be parsed')
-  t.content('application/json', z.any())
-})
+// const BadRequestResponse = doc.addResponse('BadRequest', (t) => {
+//   t.describe('The given parameters could not be parsed')
+//   t.content('application/json', z.any())
+// })
 
 const UnauthorizedResponse = doc.addResponse('Unauthorized', (t) => {
   t.describe('Authentication failed')
@@ -89,10 +98,10 @@ const UnauthorizedResponse = doc.addResponse('Unauthorized', (t) => {
     })
 })
 
-const ForbiddenResponse = doc.addResponse('Forbidden', (t) => {
-  t.describe('Access denied')
-  t.content('application/json', z.object())
-})
+// const ForbiddenResponse = doc.addResponse('Forbidden', (t) => {
+//   t.describe('Access denied')
+//   t.content('application/json', z.object())
+// })
 
 const NotFoundResponse = doc.addResponse('NotFound', (t) => {
   t.describe('Not Found')
@@ -171,7 +180,7 @@ doc.addPath('/api/animes/{id}/similar', {id: (t) => t.schema(animeID)}).get((t) 
   t.operationId('get_anime_similar')
 
   t.response(200, (t) => {
-    t.content('application/json', similar)
+    t.content('application/json', similarAnime)
   })
   t.response(401, UnauthorizedResponse)
 })
@@ -229,77 +238,167 @@ doc.addPath('/api/animes/{id}/topics', {id: (t) => t.schema(animeID)}).get((t) =
 //////////////// Manga
 doc.addPath('/api/mangas').get((t) => {
   t.tag('manga')
+  t.describe('list manga')
   t.operationId('list_manga')
+
+  t.parameter('query', 'page', (t) => t.schema(mangaSearchQuery.shape.page))
+  t.parameter('query', 'limit', (t) => t.schema(mangaSearchQuery.shape.limit))
+  t.parameter('query', 'order', (t) => t.schema(mangaSearchQuery.shape.order))
+  t.parameter('query', 'kind', (t) => t.schema(mangaSearchQuery.shape.kind))
+  t.parameter('query', 'status', (t) => t.schema(mangaSearchQuery.shape.status))
+  t.parameter('query', 'season', (t) => t.schema(mangaSearchQuery.shape.season))
+  t.parameter('query', 'score', (t) => t.schema(mangaSearchQuery.shape.score))
+  t.parameter('query', 'genre', (t) => t.schema(mangaSearchQuery.shape.genre))
+  t.parameter('query', 'genre_v2', (t) => t.schema(mangaSearchQuery.shape.genre_v2))
+  t.parameter('query', 'publisher', (t) => t.schema(mangaSearchQuery.shape.publisher))
+  t.parameter('query', 'franchise', (t) => t.schema(mangaSearchQuery.shape.franchise))
+  t.parameter('query', 'censored', (t) => t.schema(mangaSearchQuery.shape.censored))
+  t.parameter('query', 'mylist', (t) => t.schema(mangaSearchQuery.shape.mylist))
+  t.parameter('query', 'ids', (t) => t.schema(mangaSearchQuery.shape.ids))
+  t.parameter('query', 'exclude_ids', (t) => t.schema(mangaSearchQuery.shape.exclude_ids))
+  t.parameter('query', 'search', (t) => t.schema(mangaSearchQuery.shape.search))
+
+  t.response(200, (t) => t.content('application/json', mangaList))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
+  t.describe('Show a manga')
   t.operationId('get_manga')
+
+  t.response(200, (t) => t.content('application/json', manga))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}/roles', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}/roles', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
   t.operationId('get_manga_roles')
+
+  t.response(200, (t) => t.content('application/json', roles))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}/similar', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}/similar', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
   t.operationId('get_manga_similar')
+
+  t.response(200, (t) => t.content('application/json', similarManga))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}/related', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}/related', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
   t.operationId('get_manga_related')
+
+  t.response(200, (t) => t.content('application/json', related))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}/screenshots', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}/screenshots', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
   t.operationId('get_manga_screenshots')
+
+  t.response(200, (t) => t.content('application/json', screenshots))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}/franchise', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}/franchise', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
   t.operationId('get_manga_franchise')
+
+  t.response(200, (t) => t.content('application/json', franchise))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}/external_links', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}/external_links', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
   t.operationId('get_manga_external_links')
+
+  t.response(200, (t) => t.content('application/json', externalLinks))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/mangas/{id}/topics', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/mangas/{id}/topics', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('manga')
   t.operationId('get_manga_topics')
+
+  t.response(200, (t) => t.content('application/json', topics))
+  t.response(401, UnauthorizedResponse)
 })
 
 //////////////// Ranobe
 doc.addPath('/api/ranobe').get((t) => {
   t.tag('ranobe')
+  t.describe('List ranobe')
   t.operationId('list_ranobe')
+
+  t.parameter('query', 'page', (t) => t.schema(mangaSearchQuery.shape.page))
+  t.parameter('query', 'limit', (t) => t.schema(mangaSearchQuery.shape.limit))
+  t.parameter('query', 'order', (t) => t.schema(mangaSearchQuery.shape.order))
+  t.parameter('query', 'status', (t) => t.schema(mangaSearchQuery.shape.status))
+  t.parameter('query', 'season', (t) => t.schema(mangaSearchQuery.shape.season))
+  t.parameter('query', 'score', (t) => t.schema(mangaSearchQuery.shape.score))
+  t.parameter('query', 'genre', (t) => t.schema(mangaSearchQuery.shape.genre))
+  t.parameter('query', 'publisher', (t) => t.schema(mangaSearchQuery.shape.publisher))
+  t.parameter('query', 'franchise', (t) => t.schema(mangaSearchQuery.shape.franchise))
+  t.parameter('query', 'censored', (t) => t.schema(mangaSearchQuery.shape.censored))
+  t.parameter('query', 'mylist', (t) => t.schema(mangaSearchQuery.shape.mylist))
+  t.parameter('query', 'ids', (t) => t.schema(mangaSearchQuery.shape.ids))
+  t.parameter('query', 'exclude_ids', (t) => t.schema(mangaSearchQuery.shape.exclude_ids))
+  t.parameter('query', 'search', (t) => t.schema(mangaSearchQuery.shape.search))
+
+  t.response(200, (t) => t.content('application/json', mangaList))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
+  t.describe('Show a ranobe')
   t.operationId('get_ranobe')
+
+  t.response(200, (t) => t.content('application/json', manga))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}/roles', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}/roles', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
   t.operationId('get_ranobe_roles')
+
+  t.response(200, (t) => t.content('application/json', roles))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}/similar', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}/similar', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
   t.operationId('get_ranobe_similar')
+
+  t.response(200, (t) => t.content('application/json', similarManga))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}/related', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}/related', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
   t.operationId('get_ranobe_related')
+
+  t.response(200, (t) => t.content('application/json', related))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}/screenshots', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}/screenshots', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
   t.operationId('get_ranobe_screenshots')
+
+  t.response(200, (t) => t.content('application/json', screenshots))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}/franchise', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}/franchise', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
   t.operationId('get_ranobe_franchise')
+
+  t.response(200, (t) => t.content('application/json', franchise))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}/external_links', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}/external_links', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
   t.operationId('get_ranobe_external_links')
+
+  t.response(200, (t) => t.content('application/json', externalLinks))
+  t.response(401, UnauthorizedResponse)
 })
-doc.addPath('/api/ranobe/{id}/topics', {id: (t) => t.schema(animeID)}).get((t) => {
+doc.addPath('/api/ranobe/{id}/topics', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('ranobe')
   t.operationId('get_ranobe_topics')
+
+  t.response(200, (t) => t.content('application/json', topics))
+  t.response(401, UnauthorizedResponse)
 })
 
 //////////////// Characters
@@ -673,6 +772,3 @@ doc
 
     t.response(200, (t) => {})
   })
-
-//////////////// WIP
-// doc.addPath('/api/stats/active_users')
