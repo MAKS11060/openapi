@@ -191,6 +191,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description list manga */
         get: operations["list_manga"];
         put?: never;
         post?: never;
@@ -205,10 +206,11 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
+        /** @description Show a manga */
         get: operations["get_manga"];
         put?: never;
         post?: never;
@@ -223,7 +225,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -241,7 +243,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -259,7 +261,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -277,7 +279,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -295,7 +297,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -313,7 +315,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -331,7 +333,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -351,6 +353,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
+        /** @description List ranobe */
         get: operations["list_ranobe"];
         put?: never;
         post?: never;
@@ -365,10 +368,11 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
+        /** @description Show a ranobe */
         get: operations["get_ranobe"];
         put?: never;
         post?: never;
@@ -383,7 +387,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -401,7 +405,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -419,7 +423,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -437,7 +441,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -455,7 +459,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -473,7 +477,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -491,7 +495,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -903,99 +907,226 @@ export interface components {
         }[];
         anime: {
             id: components["schemas"]["animeID"];
+            /** @description The name of the anime */
             name: string;
+            /** @description The Russian name of the anime */
             russian: string;
+            /** @description The image details of the anime */
             image: {
+                /** @description The URL of the original image */
                 original: string;
+                /** @description The URL of the preview image */
                 preview: string;
+                /** @description The URL of the 96x96 image */
                 x96: string;
+                /** @description The URL of the 48x48 image */
                 x48: string;
             };
+            /** @description The URL of the anime */
             url: string;
-            kind: string;
+            /**
+             * @description The kind of the anime
+             * @enum {string}
+             */
+            kind: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm";
+            /** @description The score of the anime */
             score: string;
-            status: string;
+            /**
+             * @description The status of the anime
+             * @enum {string}
+             */
+            status: "anons" | "ongoing" | "released";
+            /** @description The total number of episodes */
             episodes: number;
+            /** @description The number of episodes aired */
             episodes_aired: number;
-            /** Format: date-time */
+            /**
+             * Format: date
+             * @description The date when the anime aired
+             */
             aired_on: string;
+            /** @description The date when the anime was released */
             released_on?: string | null;
+            /** @description The rating of the anime */
             rating: string;
+            /** @description The English names of the anime */
             english: (string | null)[];
+            /** @description The Japanese names of the anime */
             japanese: (string | null)[];
+            /** @description The synonyms of the anime */
             synonyms: string[];
+            /** @description The Russian license name of the anime */
             license_name_ru?: string | null;
+            /** @description The duration of the anime */
             duration: number;
+            /** @description The description of the anime */
             description?: string | null;
+            /** @description The HTML description of the anime */
             description_html: string;
+            /** @description The source of the description */
             description_source?: string | null;
+            /** @description The franchise of the anime */
             franchise?: string | null;
+            /** @description Indicates whether the anime is favoured */
             favoured: boolean;
+            /** @description Indicates whether the anime is anons */
             anons: boolean;
+            /** @description Indicates whether the anime is ongoing */
             ongoing: boolean;
-            thread_id: number;
-            topic_id: number;
-            myanimelist_id: number;
-            rates_scores_stats: unknown[];
-            rates_statuses_stats: unknown[];
-            /** Format: date-time */
+            /** @description The thread ID of the anime */
+            thread_id: components["schemas"]["ID"];
+            /** @description The topic ID of the anime */
+            topic_id: components["schemas"]["ID"];
+            /** @description The MyAnimeList ID of the anime */
+            myanimelist_id: components["schemas"]["ID"];
+            /** @description The rates scores stats of the anime */
+            rates_scores_stats: {
+                name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+                value: number;
+            }[];
+            /** @description The rates statuses stats of the anime */
+            rates_statuses_stats: {
+                /** @enum {string} */
+                name: "Запланировано" | "Просмотрено" | "Смотрю" | "Брошено" | "Отложено";
+                value: number;
+            }[];
+            /**
+             * Format: date-time
+             * @description The timestamp when the anime was last updated
+             */
             updated_at: string;
+            /** @description The timestamp when the next episode will air */
             next_episode_at?: string | null;
-            fansubbers: unknown[];
-            fandubbers: unknown[];
-            licensors: unknown[];
-            genres: unknown[];
-            studios: unknown[];
-            videos: unknown[];
-            screenshots: unknown[];
+            /** @description The fansubbers of the anime */
+            fansubbers: string[];
+            /** @description The fandubbers of the anime */
+            fandubbers: string[];
+            /** @description The licensors of the anime */
+            licensors: string[];
+            /** @description The genres of the anime */
+            genres: {
+                id: components["schemas"]["ID"];
+                name: string;
+                russian: string;
+                /** @constant */
+                kind: "genre";
+                /** @constant */
+                entry_type: "Anime";
+            }[];
+            /** @description The studios of the anime */
+            studios: components["schemas"]["studios"];
+            /** @description The videos of the anime */
+            videos: components["schemas"]["videos"];
+            /** @description The screenshots of the anime */
+            screenshots: components["schemas"]["screenshots"];
+            /** @description The user rate of the anime */
             user_rate?: number | null;
         };
+        /**
+         * @description The ID of the anime
+         * @example 21
+         */
         animeID: number;
         animeList: {
             id: components["schemas"]["animeID"];
+            /** @description The name of the anime */
             name: string;
+            /** @description The Russian name of the anime */
             russian: string;
+            /** @description The image details of the anime */
             image: {
+                /** @description The URL of the original image */
                 original: string;
+                /** @description The URL of the preview image */
                 preview: string;
+                /** @description The URL of the 96x96 image */
                 x96: string;
+                /** @description The URL of the 48x48 image */
                 x48: string;
             };
+            /** @description The URL of the anime */
             url: string;
-            kind: string;
+            /**
+             * @description The kind of the anime
+             * @enum {string}
+             */
+            kind: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm";
+            /** @description The score of the anime */
             score: string;
-            status: string;
+            /**
+             * @description The status of the anime
+             * @enum {string}
+             */
+            status: "anons" | "ongoing" | "released";
+            /** @description The total number of episodes */
             episodes: number;
+            /** @description The number of episodes aired */
             episodes_aired: number;
-            /** Format: date-time */
+            /**
+             * Format: date
+             * @description The date when the anime aired
+             */
             aired_on: string;
+            /** @description The date when the anime was released */
             released_on?: string | null;
         }[];
         animeSearchQuery: {
+            /** @description The page number */
             page?: number;
+            /** @description The limit of results per page */
             limit?: number;
-            /** @enum {string} */
+            /**
+             * @description The order of the results
+             * @enum {string}
+             */
             order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "episodes" | "status" | "random" | "created_at" | "created_at_desc";
-            /** @enum {string} */
+            /**
+             * @description The kind of the anime
+             * @enum {string}
+             */
             kind?: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48";
-            /** @enum {string} */
+            /**
+             * @description The status of the anime
+             * @enum {string}
+             */
             status?: "anons" | "ongoing" | "released";
+            /** @description The season of the anime */
             season?: string;
+            /** @description The minimal anime score, must be a number */
             score?: number;
-            /** @enum {string} */
+            /**
+             * @description The duration of the anime
+             * @enum {string}
+             */
             duration?: "S" | "D" | "F";
-            /** @enum {string} */
+            /**
+             * @description The rating of the anime
+             * @enum {string}
+             */
             rating?: "none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx";
+            /** @description List of genre ids separated by comma */
             genre?: string;
+            /** @description List of genre v2 ids separated by comma */
             genre_v2?: string;
+            /** @description List of studio ids separated by comma */
             studio?: string;
+            /** @description List of franchises separated by comma */
             franchise?: string;
-            /** @enum {string} */
+            /**
+             * @description Set to false to allow hentai, yaoi and yuri
+             * @enum {string}
+             */
             censored?: "true" | "false";
-            /** @enum {string} */
+            /**
+             * @description Status of anime in current user list
+             * @enum {string}
+             */
             mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+            /** @description List of anime ids separated by comma */
             ids?: string;
+            /** @description List of anime ids separated by comma */
             exclude_ids?: string;
+            /** @description Search phrase to filter animes by name */
             search?: string;
         };
         character: {
@@ -1003,9 +1134,13 @@ export interface components {
             name: string;
             russian: string;
             image: {
+                /** @description The URL of the original image */
                 original: string;
+                /** @description The URL of the preview image */
                 preview: string;
+                /** @description The URL of the 96x96 image */
                 x96: string;
+                /** @description The URL of the 48x48 image */
                 x48: string;
             };
             url: string;
@@ -1015,9 +1150,13 @@ export interface components {
             name: string;
             russian: string;
             image: {
+                /** @description The URL of the original image */
                 original: string;
+                /** @description The URL of the preview image */
                 preview: string;
+                /** @description The URL of the 96x96 image */
                 x96: string;
+                /** @description The URL of the 48x48 image */
                 x48: string;
             };
             url: string;
@@ -1034,44 +1173,90 @@ export interface components {
             seyu: components["schemas"]["character"][];
             animes: {
                 id: components["schemas"]["animeID"];
+                /** @description The name of the anime */
                 name: string;
+                /** @description The Russian name of the anime */
                 russian: string;
+                /** @description The image details of the anime */
                 image: {
+                    /** @description The URL of the original image */
                     original: string;
+                    /** @description The URL of the preview image */
                     preview: string;
+                    /** @description The URL of the 96x96 image */
                     x96: string;
+                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
+                /** @description The URL of the anime */
                 url: string;
-                kind: string;
+                /**
+                 * @description The kind of the anime
+                 * @enum {string}
+                 */
+                kind: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm";
+                /** @description The score of the anime */
                 score: string;
-                status: string;
+                /**
+                 * @description The status of the anime
+                 * @enum {string}
+                 */
+                status: "anons" | "ongoing" | "released";
+                /** @description The total number of episodes */
                 episodes: number;
+                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /** Format: date-time */
+                /**
+                 * Format: date
+                 * @description The date when the anime aired
+                 */
                 aired_on: string;
+                /** @description The date when the anime was released */
                 released_on?: string | null;
                 roles: string[];
                 role: string;
             }[];
             mangas: {
                 id: components["schemas"]["animeID"];
+                /** @description The name of the anime */
                 name: string;
+                /** @description The Russian name of the anime */
                 russian: string;
+                /** @description The image details of the anime */
                 image: {
+                    /** @description The URL of the original image */
                     original: string;
+                    /** @description The URL of the preview image */
                     preview: string;
+                    /** @description The URL of the 96x96 image */
                     x96: string;
+                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
+                /** @description The URL of the anime */
                 url: string;
-                kind: string;
+                /**
+                 * @description The kind of the anime
+                 * @enum {string}
+                 */
+                kind: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm";
+                /** @description The score of the anime */
                 score: string;
-                status: string;
+                /**
+                 * @description The status of the anime
+                 * @enum {string}
+                 */
+                status: "anons" | "ongoing" | "released";
+                /** @description The total number of episodes */
                 episodes: number;
+                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /** Format: date-time */
+                /**
+                 * Format: date
+                 * @description The date when the anime aired
+                 */
                 aired_on: string;
+                /** @description The date when the anime was released */
                 released_on?: string | null;
                 roles: string[];
                 role: string;
@@ -1117,32 +1302,304 @@ export interface components {
             /** @enum {string} */
             kind: "anime" | "manga";
         }[];
+        /** @description The ID */
         ID: number;
-        relatedList: {
+        manga: {
+            id: components["schemas"]["ID"];
+            /** @description The name of the manga */
+            name: string;
+            /** @description The Russian name of the manga */
+            russian: string;
+            /** @description The image details of the manga */
+            image: {
+                /** @description The URL of the original image */
+                original: string;
+                /** @description The URL of the preview image */
+                preview: string;
+                /** @description The URL of the 96x96 image */
+                x96: string;
+                /** @description The URL of the 48x48 image */
+                x48: string;
+            };
+            /** @description The URL of the manga */
+            url: string;
+            /**
+             * @description The kind of the manga
+             * @enum {string}
+             */
+            kind: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
+            /** @description The score of the manga */
+            score: string;
+            /**
+             * @description The status of the manga
+             * @enum {string}
+             */
+            status: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+            /** @description The total number of volumes */
+            volumes: number;
+            /** @description The total number of chapters */
+            chapters: number;
+            /**
+             * Format: date
+             * @description The date when the manga aired
+             */
+            aired_on: string;
+            /** @description The date when the manga was released */
+            released_on?: string | null;
+            /** @description The English names of the manga */
+            english: (string | null)[];
+            /** @description The Japanese names of the manga */
+            japanese: (string | null)[];
+            /** @description The synonyms of the manga */
+            synonyms: string[];
+            /** @description The Russian license name of the manga */
+            license_name_ru?: string | null;
+            /** @description The description of the manga */
+            description?: string | null;
+            /** @description The HTML description of the manga */
+            description_html: string;
+            /** @description The source of the description */
+            description_source?: string | null;
+            /** @description The franchise of the manga */
+            franchise?: string | null;
+            /** @description Indicates whether the manga is favoured */
+            favoured: boolean;
+            /** @description Indicates whether the manga is anons */
+            anons: boolean;
+            /** @description Indicates whether the manga is ongoing */
+            ongoing: boolean;
+            /** @description The thread ID of the manga */
+            thread_id: components["schemas"]["ID"];
+            /** @description The topic ID of the manga */
+            topic_id: components["schemas"]["ID"];
+            /** @description The MyAnimeList ID of the manga */
+            myanimelist_id: components["schemas"]["ID"];
+            /** @description The rates scores stats of the manga */
+            rates_scores_stats: {
+                name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
+                value: number;
+            }[];
+            /** @description The rates statuses stats of the manga */
+            rates_statuses_stats: {
+                /** @enum {string} */
+                name: "Запланировано" | "Прочитано" | "Читаю" | "Брошено" | "Отложено";
+                value: number;
+            }[];
+            /**
+             * Format: date-time
+             * @description The timestamp when the manga was last updated
+             */
+            updated_at: string;
+            /** @description The timestamp when the next episode will air */
+            next_episode_at?: string | null;
+            /** @description The fansubbers of the manga */
+            fansubbers: string[];
+            /** @description The fandubbers of the manga */
+            fandubbers: string[];
+            /** @description The licensors of the manga */
+            licensors: string[];
+            /** @description The genres of the manga */
+            genres: {
+                id: components["schemas"]["ID"];
+                name: string;
+                russian: string;
+                /** @constant */
+                kind: "genre";
+                /** @constant */
+                entry_type: "Manga";
+            }[];
+            /** @description The studios of the manga */
+            studios: components["schemas"]["studios"];
+            /** @description The videos of the manga */
+            videos: components["schemas"]["videos"];
+            /** @description The screenshots of the manga */
+            screenshots: components["schemas"]["screenshots"];
+            /** @description The user rate of the manga */
+            user_rate?: number | null;
+        };
+        mangaList: {
+            id: components["schemas"]["ID"];
+            /** @description The name of the manga */
+            name: string;
+            /** @description The Russian name of the manga */
+            russian: string;
+            /** @description The image details of the manga */
+            image: {
+                /** @description The URL of the original image */
+                original: string;
+                /** @description The URL of the preview image */
+                preview: string;
+                /** @description The URL of the 96x96 image */
+                x96: string;
+                /** @description The URL of the 48x48 image */
+                x48: string;
+            };
+            /** @description The URL of the manga */
+            url: string;
+            /**
+             * @description The kind of the manga
+             * @enum {string}
+             */
+            kind: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
+            /** @description The score of the manga */
+            score: string;
+            /**
+             * @description The status of the manga
+             * @enum {string}
+             */
+            status: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+            /** @description The total number of volumes */
+            volumes: number;
+            /** @description The total number of chapters */
+            chapters: number;
+            /**
+             * Format: date
+             * @description The date when the manga aired
+             */
+            aired_on: string;
+            /** @description The date when the manga was released */
+            released_on?: string | null;
+        }[];
+        mangaSearchQuery: {
+            /** @description The page number */
+            page?: number;
+            /** @description The limit of results per page */
+            limit?: number;
+            /**
+             * @description The order of the results
+             * @enum {string}
+             */
+            order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "volumes" | "chapters" | "status" | "random" | "created_at" | "created_at_desc";
+            /**
+             * @description The kind of the manga
+             * @enum {string}
+             */
+            kind?: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
+            /**
+             * @description The status of the manga
+             * @enum {string}
+             */
+            status?: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+            /** @description The season of the anime */
+            season?: string;
+            /** @description The minimal score, must be a number */
+            score?: number;
+            /** @description List of genre ids separated by comma */
+            genre?: string;
+            /** @description List of genre v2 ids separated by comma */
+            genre_v2?: string;
+            /** @description List of publisher ids separated by comma */
+            publisher?: string;
+            /** @description List of franchises separated by comma */
+            franchise?: string;
+            /**
+             * @description Set to false to allow hentai, yaoi and yuri
+             * @enum {string}
+             */
+            censored?: "true" | "false";
+            /**
+             * @description Status of manga in current user list
+             * @enum {string}
+             */
+            mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+            /** @description List of anime ids separated by comma */
+            ids?: string;
+            /** @description List of anime ids separated by comma */
+            exclude_ids?: string;
+            /** @description Search phrase to filter animes by name */
+            search?: string;
+        };
+        related: {
             relation: string;
             relation_russian: string;
             anime: {
                 id: components["schemas"]["animeID"];
+                /** @description The name of the anime */
                 name: string;
+                /** @description The Russian name of the anime */
                 russian: string;
+                /** @description The image details of the anime */
                 image: {
+                    /** @description The URL of the original image */
                     original: string;
+                    /** @description The URL of the preview image */
                     preview: string;
+                    /** @description The URL of the 96x96 image */
                     x96: string;
+                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
+                /** @description The URL of the anime */
                 url: string;
-                kind: string;
+                /**
+                 * @description The kind of the anime
+                 * @enum {string}
+                 */
+                kind: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm";
+                /** @description The score of the anime */
                 score: string;
-                status: string;
+                /**
+                 * @description The status of the anime
+                 * @enum {string}
+                 */
+                status: "anons" | "ongoing" | "released";
+                /** @description The total number of episodes */
                 episodes: number;
+                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /** Format: date-time */
+                /**
+                 * Format: date
+                 * @description The date when the anime aired
+                 */
                 aired_on: string;
+                /** @description The date when the anime was released */
                 released_on?: string | null;
-            };
-            manga: Record<string, never>;
-        }[];
+            } | null;
+            manga: {
+                id: components["schemas"]["ID"];
+                /** @description The name of the manga */
+                name: string;
+                /** @description The Russian name of the manga */
+                russian: string;
+                /** @description The image details of the manga */
+                image: {
+                    /** @description The URL of the original image */
+                    original: string;
+                    /** @description The URL of the preview image */
+                    preview: string;
+                    /** @description The URL of the 96x96 image */
+                    x96: string;
+                    /** @description The URL of the 48x48 image */
+                    x48: string;
+                };
+                /** @description The URL of the manga */
+                url: string;
+                /**
+                 * @description The kind of the manga
+                 * @enum {string}
+                 */
+                kind: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
+                /** @description The score of the manga */
+                score: string;
+                /**
+                 * @description The status of the manga
+                 * @enum {string}
+                 */
+                status: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+                /** @description The total number of volumes */
+                volumes: number;
+                /** @description The total number of chapters */
+                chapters: number;
+                /**
+                 * Format: date
+                 * @description The date when the manga aired
+                 */
+                aired_on: string;
+                /** @description The date when the manga was released */
+                released_on?: string | null;
+            } | null;
+        };
+        relatedList: components["schemas"]["related"][];
         roles: {
             roles: string[];
             roles_russian: string[];
@@ -1150,31 +1607,100 @@ export interface components {
             person: components["schemas"]["character"] | null;
         }[];
         screenshots: {
+            /** @description The URL of the original image */
             original: string;
+            /** @description The URL of the preview image */
             preview: string;
         }[];
-        similar: {
+        similarAnime: {
             id: components["schemas"]["animeID"];
+            /** @description The name of the anime */
             name: string;
+            /** @description The Russian name of the anime */
             russian: string;
+            /** @description The image details of the anime */
             image: {
+                /** @description The URL of the original image */
                 original: string;
+                /** @description The URL of the preview image */
                 preview: string;
+                /** @description The URL of the 96x96 image */
                 x96: string;
+                /** @description The URL of the 48x48 image */
                 x48: string;
             };
+            /** @description The URL of the anime */
             url: string;
-            kind: string;
+            /**
+             * @description The kind of the anime
+             * @enum {string}
+             */
+            kind: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm";
+            /** @description The score of the anime */
             score: string;
-            status: string;
+            /**
+             * @description The status of the anime
+             * @enum {string}
+             */
+            status: "anons" | "ongoing" | "released";
+            /** @description The total number of episodes */
             episodes: number;
+            /** @description The number of episodes aired */
             episodes_aired: number;
-            /** Format: date-time */
+            /**
+             * Format: date
+             * @description The date when the anime aired
+             */
             aired_on: string;
+            /** @description The date when the anime was released */
+            released_on?: string | null;
+        }[];
+        similarManga: {
+            id: components["schemas"]["ID"];
+            /** @description The name of the manga */
+            name: string;
+            /** @description The Russian name of the manga */
+            russian: string;
+            /** @description The image details of the manga */
+            image: {
+                /** @description The URL of the original image */
+                original: string;
+                /** @description The URL of the preview image */
+                preview: string;
+                /** @description The URL of the 96x96 image */
+                x96: string;
+                /** @description The URL of the 48x48 image */
+                x48: string;
+            };
+            /** @description The URL of the manga */
+            url: string;
+            /**
+             * @description The kind of the manga
+             * @enum {string}
+             */
+            kind: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
+            /** @description The score of the manga */
+            score: string;
+            /**
+             * @description The status of the manga
+             * @enum {string}
+             */
+            status: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+            /** @description The total number of volumes */
+            volumes: number;
+            /** @description The total number of chapters */
+            chapters: number;
+            /**
+             * Format: date
+             * @description The date when the manga aired
+             */
+            aired_on: string;
+            /** @description The date when the manga was released */
             released_on?: string | null;
         }[];
         studios: {
             id: number;
+            /** @description The name of the studio */
             name: string;
             filtered_name: string;
             real: boolean;
@@ -1202,22 +1728,87 @@ export interface components {
             linked_type: string;
             linked: {
                 id: components["schemas"]["animeID"];
+                /** @description The name of the anime */
                 name: string;
+                /** @description The Russian name of the anime */
                 russian: string;
+                /** @description The image details of the anime */
                 image: {
+                    /** @description The URL of the original image */
                     original: string;
+                    /** @description The URL of the preview image */
                     preview: string;
+                    /** @description The URL of the 96x96 image */
                     x96: string;
+                    /** @description The URL of the 48x48 image */
                     x48: string;
                 };
+                /** @description The URL of the anime */
                 url: string;
-                kind: string;
+                /**
+                 * @description The kind of the anime
+                 * @enum {string}
+                 */
+                kind: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm";
+                /** @description The score of the anime */
                 score: string;
-                status: string;
+                /**
+                 * @description The status of the anime
+                 * @enum {string}
+                 */
+                status: "anons" | "ongoing" | "released";
+                /** @description The total number of episodes */
                 episodes: number;
+                /** @description The number of episodes aired */
                 episodes_aired: number;
-                /** Format: date-time */
+                /**
+                 * Format: date
+                 * @description The date when the anime aired
+                 */
                 aired_on: string;
+                /** @description The date when the anime was released */
+                released_on?: string | null;
+            } | {
+                id: components["schemas"]["ID"];
+                /** @description The name of the manga */
+                name: string;
+                /** @description The Russian name of the manga */
+                russian: string;
+                /** @description The image details of the manga */
+                image: {
+                    /** @description The URL of the original image */
+                    original: string;
+                    /** @description The URL of the preview image */
+                    preview: string;
+                    /** @description The URL of the 96x96 image */
+                    x96: string;
+                    /** @description The URL of the 48x48 image */
+                    x48: string;
+                };
+                /** @description The URL of the manga */
+                url: string;
+                /**
+                 * @description The kind of the manga
+                 * @enum {string}
+                 */
+                kind: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
+                /** @description The score of the manga */
+                score: string;
+                /**
+                 * @description The status of the manga
+                 * @enum {string}
+                 */
+                status: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+                /** @description The total number of volumes */
+                volumes: number;
+                /** @description The total number of chapters */
+                chapters: number;
+                /**
+                 * Format: date
+                 * @description The date when the manga aired
+                 */
+                aired_on: string;
+                /** @description The date when the manga was released */
                 released_on?: string | null;
             };
             viewed: boolean;
@@ -1226,7 +1817,9 @@ export interface components {
             episode: number | null;
         }[];
         topicsQuery: {
+            /** @description The page number */
             page?: number;
+            /** @description The limit of results per page */
             limit?: number;
             /** @enum {string} */
             kind?: "anons" | "ongoing" | "released" | "episode";
@@ -1248,7 +1841,11 @@ export interface components {
             last_online_at: string;
             url: string;
         };
-        userID: number;
+        /**
+         * @description The user ID
+         * @example 406192
+         */
+        userID: components["schemas"]["ID"];
         userInfo: {
             id: components["schemas"]["userID"];
             nickname: string;
@@ -1266,6 +1863,7 @@ export interface components {
             website: string | null;
         };
         userRates: {
+            /** @description The user rate ID */
             id: number;
             user_id: components["schemas"]["userID"];
             target_id: number;
@@ -1307,7 +1905,9 @@ export interface components {
             target_type: "Anime" | "Mange";
             /** @enum {string} */
             status: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+            /** @description This field is ignored when user_id is set */
             page?: number;
+            /** @description This field is ignored when user_id is set */
             limit?: number;
         };
         userRatesUpdateParams: {
@@ -1340,15 +1940,6 @@ export interface components {
         videos: components["schemas"]["video"][];
     };
     responses: {
-        /** @description The given parameters could not be parsed */
-        BadRequest: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": unknown;
-            };
-        };
         /** @description Authentication failed */
         Unauthorized: {
             headers: {
@@ -1356,15 +1947,6 @@ export interface components {
             };
             content: {
                 "application/json": components["schemas"]["UnauthorizedSchema"];
-            };
-        };
-        /** @description Access denied */
-        Forbidden: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content: {
-                "application/json": Record<string, never>;
             };
         };
         /** @description Not Found */
@@ -1518,7 +2100,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["similar"];
+                    "application/json": components["schemas"]["similarAnime"];
                 };
             };
             401: components["responses"]["Unauthorized"];
@@ -1646,215 +2228,445 @@ export interface operations {
     };
     list_manga: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                limit?: number;
+                order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "volumes" | "chapters" | "status" | "random" | "created_at" | "created_at_desc";
+                kind?: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
+                status?: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+                season?: string;
+                score?: number;
+                genre?: string;
+                genre_v2?: string;
+                publisher?: string;
+                franchise?: string;
+                censored?: "true" | "false";
+                mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+                ids?: string;
+                exclude_ids?: string;
+                search?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["mangaList"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["manga"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga_roles: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["roles"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga_similar: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["similarManga"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga_related: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["related"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga_screenshots: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["screenshots"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga_franchise: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["franchise"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga_external_links: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["externalLinks"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_manga_topics: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["topics"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     list_ranobe: {
         parameters: {
-            query?: never;
+            query?: {
+                page?: number;
+                limit?: number;
+                order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "volumes" | "chapters" | "status" | "random" | "created_at" | "created_at_desc";
+                status?: "anons" | "ongoing" | "released" | "paused" | "discontinued";
+                season?: string;
+                score?: number;
+                genre?: string;
+                publisher?: string;
+                franchise?: string;
+                censored?: "true" | "false";
+                mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
+                ids?: string;
+                exclude_ids?: string;
+                search?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["mangaList"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["manga"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe_roles: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["roles"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe_similar: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["similarManga"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe_related: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["related"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe_screenshots: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["screenshots"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe_franchise: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["franchise"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe_external_links: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["externalLinks"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_ranobe_topics: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["animeID"];
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
         requestBody?: never;
-        responses: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["topics"];
+                };
+            };
+            401: components["responses"]["Unauthorized"];
+        };
     };
     get_characters: {
         parameters: {

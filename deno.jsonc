@@ -1,7 +1,7 @@
 {
   "lock": true,
   "tasks": {
-    "dev": "deno run -A scripts/dev.ts",
+    "dev": "deno run -A --watch-hmr scripts/dev.ts",
     "build": "deno run -Aq scripts/build.ts",
     "build:check": "deno run -Aq scripts/build.ts -d",
     "build:client": {
