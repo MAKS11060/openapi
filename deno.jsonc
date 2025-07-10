@@ -27,10 +27,10 @@
     "@maks11060/openapi": "jsr:@maks11060/openapi@^0.0.8",
     "@std/cli": "jsr:@std/cli@^1.0.20",
     "@std/datetime": "jsr:@std/datetime@^0.225.5",
-    "@std/fs": "jsr:@std/fs@^1.0.18",
+    "@std/fs": "jsr:@std/fs@^1.0.19",
     "@std/yaml": "jsr:@std/yaml@^1.0.8",
     "openapi-typescript": "npm:openapi-typescript@^7.8.0",
-    "zod": "npm:zod@^3.25.64"
+    "zod": "npm:zod@^4.0.2"
   },
   "fmt": {
     "exclude": [
@@ -43,5 +43,8 @@
     "semiColons": false,
     "singleQuote": true,
     "spaceSurroundingProperties": false
-  }
+  },
+  "unstable": [
+    "raw-imports"
+  ]
 }

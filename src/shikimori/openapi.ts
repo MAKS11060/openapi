@@ -1,8 +1,7 @@
 import { createDoc } from '@maks11060/openapi'
 import { zodPlugin } from '@maks11060/openapi/zod'
 import { format } from '@std/datetime/format'
-
-const README = Deno.readTextFileSync('./src/shikimori/README.md').replaceAll('\r\n', '\n')
+import README from './README.md' with {type: 'text'}
 
 export const doc = createDoc({
   plugins: {
