@@ -1,20 +1,20 @@
-import z from 'zod'
+import { z } from 'zod'
 import { doc } from './openapi.ts'
 import {
-    autocomplete,
-    forbidden,
-    limit,
-    notFound,
-    only,
-    page,
-    post,
-    postID,
-    posts,
-    postsLimit,
-    unauthorized,
-    user,
-    userID,
-    users,
+  autocomplete,
+  forbidden,
+  limit,
+  notFound,
+  only,
+  page,
+  post,
+  postID,
+  posts,
+  postsLimit,
+  unauthorized,
+  user,
+  userID,
+  users,
 } from './schema.ts'
 
 export { doc } from './openapi.ts'
