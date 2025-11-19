@@ -22,9 +22,79 @@ export const only = z
 ////////////////
 export const ID = z.int().positive().describe('The ID')
 
-//////////////// Posts
+// --- Tag ---
+export const tagCategory = z.enum({
+  General: 0,
+  Artist: 1,
+  Copyright: 3,
+  Character: 4,
+  Meta: 5,
+})
+
+export const tag = z.object({
+  id: ID,
+  name: z.string(),
+  post_count: z.number().positive(),
+  category: tagCategory,
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  is_deprecated: z.boolean(),
+  words: z.string().array(),
+})
+
+// --- Wiki ---
+export const wikiPage = z.object({
+  id: ID,
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  title: z.string(),
+  body: z.string(),
+  is_locked: z.boolean(),
+  other_names: z.string().array(),
+  is_deleted: z.boolean(),
+})
+
+// --- Artist --- https://danbooru.donmai.us/wiki_pages/api%3Aartists
+export const artistUrl = z.object({
+  id: ID.describe('Artist URL ID'),
+  artist_id: ID.describe('The Artist ID'),
+  url: z.url(),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  is_active: z.boolean(),
+})
+
+export const artist = z.object({
+  id: ID.describe('Artist ID'),
+  name: z.string(),
+  group_name: z.string(),
+  other_names: z.string().array(),
+  is_banned: z.boolean(),
+  is_deleted: z.boolean(),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+
+  // Associated
+  members: z.array(z.any()).optional(),
+  urls: artistUrl.array().optional(),
+  wiki_page: wikiPage.optional(),
+  tag_alias: z.any().optional(),
+  tag: tag.optional(),
+})
+
+export const artists = artist.array()
+
+// --- Posts --- https://danbooru.donmai.us/wiki_pages/api%3Aposts
 export const fileType = z.enum(['png', 'jpg', 'gif', 'swf', 'webm', 'mp4', 'zip'])
-export const rating = z.enum(['g', 's', 'q', 'e']).nullable().describe('The rating of the post')
+
+// export const rating = z.enum(['g', 's', 'q', 'e']).nullable().describe('The rating of the post')
+export const rating = z.enum({
+  General: 'g',
+  Sensitive: 's',
+  Questionable: 'q',
+  Explicit: 'e',
+}).describe('The rating of the post')
+
 export const mediaAssetVariant = z.object({
   type: z.string(),
   url: z.url(),
@@ -32,8 +102,9 @@ export const mediaAssetVariant = z.object({
   height: z.int().positive(),
   file_ext: z.string(),
 })
+
 export const mediaAsset = z.object({
-  id: z.int().positive(),
+  id: ID,
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
   md5: z.string(),
@@ -50,6 +121,7 @@ export const mediaAsset = z.object({
 })
 
 export const postID = z.int().min(1).describe('The post ID')
+
 export const post = z.object({
   id: postID,
 
@@ -80,7 +152,7 @@ export const post = z.object({
   parent_id: postID.describe('The ID of the parent post'),
 
   // stats
-  rating,
+  rating: rating.nullable(),
   score: z.int().describe('The score of the post'),
   up_score: z.int().describe('The up score of the post'),
   down_score: z.int().describe('The down score of the post'),
@@ -142,22 +214,14 @@ export const post = z.object({
   // get replacements() { return	post replacement	.array().optional()	},
   // get pixiv_ugoira_frame_data() { return	Pixiv ugoira frame data	.optional()	},
 })
+
 export const posts = z.array(post)
+
 export const postsLimit = limit.max(200)
 
-// export const postAssociated = post.pick({
-//   uploader: true,
-//   updater: true,
-//   approver: true,
-//   parent: true,
-//   children: true,
-// })
+// --- Users --- https://danbooru.donmai.us/wiki_pages/api%3Ausers
+export const userID = ID.describe('The User ID')
 
-// const A = post.keyof().or(postAssociated.keyof())
-// type T = z.input<typeof A>
-
-//////////////// Users
-export const userID = z.int().positive().describe('The user ID')
 export const user = z.object({
   id: userID,
   name: z.string().describe('The name of the user'),
@@ -184,15 +248,17 @@ export const user = z.object({
   created_at: z.iso.datetime().describe('The timestamp when the record was created'),
   updated_at: z.iso.datetime().describe('The timestamp when the record was last updated'),
 })
+
 export const users = z.array(user)
 
-//////////////// Autocomplete
+// --- Autocomplete --- // TODO: optimize schema
 export const autocompleteArtist = z
   .object({
     type: z.literal('tag').describe('The type of the autocomplete item, must be "tag"'),
     label: z.string().describe('The label of the autocomplete item'),
     value: z.string().describe('The value of the autocomplete item'),
-    category: z.literal(1).describe('The category of the autocomplete item, must be 1 for artists'),
+    category: z.literal(tagCategory.enum.Artist)
+      .describe('The category of the autocomplete item, must be 1 for artists'),
   })
   .describe('Schema for autocomplete artist items')
 
@@ -203,19 +269,9 @@ export const autocompleteTag = z
     type: z.literal('tag-word').describe('The type of the autocomplete item, must be "tag-word"'),
     label: z.string().describe('The label of the autocomplete item'),
     value: z.string().describe('The value of the autocomplete item'),
-    category: z
-      .union([
-        z.literal(0).describe('General category'),
-        z.literal(1).describe('Artist category'),
-        z.literal(3).describe('Copyright category'),
-        z.literal(4).describe('Character category'),
-        z.literal(5).describe('Meta category'),
-      ])
-      .describe('The category of the autocomplete item, includes [0, 1, 3, 4, 5]'),
+    category: tagCategory.describe('The category of the autocomplete item, includes [0, 1, 3, 4, 5]'),
     post_count: z.int().positive().describe('The count of posts associated with the tag, must be >= 0'),
-    get tag() {
-      return tag
-    }
+    tag,
   })
   .describe('Schema for autocomplete tag items')
 
@@ -226,7 +282,7 @@ export const autocompleteUser = z
     type: z.literal('user').describe('The type of the autocomplete item, must be "user"'),
     label: z.string().describe('The label of the autocomplete item'),
     value: z.string().describe('The value of the autocomplete item'),
-    id: z.int().positive().describe('The ID of the user, must be greater than 0'),
+    id: userID,
     level: z.enum(['member', 'gold', 'platinum', 'builder', 'admin']).describe('The level of the user'),
   })
   .describe('Schema for autocomplete user items')
@@ -239,73 +295,3 @@ export const autocomplete = z.union([
   autocompleteTags,
   autocompleteUsers,
 ])
-
-// --- Tag ---
-export const tagCategory = z.enum({
-  General: 0,
-  Artist: 1,
-  Copyright: 2,
-  Character: 3,
-  Meta: 4,
-})
-
-export const tag = z.object({
-  id: ID,
-  name: z.string(),
-  post_count: z.number().positive(),
-  category: tagCategory,
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-  is_deprecated: z.boolean(),
-  words: z.string().array(),
-})
-
-// --- Artist ---
-export const artistUrl = z.object({
-  id: ID,
-  artist_id: z.int().positive().describe('Artist ID'),
-  url: z.url(),
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-  is_active: z.boolean(),
-})
-
-export const wikiPage = z.object({
-  id: ID,
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-  title: z.string(),
-  body: z.string(),
-  is_locked: z.boolean(),
-  other_names: z.string().array(),
-  is_deleted: z.boolean(),
-})
-
-export const artist = z.object({
-  id: z.int().positive().describe('Artist ID'),
-  name: z.string(),
-  group_name: z.string(),
-  other_names: z.string().array(),
-  is_banned: z.boolean(),
-  is_deleted: z.boolean(),
-  created_at: z.iso.datetime(),
-  updated_at: z.iso.datetime(),
-
-  // Associated
-  members: z.array(z.any()).optional(),
-  urls: artistUrl.array().optional(),
-  wiki_page: wikiPage.optional(),
-  tag_alias: z.any().optional(),
-  tag: tag.optional(),
-})
-
-export const artistAssociated = artist.pick({
-  members: true,
-  urls: true,
-  //
-  wiki_page: true,
-  tag_alias: true,
-  tag: true,
-})
-
-export const artists = artist.array()

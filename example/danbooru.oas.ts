@@ -283,9 +283,9 @@ export interface components {
             updated_at: string;
             members?: unknown[];
             urls?: {
-                /** @description The ID */
+                /** @description Artist URL ID */
                 id: number;
-                /** @description Artist ID */
+                /** @description The Artist ID */
                 artist_id: number;
                 /** Format: uri */
                 url: string;
@@ -315,51 +315,7 @@ export interface components {
                 name: string;
                 post_count: number;
                 /** @enum {number} */
-                category: 0 | 1 | 2 | 3 | 4;
-                /** Format: date-time */
-                created_at: string;
-                /** Format: date-time */
-                updated_at: string;
-                is_deprecated: boolean;
-                words: string[];
-            };
-        };
-        artistAssociated: {
-            members?: unknown[];
-            urls?: {
-                /** @description The ID */
-                id: number;
-                /** @description Artist ID */
-                artist_id: number;
-                /** Format: uri */
-                url: string;
-                /** Format: date-time */
-                created_at: string;
-                /** Format: date-time */
-                updated_at: string;
-                is_active: boolean;
-            }[];
-            wiki_page?: {
-                /** @description The ID */
-                id: number;
-                /** Format: date-time */
-                created_at: string;
-                /** Format: date-time */
-                updated_at: string;
-                title: string;
-                body: string;
-                is_locked: boolean;
-                other_names: string[];
-                is_deleted: boolean;
-            };
-            tag_alias?: unknown;
-            tag?: {
-                /** @description The ID */
-                id: number;
-                name: string;
-                post_count: number;
-                /** @enum {number} */
-                category: 0 | 1 | 2 | 3 | 4;
+                category: 0 | 1 | 3 | 4 | 5;
                 /** Format: date-time */
                 created_at: string;
                 /** Format: date-time */
@@ -394,7 +350,10 @@ export interface components {
             label: string;
             /** @description The value of the autocomplete item */
             value: string;
-            /** @description The category of the autocomplete item, includes [0, 1, 3, 4, 5] */
+            /**
+             * @description The category of the autocomplete item, includes [0, 1, 3, 4, 5]
+             * @enum {number}
+             */
             category: 0 | 1 | 3 | 4 | 5;
             /** @description The count of posts associated with the tag, must be >= 0 */
             post_count: number;
@@ -404,7 +363,7 @@ export interface components {
                 name: string;
                 post_count: number;
                 /** @enum {number} */
-                category: 0 | 1 | 2 | 3 | 4;
+                category: 0 | 1 | 3 | 4 | 5;
                 /** Format: date-time */
                 created_at: string;
                 /** Format: date-time */
@@ -422,8 +381,7 @@ export interface components {
             label: string;
             /** @description The value of the autocomplete item */
             value: string;
-            /** @description The ID of the user, must be greater than 0 */
-            id: number;
+            id: components["schemas"]["userID"];
             /**
              * @description The level of the user
              * @enum {string}
@@ -476,6 +434,7 @@ export interface components {
             preview_file_url: string;
             /** @description The media asset associated with the post */
             media_asset: {
+                /** @description The ID */
                 id: number;
                 /** Format: date-time */
                 created_at: string;
@@ -520,7 +479,6 @@ export interface components {
             approver_id?: number | null;
             /** @description The ID of the parent post */
             parent_id: components["schemas"]["postID"];
-            /** @description The rating of the post */
             rating: ("g" | "s" | "q" | "e") | null;
             /** @description The score of the post */
             score: number;
@@ -660,7 +618,7 @@ export interface components {
              */
             updated_at: string;
         };
-        /** @description The user ID */
+        /** @description The User ID */
         userID: number;
         users: components["schemas"]["user"][];
     };

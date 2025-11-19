@@ -2,7 +2,6 @@ import {z} from 'zod'
 import {doc} from './openapi.ts'
 import {
   artist,
-  artistAssociated,
   artists,
   autocomplete,
   forbidden,
@@ -25,7 +24,6 @@ export {doc} from './openapi.ts'
 //////////////////////////////// Schemas
 doc.addSchemas({
   artist,
-  artistAssociated,
   artists,
   autocomplete,
   forbidden,
@@ -177,9 +175,9 @@ doc
 
         // https://danbooru.donmai.us/wiki_pages/api%3Aartists#:~:text=Special%20search%20parameters
         name_matches: z.string(),
-        min_level : z.string(),
-        max_level : z.string(),
-        current_user_first : z.string(),
+        min_level: z.string(),
+        max_level: z.string(),
+        current_user_first: z.string(),
         order: z.union([
           z.literal('name'),
           z.literal('post_upload_count'),

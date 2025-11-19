@@ -21,7 +21,8 @@
       "dependencies": [
         "build"
       ]
-    }
+    },
+    "ok": "deno fmt --check && deno task build:check"
   },
   "imports": {
     "@maks11060/openapi": "jsr:@maks11060/openapi@^0.1.3",
