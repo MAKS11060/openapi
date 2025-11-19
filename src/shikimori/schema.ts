@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import {z} from 'zod'
 
 //////////////////////////////// Error
 export const UnauthorizedSchema = z.object({

@@ -40,7 +40,7 @@ deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases
 ```ts
 // shikimori.ts
 import createClient from 'npm:openapi-fetch'
-import type { paths } from './shikimori.oas.ts'
+import type {paths} from './shikimori.oas.ts'
 
 // Requirements
 // Add your Oauth2 Application name to User-Agent requests header.
@@ -72,9 +72,9 @@ deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases
 
 ```ts
 // danbooru.ts
-import { encodeBase64 } from 'jsr:@std/encoding/base64'
+import {encodeBase64} from 'jsr:@std/encoding/base64'
 import createClient from 'npm:openapi-fetch'
-import type { paths } from './danbooru.oas.ts'
+import type {paths} from './danbooru.oas.ts'
 
 // Many API endpoints do not require authentication.
 // Register api key: https://danbooru.donmai.us/profile => API Key

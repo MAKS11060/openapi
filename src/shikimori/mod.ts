@@ -1,5 +1,5 @@
-import { z } from 'zod'
-import { doc, oauth2 } from './openapi.ts'
+import {z} from 'zod'
+import {doc, oauth2} from './openapi.ts'
 import {
   achievements,
   anime,
@@ -39,7 +39,7 @@ import {
   videos,
 } from './schema.ts'
 
-export { doc } from './openapi.ts'
+export {doc} from './openapi.ts'
 
 doc.addSchemas({
   achievements,
