@@ -1,4 +1,4 @@
-import { z } from 'zod'
+import {z} from 'zod'
 
 //////////////// Error
 export const BadRequest = z.any().describe('The given parameters could not be parsed')
@@ -18,6 +18,9 @@ export const page = z.int().positive().describe('The number of results to show p
 export const only = z
   .string()
   .describe('Determines the list of attributes that will be returned')
+
+////////////////
+export const ID = z.int().positive().describe('The ID')
 
 //////////////// Posts
 export const fileType = z.enum(['png', 'jpg', 'gif', 'swf', 'webm', 'mp4', 'zip'])
@@ -49,28 +52,47 @@ export const mediaAsset = z.object({
 export const postID = z.int().min(1).describe('The post ID')
 export const post = z.object({
   id: postID,
+
+  // source
+  source: z.string().describe('The source of the post'),
+  pixiv_id: z.int().nullish().describe('The Pixiv ID of the post'),
+
+  // file
+  md5: z.string().describe('The MD5 hash of the file'),
+
+  file_ext: fileType.describe('The file extension'),
+  file_size: z.int().describe('The size of the file'),
+
+  file_url: z.url().describe('The URL of the file'),
+  large_file_url: z.url().describe('The URL of the large file'),
+  preview_file_url: z.url().describe('The URL of the preview file'),
+
+  media_asset: mediaAsset.describe('The media asset associated with the post'),
+  image_height: z.int().describe('The height of the image'),
+  image_width: z.int().describe('The width of the image'),
+
+  // meta
+  created_at: z.iso.datetime().describe('The timestamp when the post was created'),
+  updated_at: z.iso.datetime().describe('The timestamp when the post was last updated'),
+
   uploader_id: z.int().min(1).describe('The ID of the user who uploaded the post'),
   approver_id: z.int().nullish().describe('The ID of the user who approved the post'),
+  parent_id: postID.describe('The ID of the parent post'),
 
+  // stats
+  rating,
+  score: z.int().describe('The score of the post'),
+  up_score: z.int().describe('The up score of the post'),
+  down_score: z.int().describe('The down score of the post'),
+  fav_count: z.int().describe('The number of favorites'),
+
+  // tags
   tag_string: z.string().describe('The tags associated with the post'),
   tag_string_general: z.string().describe('The general tags associated with the post'),
   tag_string_artist: z.string().describe('The artist tags associated with the post'),
   tag_string_copyright: z.string().describe('The copyright tags associated with the post'),
   tag_string_character: z.string().describe('The character tags associated with the post'),
   tag_string_meta: z.string().describe('The meta tags associated with the post'),
-
-  rating,
-  parent_id: z.int().nullish().describe('The ID of the parent post'),
-  source: z.url().describe('The source of the post'),
-  md5: z.string().describe('The MD5 hash of the file'),
-  file_ext: fileType.describe('The file extension'),
-  file_size: z.int().describe('The size of the file'),
-  file_url: z.url().describe('The URL of the file'),
-  large_file_url: z.url().describe('The URL of the large file'),
-  preview_file_url: z.url().describe('The URL of the preview file'),
-
-  score: z.int().describe('The score of the post'),
-  fav_count: z.int().describe('The number of favorites'),
 
   tag_count: z.int().describe('The total number of tags'),
   tag_count_general: z.int().describe('The number of general tags'),
@@ -79,35 +101,60 @@ export const post = z.object({
   tag_count_character: z.int().describe('The number of character tags'),
   tag_count_meta: z.int().describe('The number of meta tags'),
 
-  image_width: z.int().describe('The width of the image'),
-  image_height: z.int().describe('The height of the image'),
-  created_at: z.iso.datetime().describe('The timestamp when the post was created'),
-  updated_at: z.iso.datetime().describe('The timestamp when the post was last updated'),
-
   last_comment_bumped_at: z.iso.datetime().nullish().describe('The timestamp when the last comment was bumped'),
   last_commented_at: z.iso.datetime().nullish().describe('The timestamp when the last comment was added'),
   last_noted_at: z.iso.datetime().nullish().describe('The timestamp when the last note was added'),
-
-  media_asset: mediaAsset.describe('The media asset associated with the post'),
-
-  up_score: z.int().describe('The up score of the post'),
-  down_score: z.int().describe('The down score of the post'),
-
-  pixiv_id: z.int().nullish().describe('The Pixiv ID of the post'),
-  bit_flags: z.int().describe('The bit flags of the post'),
 
   has_active_children: z.boolean().describe('Indicates whether the post has active children'),
   has_children: z.boolean().describe('Indicates whether the post has children'),
   has_large: z.boolean().describe('Indicates whether the post has a large version'),
   has_visible_children: z.boolean().describe('Indicates whether the post has visible children'),
 
+  bit_flags: z.int().describe('The bit flags of the post'),
+
   is_banned: z.boolean().describe('Indicates whether the post is banned'),
   is_deleted: z.boolean().describe('Indicates whether the post is deleted'),
   is_flagged: z.boolean().describe('Indicates whether the post is flagged'),
   is_pending: z.boolean().describe('Indicates whether the post is pending'),
+
+  // Associated
+  get uploader() {
+    return user.optional()
+  },
+  get updater() {
+    return user.optional()
+  },
+  get approver() {
+    return user.optional()
+  },
+  get parent() {
+    return post.optional()
+  },
+  get children() {
+    return post.array().optional()
+  },
+  // get artist_commentary() {	return artist_commentary	optional	},
+  // get notes() {	return note.array().optional()	},
+  // get comments() {	return comment.array().optional()	},
+  // get flags() { return	post flag	.array().optional()	},
+  // get appeals() { return	post appeals	.array().optional()	},
+  // get approvals() { return	post approval	.array().optional()	},
+  // get replacements() { return	post replacement	.array().optional()	},
+  // get pixiv_ugoira_frame_data() { return	Pixiv ugoira frame data	.optional()	},
 })
 export const posts = z.array(post)
 export const postsLimit = limit.max(200)
+
+// export const postAssociated = post.pick({
+//   uploader: true,
+//   updater: true,
+//   approver: true,
+//   parent: true,
+//   children: true,
+// })
+
+// const A = post.keyof().or(postAssociated.keyof())
+// type T = z.input<typeof A>
 
 //////////////// Users
 export const userID = z.int().positive().describe('The user ID')
@@ -166,6 +213,9 @@ export const autocompleteTag = z
       ])
       .describe('The category of the autocomplete item, includes [0, 1, 3, 4, 5]'),
     post_count: z.int().positive().describe('The count of posts associated with the tag, must be >= 0'),
+    get tag() {
+      return tag
+    }
   })
   .describe('Schema for autocomplete tag items')
 
@@ -189,3 +239,73 @@ export const autocomplete = z.union([
   autocompleteTags,
   autocompleteUsers,
 ])
+
+// --- Tag ---
+export const tagCategory = z.enum({
+  General: 0,
+  Artist: 1,
+  Copyright: 2,
+  Character: 3,
+  Meta: 4,
+})
+
+export const tag = z.object({
+  id: ID,
+  name: z.string(),
+  post_count: z.number().positive(),
+  category: tagCategory,
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  is_deprecated: z.boolean(),
+  words: z.string().array(),
+})
+
+// --- Artist ---
+export const artistUrl = z.object({
+  id: ID,
+  artist_id: z.int().positive().describe('Artist ID'),
+  url: z.url(),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  is_active: z.boolean(),
+})
+
+export const wikiPage = z.object({
+  id: ID,
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  title: z.string(),
+  body: z.string(),
+  is_locked: z.boolean(),
+  other_names: z.string().array(),
+  is_deleted: z.boolean(),
+})
+
+export const artist = z.object({
+  id: z.int().positive().describe('Artist ID'),
+  name: z.string(),
+  group_name: z.string(),
+  other_names: z.string().array(),
+  is_banned: z.boolean(),
+  is_deleted: z.boolean(),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+
+  // Associated
+  members: z.array(z.any()).optional(),
+  urls: artistUrl.array().optional(),
+  wiki_page: wikiPage.optional(),
+  tag_alias: z.any().optional(),
+  tag: tag.optional(),
+})
+
+export const artistAssociated = artist.pick({
+  members: true,
+  urls: true,
+  //
+  wiki_page: true,
+  tag_alias: true,
+  tag: true,
+})
+
+export const artists = artist.array()

@@ -1,6 +1,9 @@
-import { z } from 'zod'
-import { doc } from './openapi.ts'
+import {z} from 'zod'
+import {doc} from './openapi.ts'
 import {
+  artist,
+  artistAssociated,
+  artists,
   autocomplete,
   forbidden,
   limit,
@@ -17,10 +20,13 @@ import {
   users,
 } from './schema.ts'
 
-export { doc } from './openapi.ts'
+export {doc} from './openapi.ts'
 
 //////////////////////////////// Schemas
 doc.addSchemas({
+  artist,
+  artistAssociated,
+  artists,
   autocomplete,
   forbidden,
   limit,
@@ -63,40 +69,40 @@ const NotFound = doc.addResponse('NotFound', (t) => {
 })
 
 //////////////////////////////// Parameters
+const limitQueryParam = doc.addParameter('Limit', 'query', 'limit', (t) => t.schema(z.int().positive().max(1000)))
+const postsLimitQueryParam = doc.addParameter('LimitPosts', 'query', 'limit', (t) => t.schema(postsLimit))
 const pageQueryParam = doc.addParameter('Page', 'query', 'page', (t) => t.schema(page))
-const onlyQueryParam = doc.addParameter('Only', 'query', 'only', (t) => {
-  t.schema(only) //
-    .example('Get all fields', (t) => t.value(''))
-    .example('Get id,created_at,file_url', (t) => t.value('id,created_at,file_url'))
-})
 
-const tagQueryParam = doc.addParameter('Tags', 'query', 'tags', (t) => {
+const tagsQueryParam = doc.addParameter('Tags', 'query', 'tags', (t) => {
   t.schema(z.string())
     .style('spaceDelimited') //
     .example('No tags', (t) => t.value(''))
+    .example('Post by ID', (t) => t.value('id:1,10294969'))
+    .example('Post by MD5', (t) => t.value('md5:04399f2ed1c932d9bb8f848bf995f1f7'))
     .example('Daily top', (t) => t.value('order:rank'))
-    .example('Weekly top by score', (t) => t.value('order:score -rating:e,q age:<7d'))
-    .example('Weekly top by favorites', (t) => t.value('order:favcount -rating:e,q age:<7d'))
+    .example('Weekly top by score', (t) => t.value('order:score is:sfw age:<7d'))
+    .example('Weekly top by favorites', (t) => t.value('order:favcount is:sfw age:<7d'))
     .example('Saved searches', (t) => t.value('search:all'))
 })
 
 //////////////////////////////// Paths
-//////////////// Posts
+
+// --- Posts ---
 doc
   .addPath('/posts.json') //
-  // .parameter('query', 'tags', (t) => {
-  //   t.schema(z.string())
-  //     .style('spaceDelimited') //
-  //     .example('No tags', (t) => t.value(''))
-  //     .example('Daily top', (t) => t.value('order:rank'))
-  //     .example('Weekly top by score', (t) => t.value('order:score -rating:e,q age:<7d'))
-  //     .example('Weekly top by favorites', (t) => t.value('order:favcount -rating:e,q age:<7d'))
-  //     .example('Saved searches', (t) => t.value('search:all'))
-  // })
-  .parameter('query', 'limit', (t) => t.schema(postsLimit))
-  .parameter(tagQueryParam)
+  .parameter(tagsQueryParam)
   .parameter(pageQueryParam)
-  .parameter(onlyQueryParam)
+  .parameter(postsLimitQueryParam)
+  .parameter('query', 'md5', (t) => {
+    t.explode(false)
+    t.schema(z.string().or(z.string().array()))
+  })
+  .parameter('query', 'only', (t) => {
+    t.style('form')
+    t.explode(false)
+    t.schema(post.keyof().array())
+      .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
+  })
   .get((t) => {
     t.tag('posts')
     t.describe('Posts list')
@@ -117,7 +123,11 @@ doc
 
 doc
   .addPath('/posts/{id}.json', {id: (t) => t.schema(postID)}) //
-  .parameter(onlyQueryParam)
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(post.keyof().array())
+      .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
+  })
   .get((t) => {
     t.tag('posts')
     t.describe('Show post')
@@ -133,7 +143,11 @@ doc
 
 doc
   .addPath('/posts/random.json') //
-  .parameter(onlyQueryParam)
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(post.keyof().array())
+      .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
+  })
   .get((t) => {
     t.tag('posts')
     t.describe('Get random post')
@@ -147,11 +161,41 @@ doc
     t.response(404, NotFound)
   })
 
-//////////////// Users
-
+// --- Users ---
 doc
   .addPath('/users.json') //
-  .parameter(tagQueryParam)
+  .parameter('query', 'search', (t) => {
+    t.style('deepObject')
+    t.explode(false)
+    t.schema(
+      z.object({
+        id: z.number().or(z.number().array()),
+        name: z.string(),
+
+        created_at: z.number(),
+        updated_at: z.number(),
+
+        // https://danbooru.donmai.us/wiki_pages/api%3Aartists#:~:text=Special%20search%20parameters
+        name_matches: z.string(),
+        min_level : z.string(),
+        max_level : z.string(),
+        current_user_first : z.string(),
+        order: z.union([
+          z.literal('name'),
+          z.literal('post_upload_count'),
+          z.literal('post_update_count'),
+          z.literal('note_count'),
+        ]),
+      }).partial(),
+    )
+  })
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(user.keyof().array())
+      .example('Pick id,name', (t) => t.value(['id', 'name']))
+  })
+  .parameter(tagsQueryParam)
+  .parameter(pageQueryParam)
   .get((t) => {
     t.tag('users')
     t.describe('Get list of users')
@@ -167,7 +211,12 @@ doc
 
 doc
   .addPath('/users/{id}.json', {id: (t) => t.schema(userID)}) //
-  .parameter(tagQueryParam)
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(user.keyof().array())
+      .example('Pick id,name', (t) => t.value(['id', 'name']))
+  })
+  .parameter(tagsQueryParam)
   .get((t) => {
     t.tag('users')
     t.describe('Get user')
@@ -181,27 +230,133 @@ doc
     t.response(404, NotFound)
   })
 
-//////////////// Autocomplete
+// --- Artists ---
+doc.addPath('/artists.json')
+  .parameter('query', 'search', (t) => {
+    t.style('deepObject')
+    t.explode(false)
+    t.schema(
+      z.object({
+        id: z.number().or(z.number().array()),
+        name: z.string(),
+        group_name: z.string(),
+        created_at: z.number(),
+        updated_at: z.number(),
+        is_deleted: z.boolean(),
+        is_banned: z.boolean(),
+
+        // https://danbooru.donmai.us/wiki_pages/api%3Aartists#:~:text=Special%20search%20parameters
+        any_other_name_like: z.string(),
+        any_name_matches: z.string(),
+        url_matches: z.string(),
+        any_name_or_url_matches: z.string(),
+        order: z.union([
+          z.literal('name'),
+          z.literal('updated_at'),
+          z.literal('post_count'),
+        ]),
+      }).partial(),
+    )
+      .example('Use ID', (t) => t.value({id: 188101}))
+      .example('Use array ID', (t) => t.value({id: [188101, 210615]}))
+  })
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(artist.keyof().array())
+      .example('Pick id,name', (t) => t.value(['id', 'name']))
+      .example('Pick id,name,urls', (t) => t.value(['id', 'name', 'urls']))
+  })
+  .parameter(limitQueryParam)
+  .parameter(pageQueryParam)
+  .get((t) => {
+    t.tag('artists')
+    t.operationId('list_artists')
+
+    t.response(200, (t) => {
+      t.content('application/json', artists)
+    })
+  })
+
+doc.addPath('/artists/{id}.json', {id: (t) => t.schema(artist.shape.id)})
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(artist.keyof().array())
+      .example('Pick id,name,urls', (t) => t.value(['id', 'name', 'urls']))
+  })
+  .get((t) => {
+    t.tag('artists')
+    t.operationId('get_artist')
+    t.describe('Get artist')
+
+    t.response(200, (t) => {
+      t.content('application/json', artist)
+    })
+  })
+
+// --- Reverse search ---
+doc
+  .addPath('/iqdb_queries.json') //
+  .parameter('query', 'search', (t) => {
+    t.style('deepObject')
+    t.explode(false)
+    t.schema(
+      z.object({
+        id: postID,
+        url: z.string(),
+        hash: z.string().describe('The IQDB hash'),
+        // TODO: file: ?
+      }).partial(),
+    )
+      .example('Use ID', (t) => t.value({id: 10294969}))
+      .example('Use URL', (t) => t.value({url: 'https://example.com'}))
+      .example('Use IQDB', (t) =>
+        t.value({
+          // deno-fmt-ignore
+          hash: 'iqdb_3fe037e0804fa2e23fa801eee79596303f775005ad0e315ef0f9f780fa80fbfdfc00fc7dfcfbfd80fdf5fdf9fe00fef9ff00ff7efff4fffcfffeffff00030007000f00830087008e0180018101830187018f028303000307030e0402050b06800681068e0d800d83e77ef1f1f877f880f9fef9fffc6dfc80fca0fcfbfd7afd7dfdfbfdfefe61fe78fef3fefdff6dff7efff8fff9fffc000100020005000a0013008300870101018101820183018702810318038406080704e57ef1f1f320f877f96df97ef97ff980f9f8fc6dfc7efc80fca0fe6dfe7efe7ffe80fefdff00ff78fffcfffeffff0008008100820083008701830184018701880318060006010602061306880e3d1882',
+        }))
+  })
+  .parameter(limitQueryParam)
+  .get((t) => {
+    t.tag('search image')
+    t.response(200, (t) => {
+      t.content(
+        'application/json',
+        z.object({
+          hash: z.string(),
+          post_id: postID,
+          score: z.number().min(0).max(100),
+          signature: z.object({
+            avglf: z.tuple([z.number(), z.number(), z.number()]),
+            sig: z.tuple([
+              z.array(z.number()),
+              z.array(z.number()),
+              z.array(z.number()),
+            ]),
+          }),
+          post,
+        }),
+      )
+    })
+  })
+
+// --- Autocomplete ---
 doc
   .addPath('/autocomplete.json') //
-  .parameter('query', 'search[type]', (t) => {
-    t.schema(z.enum(['tag', 'user', 'artist']))
+  .parameter('query', 'search', (t) => {
+    t.style('deepObject')
+    t.explode(false)
+    t.schema(z.object({
+      type: z.union([
+        z.literal('tag'),
+        z.literal('user'),
+        z.literal('artist'),
+      ]),
+      query: z.string(),
+    }))
+      .example('Search Tag', (t) => t.value({type: 'tag', query: 'zenless zone zero'}))
+      .example('Search Artists', (t) => t.value({type: 'artist', query: 'lunacle'}))
   })
-  .parameter('query', 'search[query]', (t) => {
-    t.schema(z.string()) //
-      .example('Example', (t) => t.value('zenless zone zero'))
-  })
-  // .parameter('query', 'search', (t) => {
-  //   t.style('form')
-  //   t.content(
-  //     'application/x-www-form-urlencoded',
-  //     z.object({
-  //       type: z.enum(['tag', 'user', 'artist']),
-  //       query: z.string(),
-  //     })
-  //   ) //
-  // })
-  .parameter('query', 'limit', (t) => t.schema(limit))
+  .parameter(limitQueryParam)
   .get((t) => {
     t.tag('autocomplete')
     t.describe('Get autocomplete')

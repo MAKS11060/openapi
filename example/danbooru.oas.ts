@@ -7,10 +7,11 @@ export interface paths {
     "/posts.json": {
         parameters: {
             query?: {
-                limit?: components["schemas"]["postsLimit"];
                 tags?: components["parameters"]["Tags"];
                 page?: components["parameters"]["Page"];
-                only?: components["parameters"]["Only"];
+                limit?: components["parameters"]["LimitPosts"];
+                md5?: string | string[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;
             path?: never;
@@ -29,7 +30,7 @@ export interface paths {
     "/posts/{id}.json": {
         parameters: {
             query?: {
-                only?: components["parameters"]["Only"];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;
             path: {
@@ -50,7 +51,7 @@ export interface paths {
     "/posts/random.json": {
         parameters: {
             query?: {
-                only?: components["parameters"]["Only"];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;
             path?: never;
@@ -69,7 +70,20 @@ export interface paths {
     "/users.json": {
         parameters: {
             query?: {
+                search?: {
+                    id?: number | number[];
+                    name?: string;
+                    created_at?: number;
+                    updated_at?: number;
+                    name_matches?: string;
+                    min_level?: string;
+                    max_level?: string;
+                    current_user_first?: string;
+                    order?: "name" | "post_upload_count" | "post_update_count" | "note_count";
+                };
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
                 tags?: components["parameters"]["Tags"];
+                page?: components["parameters"]["Page"];
             };
             header?: never;
             path?: never;
@@ -88,6 +102,7 @@ export interface paths {
     "/users/{id}.json": {
         parameters: {
             query?: {
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
                 tags?: components["parameters"]["Tags"];
             };
             header?: never;
@@ -106,12 +121,135 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/artists.json": {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: number | number[];
+                    name?: string;
+                    group_name?: string;
+                    created_at?: number;
+                    updated_at?: number;
+                    is_deleted?: boolean;
+                    is_banned?: boolean;
+                    any_other_name_like?: string;
+                    any_name_matches?: string;
+                    url_matches?: string;
+                    any_name_or_url_matches?: string;
+                    order?: "name" | "updated_at" | "post_count";
+                };
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+                limit?: components["parameters"]["Limit"];
+                page?: components["parameters"]["Page"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["list_artists"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/artists/{id}.json": {
+        parameters: {
+            query?: {
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description Get artist */
+        get: operations["get_artist"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/iqdb_queries.json": {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: components["schemas"]["postID"];
+                    url?: string;
+                    hash?: string;
+                };
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    search?: {
+                        id?: components["schemas"]["postID"];
+                        url?: string;
+                        hash?: string;
+                    };
+                    limit?: components["parameters"]["Limit"];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Response 200 */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": {
+                            hash: string;
+                            post_id: components["schemas"]["postID"];
+                            score: number;
+                            signature: {
+                                avglf: [
+                                    number,
+                                    number,
+                                    number
+                                ];
+                                sig: [
+                                    number[],
+                                    number[],
+                                    number[]
+                                ];
+                            };
+                            post: components["schemas"]["post"];
+                        };
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/autocomplete.json": {
         parameters: {
             query?: {
-                "search[type]"?: "tag" | "user" | "artist";
-                "search[query]"?: string;
-                limit?: components["schemas"]["limit"];
+                search?: {
+                    type: "tag" | "user" | "artist";
+                    query: string;
+                };
+                limit?: components["parameters"]["Limit"];
             };
             header?: never;
             path?: never;
@@ -131,6 +269,106 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        artist: {
+            /** @description Artist ID */
+            id: number;
+            name: string;
+            group_name: string;
+            other_names: string[];
+            is_banned: boolean;
+            is_deleted: boolean;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            members?: unknown[];
+            urls?: {
+                /** @description The ID */
+                id: number;
+                /** @description Artist ID */
+                artist_id: number;
+                /** Format: uri */
+                url: string;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                is_active: boolean;
+            }[];
+            wiki_page?: {
+                /** @description The ID */
+                id: number;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                title: string;
+                body: string;
+                is_locked: boolean;
+                other_names: string[];
+                is_deleted: boolean;
+            };
+            tag_alias?: unknown;
+            tag?: {
+                /** @description The ID */
+                id: number;
+                name: string;
+                post_count: number;
+                /** @enum {number} */
+                category: 0 | 1 | 2 | 3 | 4;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                is_deprecated: boolean;
+                words: string[];
+            };
+        };
+        artistAssociated: {
+            members?: unknown[];
+            urls?: {
+                /** @description The ID */
+                id: number;
+                /** @description Artist ID */
+                artist_id: number;
+                /** Format: uri */
+                url: string;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                is_active: boolean;
+            }[];
+            wiki_page?: {
+                /** @description The ID */
+                id: number;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                title: string;
+                body: string;
+                is_locked: boolean;
+                other_names: string[];
+                is_deleted: boolean;
+            };
+            tag_alias?: unknown;
+            tag?: {
+                /** @description The ID */
+                id: number;
+                name: string;
+                post_count: number;
+                /** @enum {number} */
+                category: 0 | 1 | 2 | 3 | 4;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                is_deprecated: boolean;
+                words: string[];
+            };
+        };
+        artists: components["schemas"]["artist"][];
         autocomplete: {
             /**
              * @description The type of the autocomplete item, must be "tag"
@@ -160,6 +398,20 @@ export interface components {
             category: 0 | 1 | 3 | 4 | 5;
             /** @description The count of posts associated with the tag, must be >= 0 */
             post_count: number;
+            tag: {
+                /** @description The ID */
+                id: number;
+                name: string;
+                post_count: number;
+                /** @enum {number} */
+                category: 0 | 1 | 2 | 3 | 4;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                is_deprecated: boolean;
+                words: string[];
+            };
         }[] | {
             /**
              * @description The type of the autocomplete item, must be "user"
@@ -194,31 +446,10 @@ export interface components {
         page: number;
         post: {
             id: components["schemas"]["postID"];
-            /** @description The ID of the user who uploaded the post */
-            uploader_id: number;
-            /** @description The ID of the user who approved the post */
-            approver_id?: number | null;
-            /** @description The tags associated with the post */
-            tag_string: string;
-            /** @description The general tags associated with the post */
-            tag_string_general: string;
-            /** @description The artist tags associated with the post */
-            tag_string_artist: string;
-            /** @description The copyright tags associated with the post */
-            tag_string_copyright: string;
-            /** @description The character tags associated with the post */
-            tag_string_character: string;
-            /** @description The meta tags associated with the post */
-            tag_string_meta: string;
-            /** @description The rating of the post */
-            rating: ("g" | "s" | "q" | "e") | null;
-            /** @description The ID of the parent post */
-            parent_id?: number | null;
-            /**
-             * Format: uri
-             * @description The source of the post
-             */
+            /** @description The source of the post */
             source: string;
+            /** @description The Pixiv ID of the post */
+            pixiv_id?: number | null;
             /** @description The MD5 hash of the file */
             md5: string;
             /**
@@ -243,42 +474,6 @@ export interface components {
              * @description The URL of the preview file
              */
             preview_file_url: string;
-            /** @description The score of the post */
-            score: number;
-            /** @description The number of favorites */
-            fav_count: number;
-            /** @description The total number of tags */
-            tag_count: number;
-            /** @description The number of general tags */
-            tag_count_general: number;
-            /** @description The number of artist tags */
-            tag_count_artist: number;
-            /** @description The number of copyright tags */
-            tag_count_copyright: number;
-            /** @description The number of character tags */
-            tag_count_character: number;
-            /** @description The number of meta tags */
-            tag_count_meta: number;
-            /** @description The width of the image */
-            image_width: number;
-            /** @description The height of the image */
-            image_height: number;
-            /**
-             * Format: date-time
-             * @description The timestamp when the post was created
-             */
-            created_at: string;
-            /**
-             * Format: date-time
-             * @description The timestamp when the post was last updated
-             */
-            updated_at: string;
-            /** @description The timestamp when the last comment was bumped */
-            last_comment_bumped_at?: string | null;
-            /** @description The timestamp when the last comment was added */
-            last_commented_at?: string | null;
-            /** @description The timestamp when the last note was added */
-            last_noted_at?: string | null;
             /** @description The media asset associated with the post */
             media_asset: {
                 id: number;
@@ -305,14 +500,66 @@ export interface components {
                     file_ext: string;
                 }[];
             };
+            /** @description The height of the image */
+            image_height: number;
+            /** @description The width of the image */
+            image_width: number;
+            /**
+             * Format: date-time
+             * @description The timestamp when the post was created
+             */
+            created_at: string;
+            /**
+             * Format: date-time
+             * @description The timestamp when the post was last updated
+             */
+            updated_at: string;
+            /** @description The ID of the user who uploaded the post */
+            uploader_id: number;
+            /** @description The ID of the user who approved the post */
+            approver_id?: number | null;
+            /** @description The ID of the parent post */
+            parent_id: components["schemas"]["postID"];
+            /** @description The rating of the post */
+            rating: ("g" | "s" | "q" | "e") | null;
+            /** @description The score of the post */
+            score: number;
             /** @description The up score of the post */
             up_score: number;
             /** @description The down score of the post */
             down_score: number;
-            /** @description The Pixiv ID of the post */
-            pixiv_id?: number | null;
-            /** @description The bit flags of the post */
-            bit_flags: number;
+            /** @description The number of favorites */
+            fav_count: number;
+            /** @description The tags associated with the post */
+            tag_string: string;
+            /** @description The general tags associated with the post */
+            tag_string_general: string;
+            /** @description The artist tags associated with the post */
+            tag_string_artist: string;
+            /** @description The copyright tags associated with the post */
+            tag_string_copyright: string;
+            /** @description The character tags associated with the post */
+            tag_string_character: string;
+            /** @description The meta tags associated with the post */
+            tag_string_meta: string;
+            /** @description The total number of tags */
+            tag_count: number;
+            /** @description The number of general tags */
+            tag_count_general: number;
+            /** @description The number of artist tags */
+            tag_count_artist: number;
+            /** @description The number of copyright tags */
+            tag_count_copyright: number;
+            /** @description The number of character tags */
+            tag_count_character: number;
+            /** @description The number of meta tags */
+            tag_count_meta: number;
+            /** @description The timestamp when the last comment was bumped */
+            last_comment_bumped_at?: string | null;
+            /** @description The timestamp when the last comment was added */
+            last_commented_at?: string | null;
+            /** @description The timestamp when the last note was added */
+            last_noted_at?: string | null;
             /** @description Indicates whether the post has active children */
             has_active_children: boolean;
             /** @description Indicates whether the post has children */
@@ -321,6 +568,8 @@ export interface components {
             has_large: boolean;
             /** @description Indicates whether the post has visible children */
             has_visible_children: boolean;
+            /** @description The bit flags of the post */
+            bit_flags: number;
             /** @description Indicates whether the post is banned */
             is_banned: boolean;
             /** @description Indicates whether the post is deleted */
@@ -329,6 +578,11 @@ export interface components {
             is_flagged: boolean;
             /** @description Indicates whether the post is pending */
             is_pending: boolean;
+            uploader?: components["schemas"]["user"];
+            updater?: components["schemas"]["user"];
+            approver?: components["schemas"]["user"];
+            parent?: components["schemas"]["post"];
+            children?: components["schemas"]["post"][];
         };
         /** @description The post ID */
         postID: number;
@@ -449,8 +703,9 @@ export interface components {
         };
     };
     parameters: {
+        Limit: number;
+        LimitPosts: components["schemas"]["postsLimit"];
         Page: components["schemas"]["page"];
-        Only: components["schemas"]["only"];
         Tags: string;
     };
     requestBodies: never;
@@ -462,10 +717,11 @@ export interface operations {
     list_posts: {
         parameters: {
             query?: {
-                limit?: components["schemas"]["postsLimit"];
                 tags?: components["parameters"]["Tags"];
                 page?: components["parameters"]["Page"];
-                only?: components["parameters"]["Only"];
+                limit?: components["parameters"]["LimitPosts"];
+                md5?: string | string[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;
             path?: never;
@@ -490,7 +746,7 @@ export interface operations {
     get_post: {
         parameters: {
             query?: {
-                only?: components["parameters"]["Only"];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;
             path: {
@@ -517,7 +773,7 @@ export interface operations {
     get_random_post: {
         parameters: {
             query?: {
-                only?: components["parameters"]["Only"];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;
             path?: never;
@@ -542,7 +798,20 @@ export interface operations {
     list_users: {
         parameters: {
             query?: {
+                search?: {
+                    id?: number | number[];
+                    name?: string;
+                    created_at?: number;
+                    updated_at?: number;
+                    name_matches?: string;
+                    min_level?: string;
+                    max_level?: string;
+                    current_user_first?: string;
+                    order?: "name" | "post_upload_count" | "post_update_count" | "note_count";
+                };
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
                 tags?: components["parameters"]["Tags"];
+                page?: components["parameters"]["Page"];
             };
             header?: never;
             path?: never;
@@ -567,6 +836,7 @@ export interface operations {
     get_user: {
         parameters: {
             query?: {
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
                 tags?: components["parameters"]["Tags"];
             };
             header?: never;
@@ -591,12 +861,76 @@ export interface operations {
             404: components["responses"]["NotFound"];
         };
     };
+    list_artists: {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: number | number[];
+                    name?: string;
+                    group_name?: string;
+                    created_at?: number;
+                    updated_at?: number;
+                    is_deleted?: boolean;
+                    is_banned?: boolean;
+                    any_other_name_like?: string;
+                    any_name_matches?: string;
+                    url_matches?: string;
+                    any_name_or_url_matches?: string;
+                    order?: "name" | "updated_at" | "post_count";
+                };
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+                limit?: components["parameters"]["Limit"];
+                page?: components["parameters"]["Page"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["artists"];
+                };
+            };
+        };
+    };
+    get_artist: {
+        parameters: {
+            query?: {
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["artist"];
+                };
+            };
+        };
+    };
     get_autocomplete: {
         parameters: {
             query?: {
-                "search[type]"?: "tag" | "user" | "artist";
-                "search[query]"?: string;
-                limit?: components["schemas"]["limit"];
+                search?: {
+                    type: "tag" | "user" | "artist";
+                    query: string;
+                };
+                limit?: components["parameters"]["Limit"];
             };
             header?: never;
             path?: never;

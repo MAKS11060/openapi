@@ -1,6 +1,6 @@
-import { createDoc } from '@maks11060/openapi'
-import { zodPlugin } from '@maks11060/openapi/zod'
-import { format } from '@std/datetime/format'
+import {createDoc} from '@maks11060/openapi'
+import {zodPlugin} from '@maks11060/openapi/zod'
+import {format} from '@std/datetime/format'
 
 export const doc = createDoc({
   plugins: {
@@ -18,6 +18,7 @@ export const doc = createDoc({
     //
     {name: 'posts', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api:posts'}},
     {name: 'users', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api:users'}},
+    {name: 'artists', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api:artists'}},
     {name: 'autocomplete'},
   ],
 })
