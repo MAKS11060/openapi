@@ -51,6 +51,7 @@ export interface paths {
     "/posts/random.json": {
         parameters: {
             query?: {
+                tags?: components["parameters"]["Tags"];
                 only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;
@@ -664,7 +665,7 @@ export interface components {
         Limit: number;
         LimitPosts: components["schemas"]["postsLimit"];
         Page: components["schemas"]["page"];
-        Tags: string;
+        Tags: string | string[];
     };
     requestBodies: never;
     headers: never;
@@ -731,6 +732,7 @@ export interface operations {
     get_random_post: {
         parameters: {
             query?: {
+                tags?: components["parameters"]["Tags"];
                 only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
             };
             header?: never;

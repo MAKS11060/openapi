@@ -72,8 +72,8 @@ const postsLimitQueryParam = doc.addParameter('LimitPosts', 'query', 'limit', (t
 const pageQueryParam = doc.addParameter('Page', 'query', 'page', (t) => t.schema(page))
 
 const tagsQueryParam = doc.addParameter('Tags', 'query', 'tags', (t) => {
-  t.schema(z.string())
-    .style('spaceDelimited') //
+  t.style('spaceDelimited')
+  t.schema(z.string().or(z.string().array()))
     .example('No tags', (t) => t.value(''))
     .example('Post by ID', (t) => t.value('id:1,10294969'))
     .example('Post by MD5', (t) => t.value('md5:04399f2ed1c932d9bb8f848bf995f1f7'))
@@ -141,6 +141,7 @@ doc
 
 doc
   .addPath('/posts/random.json') //
+  .parameter(tagsQueryParam)
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(post.keyof().array())

@@ -23,3 +23,7 @@ jobs:
       - name: Format
         run: |
           deno fmt --check
+
+      - name: Build
+        run: |
+          deno task build:check
