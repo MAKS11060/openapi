@@ -151,3 +151,16 @@ Deno.test('/artists/{id}.json', async (t) => {
   })
   if (data) console.log(data)
 })
+
+Deno.test('/tags.json', async (t) => {
+  const {data} = await danbooruApi.GET('/tags.json', {
+    params: {
+      query: {
+        only: [
+          'id',
+        ],
+      },
+    },
+  })
+  if (data) console.log(data)
+})

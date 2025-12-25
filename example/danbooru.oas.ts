@@ -196,7 +196,9 @@ export interface paths {
                     is_empty?: string;
                     order?: "name" | "date" | "count" | "similarity" | "custom";
                 };
-                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+                only?: (("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links") | {
+                    [key: string]: "id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag";
+                })[];
                 limit?: components["parameters"]["Limit"];
                 page?: components["parameters"]["Page"];
             };
@@ -966,7 +968,9 @@ export interface operations {
                     is_empty?: string;
                     order?: "name" | "date" | "count" | "similarity" | "custom";
                 };
-                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+                only?: (("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links") | {
+                    [key: string]: "id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag";
+                })[];
                 limit?: components["parameters"]["Limit"];
                 page?: components["parameters"]["Page"];
             };
