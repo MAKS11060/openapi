@@ -103,7 +103,7 @@ doc
   .parameter('query', 'only', (t) => {
     t.style('form')
     t.explode(false)
-    t.schema(post.keyof().array())
+    t.schema(post.keyof().array().or(z.string()))
       .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
   })
   .get((t) => {
@@ -128,7 +128,7 @@ doc
   .addPath('/posts/{id}.json', {id: (t) => t.schema(postID)}) //
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(post.keyof().array())
+    t.schema(post.keyof().array().or(z.string()))
       .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
   })
   .get((t) => {
@@ -149,7 +149,7 @@ doc
   .parameter(tagsQueryParam)
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(post.keyof().array())
+    t.schema(post.keyof().array().or(z.string()))
       .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
   })
   .get((t) => {
@@ -195,7 +195,7 @@ doc
   })
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(user.keyof().array())
+    t.schema(user.keyof().array().or(z.string()))
       .example('Pick id,name', (t) => t.value(['id', 'name']))
   })
   .parameter(tagsQueryParam)
@@ -217,7 +217,7 @@ doc
   .addPath('/users/{id}.json', {id: (t) => t.schema(userID)}) //
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(user.keyof().array())
+    t.schema(user.keyof().array().or(z.string()))
       .example('Pick id,name', (t) => t.value(['id', 'name']))
   })
   .parameter(tagsQueryParam)
@@ -267,7 +267,7 @@ doc.addPath('/artists.json')
   })
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(artist.keyof().array())
+    t.schema(artist.keyof().array().or(z.string()))
       .example('Pick id,name', (t) => t.value(['id', 'name']))
       .example('Pick id,name,urls', (t) => t.value(['id', 'name', 'urls']))
   })
@@ -285,7 +285,7 @@ doc.addPath('/artists.json')
 doc.addPath('/artists/{id}.json', {id: (t) => t.schema(artist.shape.id)})
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(artist.keyof().array())
+    t.schema(artist.keyof().array().or(z.string()))
       .example('Pick id,name,urls', (t) => t.value(['id', 'name', 'urls']))
   })
   .get((t) => {
@@ -335,7 +335,7 @@ doc.addPath('/tags.json')
   })
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(tag.keyof().array())
+    t.schema(tag.keyof().array().or(z.string()))
       .example('Pick id,name', (t) => t.value(['id', 'name']))
       .example('Pick id,name,category', (t) => t.value(['id', 'name', 'category']))
   })
@@ -353,7 +353,7 @@ doc.addPath('/tags.json')
 doc.addPath('/tags/{id}.json', {id: (t) => t.schema(tag.shape.id)})
   .parameter('query', 'only', (t) => {
     t.explode(false)
-    t.schema(tag.keyof().array())
+    t.schema(tag.keyof().array().or(z.string()))
       .example('Pick id,name,category', (t) => t.value(['id', 'name', 'category']))
   })
   .get((t) => {

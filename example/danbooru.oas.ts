@@ -11,7 +11,7 @@ export interface paths {
                 page?: components["parameters"]["Page"];
                 limit?: components["parameters"]["LimitPosts"];
                 md5?: string | string[];
-                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[] | string;
             };
             header?: never;
             path?: never;
@@ -30,7 +30,7 @@ export interface paths {
     "/posts/{id}.json": {
         parameters: {
             query?: {
-                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[] | string;
             };
             header?: never;
             path: {
@@ -52,7 +52,7 @@ export interface paths {
         parameters: {
             query?: {
                 tags?: components["parameters"]["Tags"];
-                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[] | string;
             };
             header?: never;
             path?: never;
@@ -82,7 +82,7 @@ export interface paths {
                     current_user_first?: string;
                     order?: "name" | "post_upload_count" | "post_update_count" | "note_count";
                 };
-                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[] | string;
                 tags?: components["parameters"]["Tags"];
                 page?: components["parameters"]["Page"];
             };
@@ -103,7 +103,7 @@ export interface paths {
     "/users/{id}.json": {
         parameters: {
             query?: {
-                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[] | string;
                 tags?: components["parameters"]["Tags"];
             };
             header?: never;
@@ -139,7 +139,7 @@ export interface paths {
                     any_name_or_url_matches?: string;
                     order?: "name" | "updated_at" | "post_count" | "custom";
                 };
-                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[] | string;
                 limit?: components["parameters"]["Limit"];
                 page?: components["parameters"]["Page"];
             };
@@ -159,7 +159,7 @@ export interface paths {
     "/artists/{id}.json": {
         parameters: {
             query?: {
-                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[] | string;
             };
             header?: never;
             path: {
@@ -196,9 +196,7 @@ export interface paths {
                     is_empty?: string;
                     order?: "name" | "date" | "count" | "similarity" | "custom";
                 };
-                only?: (("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links") | {
-                    [key: string]: "id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag";
-                })[];
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[] | string;
                 limit?: components["parameters"]["Limit"];
                 page?: components["parameters"]["Page"];
             };
@@ -218,7 +216,7 @@ export interface paths {
     "/tags/{id}.json": {
         parameters: {
             query?: {
-                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[] | string;
             };
             header?: never;
             path: {
@@ -746,7 +744,7 @@ export interface operations {
                 page?: components["parameters"]["Page"];
                 limit?: components["parameters"]["LimitPosts"];
                 md5?: string | string[];
-                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[] | string;
             };
             header?: never;
             path?: never;
@@ -771,7 +769,7 @@ export interface operations {
     get_post: {
         parameters: {
             query?: {
-                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[] | string;
             };
             header?: never;
             path: {
@@ -799,7 +797,7 @@ export interface operations {
         parameters: {
             query?: {
                 tags?: components["parameters"]["Tags"];
-                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[];
+                only?: ("id" | "source" | "pixiv_id" | "md5" | "file_ext" | "file_size" | "file_url" | "large_file_url" | "preview_file_url" | "media_asset" | "image_height" | "image_width" | "created_at" | "updated_at" | "uploader_id" | "approver_id" | "parent_id" | "rating" | "score" | "up_score" | "down_score" | "fav_count" | "tag_string" | "tag_string_general" | "tag_string_artist" | "tag_string_copyright" | "tag_string_character" | "tag_string_meta" | "tag_count" | "tag_count_general" | "tag_count_artist" | "tag_count_copyright" | "tag_count_character" | "tag_count_meta" | "last_comment_bumped_at" | "last_commented_at" | "last_noted_at" | "has_active_children" | "has_children" | "has_large" | "has_visible_children" | "bit_flags" | "is_banned" | "is_deleted" | "is_flagged" | "is_pending" | "uploader" | "updater" | "approver" | "parent" | "children")[] | string;
             };
             header?: never;
             path?: never;
@@ -835,7 +833,7 @@ export interface operations {
                     current_user_first?: string;
                     order?: "name" | "post_upload_count" | "post_update_count" | "note_count";
                 };
-                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[] | string;
                 tags?: components["parameters"]["Tags"];
                 page?: components["parameters"]["Page"];
             };
@@ -862,7 +860,7 @@ export interface operations {
     get_user: {
         parameters: {
             query?: {
-                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[];
+                only?: ("id" | "name" | "level" | "inviter_id" | "post_update_count" | "note_update_count" | "post_upload_count" | "favorite_count" | "unread_dmail_count" | "is_banned" | "bit_prefs" | "theme" | "favorite_tags" | "blacklisted_tags" | "comment_threshold" | "timezone" | "per_page" | "default_image_size" | "custom_css" | "upload_points" | "last_forum_read_at" | "last_logged_in_at" | "created_at" | "updated_at")[] | string;
                 tags?: components["parameters"]["Tags"];
             };
             header?: never;
@@ -904,7 +902,7 @@ export interface operations {
                     any_name_or_url_matches?: string;
                     order?: "name" | "updated_at" | "post_count" | "custom";
                 };
-                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[] | string;
                 limit?: components["parameters"]["Limit"];
                 page?: components["parameters"]["Page"];
             };
@@ -928,7 +926,7 @@ export interface operations {
     get_artist: {
         parameters: {
             query?: {
-                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
+                only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[] | string;
             };
             header?: never;
             path: {
@@ -968,9 +966,7 @@ export interface operations {
                     is_empty?: string;
                     order?: "name" | "date" | "count" | "similarity" | "custom";
                 };
-                only?: (("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links") | {
-                    [key: string]: "id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag";
-                })[];
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[] | string;
                 limit?: components["parameters"]["Limit"];
                 page?: components["parameters"]["Page"];
             };
@@ -994,7 +990,7 @@ export interface operations {
     get_tag: {
         parameters: {
             query?: {
-                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[] | string;
             };
             header?: never;
             path: {
