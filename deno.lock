@@ -33,6 +33,7 @@
       "integrity": "1046fb7e259727c17a9e578cdb531a970810c64f863e1c893af48626390819f4",
       "dependencies": [
         "jsr:@std/yaml@^1.0.5",
+        "npm:@standard-schema/spec@1",
         "npm:zod@^4.1.9"
       ]
     },

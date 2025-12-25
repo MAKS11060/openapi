@@ -1,6 +1,8 @@
 {
   "lock": true,
   "tasks": {
+    "init": "git config core.hooksPath .hooks",
+    "ok": "deno fmt --check && deno task build:check",
     "dev": "deno run -A --watch-hmr scripts/dev.ts",
     "build": "deno run -Aq scripts/build.ts",
     "build:check": "deno run -Aq scripts/build.ts -d",
@@ -21,8 +23,7 @@
       "dependencies": [
         "build"
       ]
-    },
-    "ok": "deno fmt --check && deno task build:check"
+    }
   },
   "imports": {
     "@maks11060/openapi": "jsr:@maks11060/openapi@^0.1.3",
