@@ -40,7 +40,21 @@ export const tag = z.object({
   updated_at: z.iso.datetime(),
   is_deprecated: z.boolean(),
   words: z.string().array(),
+
+  // Associated attributes / https://danbooru.donmai.us/wiki_pages/api%3Atags
+  get wiki_page() {
+    return wikiPage.optional()
+  },
+  get artist() {
+    return artist.optional()
+  },
+  antecedent_alias: z.string().optional(),
+  consequent_aliases: z.string().optional(),
+  antecedent_implications: z.string().optional(),
+  dtext_links: z.string().optional(),
 })
+
+export const tags = tag.array()
 
 // --- Wiki ---
 export const wikiPage = z.object({

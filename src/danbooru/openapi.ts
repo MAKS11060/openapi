@@ -18,6 +18,7 @@ export const doc = createDoc({
     //
     {name: 'posts', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api:posts'}},
     {name: 'users', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api:users'}},
+    {name: 'tags', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api:tags'}},
     {name: 'artists', externalDocs: {url: 'https://danbooru.donmai.us/wiki_pages/api:artists'}},
     {name: 'autocomplete'},
   ],
