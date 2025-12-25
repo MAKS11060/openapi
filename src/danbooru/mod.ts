@@ -38,6 +38,8 @@ doc.addSchemas({
   postID,
   posts,
   postsLimit,
+  tag,
+  tags,
   unauthorized,
   user,
   userID,

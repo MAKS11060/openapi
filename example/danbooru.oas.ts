@@ -137,7 +137,7 @@ export interface paths {
                     any_name_matches?: string;
                     url_matches?: string;
                     any_name_or_url_matches?: string;
-                    order?: "name" | "updated_at" | "post_count";
+                    order?: "name" | "updated_at" | "post_count" | "custom";
                 };
                 only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
                 limit?: components["parameters"]["Limit"];
@@ -169,6 +169,63 @@ export interface paths {
         };
         /** @description Get artist */
         get: operations["get_artist"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tags.json": {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: number | number[];
+                    name?: string;
+                    category?: (0 | 1 | 3 | 4 | 5) | (0 | 1 | 3 | 4 | 5)[];
+                    post_count?: number;
+                    is_deprecated?: boolean;
+                    created_at?: number;
+                    updated_at?: number;
+                    fuzzy_name_matches?: string;
+                    name_matches?: string;
+                    name_normalize?: string | string[];
+                    name_or_alias_matches?: string;
+                    hide_empty?: string;
+                    is_empty?: string;
+                    order?: "name" | "date" | "count" | "similarity" | "custom";
+                };
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+                limit?: components["parameters"]["Limit"];
+                page?: components["parameters"]["Page"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["list_tags"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tags/{id}.json": {
+        parameters: {
+            query?: {
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description Get tag */
+        get: operations["get_tag"];
         put?: never;
         post?: never;
         delete?: never;
@@ -310,20 +367,7 @@ export interface components {
                 is_deleted: boolean;
             };
             tag_alias?: unknown;
-            tag?: {
-                /** @description The ID */
-                id: number;
-                name: string;
-                post_count: number;
-                /** @enum {number} */
-                category: 0 | 1 | 3 | 4 | 5;
-                /** Format: date-time */
-                created_at: string;
-                /** Format: date-time */
-                updated_at: string;
-                is_deprecated: boolean;
-                words: string[];
-            };
+            tag?: components["schemas"]["tag"];
         };
         artists: components["schemas"]["artist"][];
         autocomplete: {
@@ -358,20 +402,7 @@ export interface components {
             category: 0 | 1 | 3 | 4 | 5;
             /** @description The count of posts associated with the tag, must be >= 0 */
             post_count: number;
-            tag: {
-                /** @description The ID */
-                id: number;
-                name: string;
-                post_count: number;
-                /** @enum {number} */
-                category: 0 | 1 | 3 | 4 | 5;
-                /** Format: date-time */
-                created_at: string;
-                /** Format: date-time */
-                updated_at: string;
-                is_deprecated: boolean;
-                words: string[];
-            };
+            tag: components["schemas"]["tag"];
         }[] | {
             /**
              * @description The type of the autocomplete item, must be "user"
@@ -547,6 +578,39 @@ export interface components {
         postID: number;
         posts: components["schemas"]["post"][];
         postsLimit: number;
+        tag: {
+            /** @description The ID */
+            id: number;
+            name: string;
+            post_count: number;
+            /** @enum {number} */
+            category: 0 | 1 | 3 | 4 | 5;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            is_deprecated: boolean;
+            words: string[];
+            wiki_page?: {
+                /** @description The ID */
+                id: number;
+                /** Format: date-time */
+                created_at: string;
+                /** Format: date-time */
+                updated_at: string;
+                title: string;
+                body: string;
+                is_locked: boolean;
+                other_names: string[];
+                is_deleted: boolean;
+            };
+            artist?: components["schemas"]["artist"];
+            antecedent_alias?: string;
+            consequent_aliases?: string;
+            antecedent_implications?: string;
+            dtext_links?: string;
+        };
+        tags: components["schemas"]["tag"][];
         /** @description Authentication failed */
         unauthorized: unknown;
         user: {
@@ -836,7 +900,7 @@ export interface operations {
                     any_name_matches?: string;
                     url_matches?: string;
                     any_name_or_url_matches?: string;
-                    order?: "name" | "updated_at" | "post_count";
+                    order?: "name" | "updated_at" | "post_count" | "custom";
                 };
                 only?: ("id" | "name" | "group_name" | "other_names" | "is_banned" | "is_deleted" | "created_at" | "updated_at" | "members" | "urls" | "wiki_page" | "tag_alias" | "tag")[];
                 limit?: components["parameters"]["Limit"];
@@ -879,6 +943,70 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["artist"];
+                };
+            };
+        };
+    };
+    list_tags: {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: number | number[];
+                    name?: string;
+                    category?: (0 | 1 | 3 | 4 | 5) | (0 | 1 | 3 | 4 | 5)[];
+                    post_count?: number;
+                    is_deprecated?: boolean;
+                    created_at?: number;
+                    updated_at?: number;
+                    fuzzy_name_matches?: string;
+                    name_matches?: string;
+                    name_normalize?: string | string[];
+                    name_or_alias_matches?: string;
+                    hide_empty?: string;
+                    is_empty?: string;
+                    order?: "name" | "date" | "count" | "similarity" | "custom";
+                };
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+                limit?: components["parameters"]["Limit"];
+                page?: components["parameters"]["Page"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["tags"];
+                };
+            };
+        };
+    };
+    get_tag: {
+        parameters: {
+            query?: {
+                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[];
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["tag"];
                 };
             };
         };
