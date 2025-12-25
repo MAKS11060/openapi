@@ -40,11 +40,15 @@ export const danbooruApi = createClient<paths>({
   querySerializer,
 })
 
-export const danbooru = createPathBasedClient<paths>({
-  baseUrl: Deno.env.get('DANBOORU_BASE_URL') ?? 'https://danbooru.donmai.us',
-  // headers: {authorization},
-  querySerializer,
-})
+{ // Path based
+  const danbooruApi = createPathBasedClient<paths>({
+    baseUrl: Deno.env.get('DANBOORU_BASE_URL') ?? 'https://danbooru.donmai.us',
+    // headers: {authorization},
+    querySerializer,
+  })
+
+  danbooruApi['/posts/random.json'].GET()
+}
 
 // Find user
 Deno.test('/autocomplete.json user', async (t) => {
