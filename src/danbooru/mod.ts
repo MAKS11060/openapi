@@ -300,50 +300,100 @@ doc.addPath('/artists/{id}.json', {id: (t) => t.schema(artist.shape.id)})
 
 // --- Tags ---
 doc.addPath('/tags.json')
-  .parameter('query', 'search', (t) => {
-    t.style('deepObject')
-    t.explode(false)
-    t.schema(
-      z.object({
-        id: z.number().or(z.number().array()),
-        name: z.string(),
-        category: tagCategory.or(tagCategory.array()), // 1 / [0, 1]
-        post_count: z.number().positive(),
-        is_deprecated: z.boolean(),
-        created_at: z.number(),
-        updated_at: z.number(),
-
-        // https://danbooru.donmai.us/wiki_pages/api%3Atags#:~:text=Special%20search%20parameters
-        fuzzy_name_matches: z.string(),
-        name_matches: z.string(),
-        name_normalize: z.string().or(z.string().array()),
-        name_or_alias_matches: z.string(),
-        hide_empty: z.string(),
-        is_empty: z.string(),
-
-        order: z.union([
-          z.literal('name'),
-          z.literal('date'),
-          z.literal('count'),
-          z.literal('similarity'),
-          z.literal('custom'),
-        ]),
-      }).partial(),
-    )
-      .example('Use ID', (t) => t.value({id: 188101}))
-      .example('Use array ID', (t) => t.value({id: [188101, 210615]}))
-  })
-  .parameter('query', 'only', (t) => {
-    t.explode(false)
-    t.schema(tag.keyof().array().or(z.string()))
-      .example('Pick id,name', (t) => t.value(['id', 'name']))
-      .example('Pick id,name,category', (t) => t.value(['id', 'name', 'category']))
-  })
-  .parameter(limitQueryParam)
-  .parameter(pageQueryParam)
   .get((t) => {
     t.tag('tags')
     t.operationId('list_tags')
+
+    t.parameter('query', 'search', (t) => {
+      t.style('deepObject')
+      t.explode(false)
+      t.schema(
+        z.object({
+          id: z.number().or(z.number().array()),
+          name: z.string(),
+          category: tagCategory.or(tagCategory.array()), // 1 / [0, 1]
+          post_count: z.number().positive(),
+          is_deprecated: z.boolean(),
+          created_at: z.number(),
+          updated_at: z.number(),
+
+          // https://danbooru.donmai.us/wiki_pages/api%3Atags#:~:text=Special%20search%20parameters
+          fuzzy_name_matches: z.string(),
+          name_matches: z.string(),
+          name_normalize: z.string().or(z.string().array()),
+          name_or_alias_matches: z.string(),
+          hide_empty: z.string(),
+          is_empty: z.string(),
+
+          order: z.union([
+            z.literal('name'),
+            z.literal('date'),
+            z.literal('count'),
+            z.literal('similarity'),
+            z.literal('custom'),
+          ]),
+        }).partial(),
+      )
+        .example('Use ID', (t) => t.value({id: 188101}))
+        .example('Use array ID', (t) => t.value({id: [188101, 210615]}))
+    })
+    t.parameter('query', 'only', (t) => {
+      t.explode(false)
+      t.schema(tag.keyof().array().or(z.string()))
+        .example('Pick id,name', (t) => t.value(['id', 'name']))
+        .example('Pick id,name,category', (t) => t.value(['id', 'name', 'category']))
+    })
+    t.parameter(limitQueryParam)
+    t.parameter(pageQueryParam)
+
+    t.response(200, (t) => {
+      t.content('application/json', tags)
+    })
+  })
+  .post((t) => {
+    t.tag('tags')
+    t.operationId('list_tags_use_post')
+
+    t.parameter('header', 'X-HTTP-Method-Override', (t) => {
+      t.required().schema(z.literal('get'))
+    })
+
+    t.requestBody((t) => {
+      t.content(
+        'application/json',
+        z.object({
+          limit,
+          page,
+
+          only: z.string(),
+          search: z.object({
+            id: z.number().or(z.number().array()),
+            name: z.string(),
+            category: tagCategory.or(tagCategory.array()), // 1 / [0, 1]
+            post_count: z.number().positive(),
+            is_deprecated: z.boolean(),
+            created_at: z.number(),
+            updated_at: z.number(),
+
+            // https://danbooru.donmai.us/wiki_pages/api%3Atags#:~:text=Special%20search%20parameters
+            fuzzy_name_matches: z.string(),
+            name_matches: z.string(),
+            name_normalize: z.string().or(z.string().array()),
+            name_or_alias_matches: z.string(),
+            hide_empty: z.string(),
+            is_empty: z.string(),
+
+            order: z.union([
+              z.literal('name'),
+              z.literal('date'),
+              z.literal('count'),
+              z.literal('similarity'),
+              z.literal('custom'),
+            ]),
+          }).partial(),
+        }).partial(),
+      )
+    })
 
     t.response(200, (t) => {
       t.content('application/json', tags)

@@ -29,7 +29,7 @@ export const tagCategory = z.enum({
   Copyright: 3,
   Character: 4,
   Meta: 5,
-})
+}).describe('https://danbooru.donmai.us/wiki_pages/api%3Atags#:~:text=timestamp-,Category,-Value')
 
 export const tag = z.object({
   id: ID,
