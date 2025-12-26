@@ -1,8 +1,9 @@
 #!/usr/bin/env -S deno run -A
 
 import createClient, {createPathBasedClient} from 'npm:openapi-fetch'
-import {tagCategory} from '../src/danbooru/schema.ts'
 import type {components, paths} from './danbooru.oas.ts'
+
+export type DanbooruComponents = components
 
 // Almost all GET requests do not require authorization.
 // To use 'saved searches', you need an ApiKey.
@@ -40,9 +41,9 @@ export const danbooruApi = createClient<paths>({
   querySerializer,
 })
 
-{ // Path based
+{ // or use path based client
   const danbooruApi = createPathBasedClient<paths>({
-    baseUrl: Deno.env.get('DANBOORU_BASE_URL') ?? 'https://danbooru.donmai.us',
+    baseUrl: 'https://danbooru.donmai.us',
     // headers: {authorization},
     querySerializer,
   })
@@ -74,6 +75,9 @@ function onlyToString<T>(obj: Selector<T extends Array<infer U> ? U : T>): strin
 
   return parts.join(',')
 }
+
+// --- Local Tests ---
+import {tagCategory} from '../src/danbooru/schema.ts'
 
 Deno.test('onlyToString', async (t) => {
   const only = onlyToString<components['schemas']['tags']>({
