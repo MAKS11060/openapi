@@ -1,8 +1,8 @@
 #!/usr/bin/env -S deno run -A
 
-import 'jsr:@std/dotenv/load'
 import createClient, {createPathBasedClient} from 'npm:openapi-fetch'
-import type {paths} from './danbooru.oas.ts'
+import {tagCategory} from '../src/danbooru/schema.ts'
+import type {components, paths} from './danbooru.oas.ts'
 
 // Almost all GET requests do not require authorization.
 // To use 'saved searches', you need an ApiKey.
@@ -35,7 +35,7 @@ function querySerializer(
 }
 
 export const danbooruApi = createClient<paths>({
-  baseUrl: Deno.env.get('DANBOORU_BASE_URL') ?? 'https://danbooru.donmai.us',
+  baseUrl: 'https://danbooru.donmai.us',
   // headers: {authorization},
   querySerializer,
 })
@@ -49,6 +49,44 @@ export const danbooruApi = createClient<paths>({
 
   danbooruApi['/posts/random.json'].GET()
 }
+
+// --- Helpers
+type Selector<T> = {
+  [K in keyof T]?: NonNullable<T[K]> extends infer V //
+    ? V extends (infer U)[] ? true | Selector<U>
+    : V extends object ? true | Selector<V>
+    : true
+    : never
+}
+
+function onlyToString<T>(obj: Selector<T extends Array<infer U> ? U : T>): string {
+  const parts: string[] = []
+
+  for (const key in obj) {
+    const value = obj[key]
+
+    if (value === true || !Object.keys(value!).length) {
+      parts.push(key)
+    } else if (typeof value === 'object' && value) {
+      parts.push(`${key}[${onlyToString(value as any)}]`)
+    }
+  }
+
+  return parts.join(',')
+}
+
+Deno.test('onlyToString', async (t) => {
+  const only = onlyToString<components['schemas']['tags']>({
+    id: true,
+    artist: {
+      id: true,
+      name: true,
+      urls: {
+        url: true,
+      },
+    },
+  })
+})
 
 // Find user
 Deno.test('/autocomplete.json user', async (t) => {
@@ -176,4 +214,31 @@ Deno.test('/tags.json', async (t) => {
       },
     },
   })
+})
+
+Deno.test('POST /tags.json', async (t) => {
+  const {data, error} = await danbooruApi.POST('/tags.json', {
+    params: {
+      header: {'X-HTTP-Method-Override': 'get'},
+    },
+    body: {
+      search: {
+        category: tagCategory.enum.Artist,
+      },
+      // only: 'id,name,artist[id,name,urls]',
+      only: onlyToString<components['schemas']['tags']>({
+        id: true,
+        artist: {
+          id: true,
+          name: true,
+          urls: {
+            url: true,
+          },
+        },
+      }),
+      limit: 2,
+    },
+  })
+
+  data ? console.log(data) : console.error(error)
 })

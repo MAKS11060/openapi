@@ -179,34 +179,14 @@ export interface paths {
     };
     "/tags.json": {
         parameters: {
-            query?: {
-                search?: {
-                    id?: number | number[];
-                    name?: string;
-                    category?: (0 | 1 | 3 | 4 | 5) | (0 | 1 | 3 | 4 | 5)[];
-                    post_count?: number;
-                    is_deprecated?: boolean;
-                    created_at?: number;
-                    updated_at?: number;
-                    fuzzy_name_matches?: string;
-                    name_matches?: string;
-                    name_normalize?: string | string[];
-                    name_or_alias_matches?: string;
-                    hide_empty?: string;
-                    is_empty?: string;
-                    order?: "name" | "date" | "count" | "similarity" | "custom";
-                };
-                only?: ("id" | "name" | "post_count" | "category" | "created_at" | "updated_at" | "is_deprecated" | "words" | "wiki_page" | "artist" | "antecedent_alias" | "consequent_aliases" | "antecedent_implications" | "dtext_links")[] | string;
-                limit?: components["parameters"]["Limit"];
-                page?: components["parameters"]["Page"];
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
         get: operations["list_tags"];
         put?: never;
-        post?: never;
+        post: operations["list_tags_use_post"];
         delete?: never;
         options?: never;
         head?: never;
@@ -583,7 +563,10 @@ export interface components {
             id: number;
             name: string;
             post_count: number;
-            /** @enum {number} */
+            /**
+             * @description https://danbooru.donmai.us/wiki_pages/api%3Atags#:~:text=timestamp-,Category,-Value
+             * @enum {number}
+             */
             category: 0 | 1 | 3 | 4 | 5;
             /** Format: date-time */
             created_at: string;
@@ -975,6 +958,52 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["tags"];
+                };
+            };
+        };
+    };
+    list_tags_use_post: {
+        parameters: {
+            query?: never;
+            header: {
+                "X-HTTP-Method-Override": "get";
+            };
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": {
+                    limit?: components["schemas"]["limit"];
+                    page?: components["schemas"]["page"];
+                    only?: string;
+                    search?: {
+                        id?: number | number[];
+                        name?: string;
+                        category?: (0 | 1 | 3 | 4 | 5) | (0 | 1 | 3 | 4 | 5)[];
+                        post_count?: number;
+                        is_deprecated?: boolean;
+                        created_at?: number;
+                        updated_at?: number;
+                        fuzzy_name_matches?: string;
+                        name_matches?: string;
+                        name_normalize?: string | string[];
+                        name_or_alias_matches?: string;
+                        hide_empty?: string;
+                        is_empty?: string;
+                        order?: "name" | "date" | "count" | "similarity" | "custom";
+                    };
+                };
+            };
+        };
         responses: {
             /** @description Response 200 */
             200: {
