@@ -132,18 +132,18 @@ deno run init
 
 #### Check formatting and build
 
-```bash
+```ps
 deno run ok
 ```
 
 #### Build OpenAPI Schemas
 
-```bash
+```ps
 deno run build
 ```
 
 #### Build client types in [example](./example/)
 
-```bash
+```ps
 deno run build:client
 ```
