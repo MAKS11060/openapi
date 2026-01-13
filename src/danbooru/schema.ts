@@ -14,13 +14,10 @@ export const notFound = z
 
 ////////////////
 export const limit = z.int().positive().max(1000).describe('The number of results to show per page')
-export const page = z.int().positive().describe('The number of results to show per page')
-export const only = z
-  .string()
-  .describe('Determines the list of attributes that will be returned')
+export const page = z.int().positive().min(1).describe('The number of results to show per page')
+export const only = z.string().describe('Determines the list of attributes that will be returned')
 
-////////////////
-export const ID = z.int().positive().describe('The ID')
+export const ID = z.int().positive().min(1).describe('The ID')
 
 // --- Tag ---
 export const tagCategory = z.enum({
@@ -32,7 +29,7 @@ export const tagCategory = z.enum({
 }).describe('https://danbooru.donmai.us/wiki_pages/api%3Atags#:~:text=timestamp-,Category,-Value')
 
 export const tag = z.object({
-  id: ID,
+  id: ID.describe('Tag ID'),
   name: z.string(),
   post_count: z.number().positive(),
   category: tagCategory,
@@ -58,7 +55,7 @@ export const tags = tag.array()
 
 // --- Wiki ---
 export const wikiPage = z.object({
-  id: ID,
+  id: ID.describe('Wiki ID'),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
   title: z.string(),
@@ -103,7 +100,6 @@ export const artists = artist.array()
 // --- Posts --- https://danbooru.donmai.us/wiki_pages/api%3Aposts
 export const fileType = z.enum(['jpg', 'png', 'gif', 'avif', 'mp4', 'webp', 'webm', 'swf', /* 'ugoira', */ 'zip'])
 
-// export const rating = z.enum(['g', 's', 'q', 'e']).nullable().describe('The rating of the post')
 export const rating = z.enum({
   General: 'g',
   Sensitive: 's',
@@ -120,7 +116,7 @@ export const mediaAssetVariant = z.object({
 })
 
 export const mediaAsset = z.object({
-  id: ID,
+  id: ID.describe('Asset ID'),
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
   md5: z.string(),
@@ -136,7 +132,7 @@ export const mediaAsset = z.object({
   variants: z.array(mediaAssetVariant),
 })
 
-export const postID = z.int().min(1).describe('The post ID')
+export const postID = ID.describe('The post ID')
 
 export const post = z.object({
   id: postID,
