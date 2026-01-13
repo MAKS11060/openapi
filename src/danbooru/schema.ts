@@ -101,7 +101,7 @@ export const artist = z.object({
 export const artists = artist.array()
 
 // --- Posts --- https://danbooru.donmai.us/wiki_pages/api%3Aposts
-export const fileType = z.enum(['png', 'jpg', 'gif', 'swf', 'webm', 'mp4', 'zip'])
+export const fileType = z.enum(['jpg', 'png', 'gif', 'avif', 'mp4', 'webp', 'webm', 'swf', /* 'ugoira', */ 'zip'])
 
 // export const rating = z.enum(['g', 's', 'q', 'e']).nullable().describe('The rating of the post')
 export const rating = z.enum({
