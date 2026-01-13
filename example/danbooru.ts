@@ -8,9 +8,9 @@ export type DanbooruComponents = components
 // Almost all GET requests do not require authorization.
 // To use 'saved searches', you need an ApiKey.
 // Register api key: https://danbooru.donmai.us/profile => API Key
-const login = ''
-const apiKey = ''
-const authorization = new TextEncoder().encode(`${login}:${apiKey}`).toBase64()
+// const login = ''
+// const apiKey = ''
+// const authorization = new TextEncoder().encode(`${login}:${apiKey}`).toBase64()
 
 // deep serializer /  {search: {id: [1,2]}} => ?search[id]=1,2
 function querySerializer(

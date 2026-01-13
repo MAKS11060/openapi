@@ -22,25 +22,35 @@ Unofficial OpenAPI schemas for some public APIs
 - [Search Cheatsheet](https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet)
 - [Danbooru Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
-### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
+### Typescript client with [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
-```sh
-npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml -o ./danbooru.oas.ts
-# or
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml -o ./danbooru.oas.ts
-```
+#### 1. Generating types from OpenAPI schema
+
+> ```ps
+> deno run -A npm:openapi-typescript \
+>   https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml \
+>   -o ./danbooru.oas.ts
+> ```
+>
+> ```ps
+> npx openapi-typescript \
+>   https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml \
+>   -o ./danbooru.oas.ts
+> ```
+
+#### 2. Create openapi-fetch client
 
 ```ts
 // danbooru.ts
-import createClient from 'npm:openapi-fetch'
+import createClient from 'openapi-fetch'
 import type {paths} from './danbooru.oas.ts'
 
 // Almost all GET requests do not require authorization.
 // To use 'saved searches', you need an ApiKey.
 // Register api key: https://danbooru.donmai.us/profile => API Key
-const login = ''
-const apiKey = ''
-const authorization = new TextEncoder().encode(`${login}:${apiKey}`).toBase64()
+// const login = ''
+// const apiKey = ''
+// const authorization = new TextEncoder().encode(`${login}:${apiKey}`).toBase64()
 
 // deep serializer /  {search: {id: [1,2]}} => ?search[id]=1,2
 function querySerializer(
@@ -80,17 +90,25 @@ export const danbooruApi = createClient<paths>({
 - [Swagger Editor][shikimori.swagger]
 - [Developer API](https://shikimori.one/api/doc)
 
-### Example [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
+### Typescript client with [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
-```sh
-npx openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml -o ./shikimori.oas.ts
-# or
-deno run -A npm:openapi-typescript https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml -o ./shikimori.oas.ts
-```
+#### 1. Generating types from OpenAPI schema
+
+> ```ps
+> deno run -A npm:openapi-typescript \
+>   https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml \
+>   -o ./shikimori.oas.ts
+> ```
+>
+> ```ps
+> npx openapi-typescript \
+>   https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml \
+>   -o ./shikimori.oas.ts
+> ```
 
 ```ts
 // shikimori.ts
-import createClient from 'npm:openapi-fetch'
+import createClient from 'openapi-fetch'
 import type {paths} from './shikimori.oas.ts'
 
 // Requirements
