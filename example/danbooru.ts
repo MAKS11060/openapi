@@ -12,7 +12,7 @@ export type DanbooruComponents = components
 // const apiKey = ''
 // const authorization = new TextEncoder().encode(`${login}:${apiKey}`).toBase64()
 
-// deep serializer /  {search: {id: [1,2]}} => ?search[id]=1,2
+// deep serializer / {search: {id: [1,2]}} => ?search[id]=1,2
 function querySerializer(
   obj: Record<string, unknown>,
   params: URLSearchParams = new URLSearchParams(),

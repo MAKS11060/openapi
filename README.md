@@ -3,7 +3,7 @@
 Unofficial OpenAPI schemas for some public APIs
 
 - [Danbooru](#danbooru)
-- [shikimori](#shikimori)
+- [Shikimori](#shikimori)
 
 > [!NOTE]
 >
@@ -15,28 +15,28 @@ Unofficial OpenAPI schemas for some public APIs
 ## Danbooru
 
 - [Danbooru](https://danbooru.donmai.us/)
+  - [Api Wiki](https://danbooru.donmai.us/wiki_pages/help:api)
+  - [Search Cheatsheet](https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet)
+  - [Danbooru Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 - [Code example](./example/danbooru.ts)
 - [Redoc][danbooru.redoc]
 - [Swagger Editor][danbooru.swagger]
-- [Api Wiki](https://danbooru.donmai.us/wiki_pages/help:api)
-- [Search Cheatsheet](https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet)
-- [Danbooru Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide)
 
 ### Typescript client with [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
 #### 1. Generating types from OpenAPI schema
 
-> ```ps
-> deno run -A npm:openapi-typescript \
->   https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml \
->   -o ./danbooru.oas.ts
-> ```
->
-> ```ps
-> npx openapi-typescript \
->   https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml \
->   -o ./danbooru.oas.ts
-> ```
+```ps
+deno run -A npm:openapi-typescript \
+  https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml \
+  -o ./danbooru.oas.ts
+```
+
+```ps
+npx openapi-typescript \
+  https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml \
+  -o ./danbooru.oas.ts
+```
 
 #### 2. Create openapi-fetch client
 
@@ -52,7 +52,7 @@ import type {paths} from './danbooru.oas.ts'
 // const apiKey = ''
 // const authorization = new TextEncoder().encode(`${login}:${apiKey}`).toBase64()
 
-// deep serializer /  {search: {id: [1,2]}} => ?search[id]=1,2
+// deep serializer / {search: {id: [1,2]}} => ?search[id]=1,2
 function querySerializer(
   obj: Record<string, unknown>,
   params: URLSearchParams = new URLSearchParams(),
@@ -84,27 +84,27 @@ export const danbooruApi = createClient<paths>({
 
 ## Shikimori
 
-- [shikimori](https://shikimori.one/)
+- [Shikimori](https://shikimori.one/)
+  - [Developer API](https://shikimori.one/api/doc)
 - [Code example](./example/shikimori.ts)
 - [Redoc][shikimori.redoc]
 - [Swagger Editor][shikimori.swagger]
-- [Developer API](https://shikimori.one/api/doc)
 
 ### Typescript client with [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
 
 #### 1. Generating types from OpenAPI schema
 
-> ```ps
-> deno run -A npm:openapi-typescript \
->   https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml \
->   -o ./shikimori.oas.ts
-> ```
->
-> ```ps
-> npx openapi-typescript \
->   https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml \
->   -o ./shikimori.oas.ts
-> ```
+```ps
+deno run -A npm:openapi-typescript \
+  https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml \
+  -o ./shikimori.oas.ts
+```
+
+```ps
+npx openapi-typescript \
+  https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml \
+  -o ./shikimori.oas.ts
+```
 
 ```ts
 // shikimori.ts
