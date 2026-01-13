@@ -3,6 +3,8 @@ import {doc} from './openapi.ts'
 import {
   artist,
   artists,
+  artistUrl,
+  artistUrls,
   autocomplete,
   forbidden,
   limit,
@@ -13,6 +15,7 @@ import {
   postID,
   posts,
   postsLimit,
+  source,
   tag,
   tagCategory,
   tags,
@@ -28,6 +31,8 @@ export {doc} from './openapi.ts'
 doc.addSchemas({
   artist,
   artists,
+  artistUrl,
+  artistUrls,
   autocomplete,
   forbidden,
   limit,
@@ -38,7 +43,9 @@ doc.addSchemas({
   postID,
   posts,
   postsLimit,
+  source,
   tag,
+  // tagCategory, // BUG: deno task build:client / Can't resolve $ref at #/paths/~1tags.json/post/requestBody/content/application~1json/schema/properties/search/properties/category/anyOf/1/items
   tags,
   unauthorized,
   user,
@@ -92,7 +99,7 @@ const tagsQueryParam = doc.addParameter('Tags', 'query', 'tags', (t) => {
 
 // --- Posts ---
 doc
-  .addPath('/posts.json') //
+  .addPath('/posts.json')
   .parameter(tagsQueryParam)
   .parameter(pageQueryParam)
   .parameter(postsLimitQueryParam)
@@ -145,7 +152,7 @@ doc
   })
 
 doc
-  .addPath('/posts/random.json') //
+  .addPath('/posts/random.json')
   .parameter(tagsQueryParam)
   .parameter('query', 'only', (t) => {
     t.explode(false)
@@ -167,7 +174,7 @@ doc
 
 // --- Users ---
 doc
-  .addPath('/users.json') //
+  .addPath('/users.json')
   .parameter('query', 'search', (t) => {
     t.style('deepObject')
     t.explode(false)
@@ -298,6 +305,38 @@ doc.addPath('/artists/{id}.json', {id: (t) => t.schema(artist.shape.id)})
     })
   })
 
+doc.addPath('/artist_urls.json')
+  .parameter('query', 'search', (t) => {
+    t.style('deepObject')
+    t.explode(false)
+    t.schema(
+      z.object({
+        id: z.number().or(z.number().array()),
+        artist_id: z.number().or(z.number().array()),
+        url: z.string(),
+        is_active: z.boolean(),
+      }).partial(),
+    )
+      .example('Use ID', (t) => t.value({artist_id: 479347}))
+      .example('Use array ID', (t) => t.value({artist_id: [479347, 120902]}))
+  })
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(artistUrl.keyof().array().or(z.string()))
+      .example('Pick id,artist_id,url', (t) => t.value(['id', 'artist_id', 'url']))
+  })
+  .parameter(limitQueryParam)
+  .parameter(pageQueryParam)
+  .get((t) => {
+    t.tag('artists')
+    t.operationId('get_artist_urls')
+    t.describe('Get artist urls')
+
+    t.response(200, (t) => {
+      t.content('application/json', artistUrls)
+    })
+  })
+
 // --- Tags ---
 doc.addPath('/tags.json')
   .get((t) => {
@@ -418,7 +457,7 @@ doc.addPath('/tags/{id}.json', {id: (t) => t.schema(tag.shape.id)})
 
 // --- Reverse search ---
 doc
-  .addPath('/iqdb_queries.json') //
+  .addPath('/iqdb_queries.json')
   .parameter('query', 'search', (t) => {
     t.style('deepObject')
     t.explode(false)
@@ -464,7 +503,7 @@ doc
 
 // --- Autocomplete ---
 doc
-  .addPath('/autocomplete.json') //
+  .addPath('/autocomplete.json')
   .parameter('query', 'search', (t) => {
     t.style('deepObject')
     t.explode(false)
@@ -491,4 +530,21 @@ doc
     t.response(400, BadRequest)
     t.response(401, Unauthorized)
     t.response(404, NotFound)
+  })
+
+// --- Source ---
+doc
+  .addPath('/source.json')
+  .parameter('query', 'url', (t) => {
+    t.required()
+    t.schema(z.string())
+  })
+  .get((t) => {
+    t.tag('source')
+    t.describe('Get source info by URL')
+    t.operationId('get_source_info')
+
+    t.response(200, (t) => {
+      t.content('application/json', source)
+    })
   })

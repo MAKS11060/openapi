@@ -177,6 +177,33 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/artist_urls.json": {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: number | number[];
+                    artist_id?: number | number[];
+                    url?: string;
+                    is_active?: boolean;
+                };
+                only?: ("id" | "artist_id" | "url" | "created_at" | "updated_at" | "is_active")[] | string;
+                limit?: components["parameters"]["Limit"];
+                page?: components["parameters"]["Page"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get artist urls */
+        get: operations["get_artist_urls"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tags.json": {
         parameters: {
             query?: never;
@@ -303,6 +330,25 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/source.json": {
+        parameters: {
+            query: {
+                url: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get source info by URL */
+        get: operations["get_source_info"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
 export type webhooks = Record<string, never>;
 export interface components {
@@ -320,19 +366,7 @@ export interface components {
             /** Format: date-time */
             updated_at: string;
             members?: unknown[];
-            urls?: {
-                /** @description Artist URL ID */
-                id: number;
-                /** @description The Artist ID */
-                artist_id: number;
-                /** Format: uri */
-                url: string;
-                /** Format: date-time */
-                created_at: string;
-                /** Format: date-time */
-                updated_at: string;
-                is_active: boolean;
-            }[];
+            urls?: components["schemas"]["artistUrl"][];
             wiki_page?: {
                 /** @description The ID */
                 id: number;
@@ -350,6 +384,20 @@ export interface components {
             tag?: components["schemas"]["tag"];
         };
         artists: components["schemas"]["artist"][];
+        artistUrl: {
+            /** @description Artist URL ID */
+            id: number;
+            /** @description The Artist ID */
+            artist_id: number;
+            /** Format: uri */
+            url: string;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            is_active: boolean;
+        };
+        artistUrls: components["schemas"]["artistUrl"][];
         autocomplete: {
             /**
              * @description The type of the autocomplete item, must be "tag"
@@ -558,6 +606,27 @@ export interface components {
         postID: number;
         posts: components["schemas"]["post"][];
         postsLimit: number;
+        source: {
+            page_url: string | null;
+            image_urls: string[];
+            artist: {
+                display_name: string | null;
+                username: string | null;
+                profile_urls: string[];
+                artists: {
+                    /** @description Artist ID */
+                    id: number;
+                    name: string;
+                }[];
+            };
+            tags: string[][];
+            artist_commentary: {
+                title: string | null;
+                description: string | null;
+                dtext_title: string | null;
+                dtext_description: string | null;
+            };
+        };
         tag: {
             /** @description The ID */
             id: number;
@@ -930,6 +999,36 @@ export interface operations {
             };
         };
     };
+    get_artist_urls: {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: number | number[];
+                    artist_id?: number | number[];
+                    url?: string;
+                    is_active?: boolean;
+                };
+                only?: ("id" | "artist_id" | "url" | "created_at" | "updated_at" | "is_active")[] | string;
+                limit?: components["parameters"]["Limit"];
+                page?: components["parameters"]["Page"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["artistUrls"];
+                };
+            };
+        };
+    };
     list_tags: {
         parameters: {
             query?: {
@@ -1067,6 +1166,28 @@ export interface operations {
             400: components["responses"]["BadRequest"];
             401: components["responses"]["Unauthorized"];
             404: components["responses"]["NotFound"];
+        };
+    };
+    get_source_info: {
+        parameters: {
+            query: {
+                url: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["source"];
+                };
+            };
         };
     };
 }

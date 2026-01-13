@@ -78,6 +78,8 @@ export const artistUrl = z.object({
   is_active: z.boolean(),
 })
 
+export const artistUrls = artistUrl.array()
+
 export const artist = z.object({
   id: ID.describe('Artist ID'),
   name: z.string(),
@@ -309,3 +311,27 @@ export const autocomplete = z.union([
   autocompleteTags,
   autocompleteUsers,
 ])
+
+// --- Source ---
+export const source = z.object({
+  page_url: z.string().nullable(),
+  image_urls: z.string().array(),
+  artist: z.object({
+    display_name: z.string().nullable(),
+    username: z.string().nullable(),
+    profile_urls: z.string().array(),
+    artists: z.array(
+      artist.pick({
+        id: true,
+        name: true,
+      }),
+    ),
+  }),
+  tags: z.array(z.string().array()),
+  artist_commentary: z.object({
+    title: z.string().nullable(),
+    description: z.string().nullable(),
+    dtext_title: z.string().nullable(),
+    dtext_description: z.string().nullable(),
+  }),
+})
