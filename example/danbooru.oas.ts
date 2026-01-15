@@ -368,7 +368,7 @@ export interface components {
             members?: unknown[];
             urls?: components["schemas"]["artistUrl"][];
             wiki_page?: {
-                /** @description The ID */
+                /** @description Wiki ID */
                 id: number;
                 /** Format: date-time */
                 created_at: string;
@@ -474,7 +474,7 @@ export interface components {
              * @description The file extension
              * @enum {string}
              */
-            file_ext: "png" | "jpg" | "gif" | "swf" | "webm" | "mp4" | "zip";
+            file_ext: "jpg" | "png" | "gif" | "avif" | "mp4" | "webp" | "webm" | "swf" | "zip";
             /** @description The size of the file */
             file_size: number;
             /**
@@ -494,7 +494,7 @@ export interface components {
             preview_file_url: string;
             /** @description The media asset associated with the post */
             media_asset: {
-                /** @description The ID */
+                /** @description Asset ID */
                 id: number;
                 /** Format: date-time */
                 created_at: string;
@@ -628,7 +628,7 @@ export interface components {
             };
         };
         tag: {
-            /** @description The ID */
+            /** @description Tag ID */
             id: number;
             name: string;
             post_count: number;
@@ -644,7 +644,7 @@ export interface components {
             is_deprecated: boolean;
             words: string[];
             wiki_page?: {
-                /** @description The ID */
+                /** @description Wiki ID */
                 id: number;
                 /** Format: date-time */
                 created_at: string;
