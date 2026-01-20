@@ -7,8 +7,9 @@ export const doc = createDoc({
     schema: [zodPlugin()],
   },
   info: {
-    title: 'yande.re OpenAPI Spec',
+    title: 'Moebooru OpenAPI Spec',
     version: format(new Date(), 'yyyy.MM.dd'),
+    description: 'Api spec for Moebooru-based services',
     contact: {
       url: 'https://github.com/maks11060/openapi',
     },
@@ -27,6 +28,9 @@ export const doc = createDoc({
 })
 
 doc.server({url: 'https://yande.re/', description: 'Main server'})
+
+doc.server({url: 'https://konachan.com/', description: 'NSFW Version'})
+doc.server({url: 'https://konachan.net/', description: 'SFW Version'})
 
 export const anon = doc.addSecuritySchema.anonymous()
 // export const auth = doc.addSecuritySchema.http('auth', 'basic', '')
