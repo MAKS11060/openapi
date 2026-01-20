@@ -1,4 +1,4 @@
-#!/usr/bin/env -S deno run -A --env-file --watch
+#!/usr/bin/env -S deno run -A --env-file
 
 import {OpenAPI} from '@maks11060/openapi'
 import {parseArgs} from '@std/cli/parse-args'
@@ -10,52 +10,77 @@ import {cors} from 'npm:hono/cors'
 
 const serve = (doc: OpenAPI) => {
   const app = new Hono() //
-    .use(cors())
+    // .use(cors({origin: (origin) => origin}))
+    .use(cors({
+      origin: '*',
+    }))
     .get('/openapi.json', (c) => c.text(doc.toJSON(true), {headers: {'Content-Type': 'application/json'}}))
     .get('/openapi.yaml', (c) => c.text(doc.toYAML({lineWidth: 120 + 1})))
 
-  if (Deno.env.has('KEY') && Deno.env.has('CERT')) {
-    const key = Deno.readTextFileSync(Deno.env.get('KEY')!)
-    const cert = Deno.readTextFileSync(Deno.env.get('CERT')!)
-    Deno.serve({port: 443, key, cert}, app.fetch)
-  } else {
-    Deno.serve(app.fetch)
+  const onListen = (localAddr: Deno.NetAddr) => {
+    const baseUrl = `${localAddr.port === 443 ? 'https' : 'http'}://localhost:${localAddr.port}`
+    const docUrl = `${baseUrl}/openapi.yaml`
+
+    console.log(`%chttps://swagger-next.deno.dev/?url=${docUrl}`, 'color: orange')
+    console.log(`%chttps://redocly.github.io/redoc/?url=${docUrl}&nocors`, 'color: orange')
   }
 
-  setTimeout(() => {
-    console.log('https://swagger-next.deno.dev/?url=http://localhost:8000/openapi.yaml')
-  })
+  Deno.serve({onListen}, app.fetch)
+  // if (Deno.env.has('KEY') && Deno.env.has('CERT')) {
+  //   const key = Deno.readTextFileSync(Deno.env.get('KEY')!)
+  //   const cert = Deno.readTextFileSync(Deno.env.get('CERT')!)
+  //   Deno.serve({port: 443, key, cert, onListen}, app.fetch)
+  // } else {
+  //   Deno.serve({onListen}, app.fetch)
+  // }
 }
 
-const services = Array.from(expandGlobSync(`./src/**/mod.ts`), (entry) => {
-  return basename(resolve(entry.path, './..'))
-})
+const stats = (doc: OpenAPI) => {
+  console.log(`YAML lines: %c${doc.toYAML().split('\n').length}`, 'color:orange')
+  // console.log(`JSON lines: %c${doc.toJSON(true).split('\n').length}`, 'color:orange')
+  // const yaml = doc.toYAML()
+  // const json = doc.toJSON(true)
+  // console.table({
+  //   YAML: {
+  //     lines: yaml.split('\n').length,
+  //     bytes: new TextEncoder().encode(yaml).byteLength,
+  //   },
+  //   JSON: {
+  //     lines: json.split('\n').length,
+  //     bytes: new TextEncoder().encode(json).byteLength,
+  //   },
+  // })
+}
 
 const args = parseArgs(Deno.args, {
-  boolean: ['serve', 'verbose'],
-  string: ['service'],
   alias: {
-    s: 'serve',
-    i: 'service',
-    v: 'verbose',
+    s: 'service',
   },
+  string: ['service'],
 })
 
-if (!args.service) {
+if (!args.service) { // main
+  const services = Array.from(
+    expandGlobSync(`./src/**/mod.ts`),
+    (entry) => basename(resolve(entry.path, '..')),
+  )
   args.service = promptSelect('Select service:', services, {clear: true})!
+
+  new Deno.Command(Deno.execPath(), {
+    // deno-fmt-ignore
+    args: [
+      'run', '-A', '--env-file', '--watch', './scripts/dev.ts',
+      '--service', args.service,
+    ],
+    stdout: 'inherit',
+    stderr: 'inherit',
+  }).outputSync()
+} else { // sub proc with watch mode
+  console.log(`%cServe %c${args.service}`, 'color: blue', 'color: green')
+  const {doc} = await import(
+    toFileUrl(resolve(`./src/${args.service}/mod.ts`)).toString()
+  ) as {doc: OpenAPI}
+
+  serve(doc)
+  stats(doc)
 }
-
-if (args.service && !services.includes(args.service)) {
-  throw new Error('Service not found')
-}
-
-const {doc} = (await import(toFileUrl(resolve(`./src/${args.service}/mod.ts`)).toString())) as {
-  doc: OpenAPI
-}
-
-const oasYAML = doc.toYAML()
-
-if (args.serve) serve(doc)
-if (args.verbose) console.log(oasYAML)
-
-console.log(`lines: %c${oasYAML.split('\n').length}`, 'color:orange')
