@@ -82,6 +82,47 @@ export const danbooruApi = createClient<paths>({
 })
 ```
 
+## Moebooru
+
+- [Redoc][moebooru.redoc]
+- [Swagger Editor][moebooru.swagger]
+
+#### A group of services based on [moebooru](https://github.com/moebooru/moebooru)
+
+- [yande.re](https://yande.re)
+  - [Api doc](https://yande.re/help/api)
+- [konachan.com](https://konachan.com) | [konachan.net](https://konachan.net)
+
+### Typescript client with [openapi-fetch](https://openapi-ts.dev/openapi-fetch/)
+
+#### 1. Generating types from OpenAPI schema
+
+```ps
+deno run -A npm:openapi-typescript \
+  https://github.com/MAKS11060/openapi/releases/latest/download/moebooru.openapi.yaml \
+  -o ./moebooru.oas.ts
+```
+
+```ps
+npx openapi-typescript \
+  https://github.com/MAKS11060/openapi/releases/latest/download/moebooru.openapi.yaml \
+  -o ./moebooru.oas.ts
+```
+
+#### 2. Create openapi-fetch client
+
+```ts
+// moebooru.ts
+import createClient from 'openapi-fetch'
+import type {paths} from './moebooru.oas.ts'
+
+export const moebooruApi = createClient<paths>({
+  baseUrl: 'https://yande.re',
+  // baseUrl: 'https://konachan.com',
+  // baseUrl: 'https://konachan.net',
+})
+```
+
 ## Shikimori
 
 - [Shikimori](https://shikimori.one/)
@@ -123,10 +164,12 @@ export const shikimoriApi = createClient<paths>({
 })
 ```
 
-[shikimori.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml
-[shikimori.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml
 [danbooru.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml
 [danbooru.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.yaml
+[moebooru.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/moebooru.openapi.yaml
+[moebooru.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/moebooru.openapi.yaml
+[shikimori.redoc]: https://redocly.github.io/redoc/?url=https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml
+[shikimori.swagger]: https://editor-next.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml
 
 ## Build
 
