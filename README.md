@@ -3,6 +3,7 @@
 Unofficial OpenAPI schemas for some public APIs
 
 - [Danbooru](#danbooru)
+- [Moebooru](#moebooru)
 - [Shikimori](#shikimori)
 
 > [!NOTE]
