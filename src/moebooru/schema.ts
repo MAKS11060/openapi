@@ -6,7 +6,6 @@ export const page = z.int().positive().min(1).describe('The number of results to
 export const only = z.string().describe('Determines the list of attributes that will be returned')
 
 export const ID = z.int().positive().min(1).describe('The ID')
-export const ts = z.date()
 
 // --- Posts ---
 export const fileExt = z.enum(['jpg', 'png', 'gif', 'avif', 'mp4', 'webp', 'webm', 'swf', 'zip']) // TODO: remove unused
