@@ -1,6 +1,6 @@
 import {z} from 'zod'
 
-//////////////////////////////// Error
+// --- Error ---
 export const UnauthorizedSchema = z.object({
   error: z.string(),
   error_description: z.string(),
@@ -13,10 +13,10 @@ export const NotFoundSchema = z
   })
   .describe('Page Not Found')
 
-////////////////////////////////
+// --- shared ---
 export const ID = z.int().positive().describe('The ID')
 
-//////////////////////////////// User
+// --- User ---
 export const userAnimeStatus = z.enum(['planned', 'watching', 'rewatching', 'completed', 'on_hold', 'dropped'])
 
 export const userID = ID.describe('The user ID').meta({example: 406192})
@@ -43,7 +43,7 @@ export const userInfo = z.object({
   ...userInfoAdditional.shape,
 })
 
-//////////////////////////////// Users
+// --- Users ---
 export const users = z.array(user)
 
 export const usersSearchQuery = z.object({
@@ -52,7 +52,7 @@ export const usersSearchQuery = z.object({
   search: z.string().optional(),
 })
 
-//////////////////////////////// UserRates
+// --- UserRates ---
 export const userAnimeTarget = z.enum(['Anime', 'Mange'])
 export const userRates = z.object({
   id: z.number().positive().describe('The user rate ID'),
@@ -101,11 +101,11 @@ export const userRatesCreateParams = z.object({
   ...userRatesUpdateParams.shape,
 })
 
-//////////////////////////////// Anime
+// --- Anime ---
 export const animeKind = z.enum(['tv', 'movie', 'ova', 'ona', 'special', 'tv_special', 'music', 'pv', 'cm'])
 export const animeRating = z.enum(['none', 'g', 'pg', 'pg_13', 'r', 'r_plus', 'rx'])
 export const animeStatus = z.enum(['anons', 'ongoing', 'released'])
-export const animeID = z //
+export const animeID = z
   .number()
   .int()
   .positive()
@@ -213,7 +213,7 @@ export const studio = z
 
 export const studios = z.array(studio)
 
-//////////////////////////////// Anime Search
+// --- Anime Search ---
 export const animeSearchQuery_order = z.enum([
   'id',
   'id_desc',
@@ -341,7 +341,7 @@ export const animeShort = anime.pick({
 })
 export const animeList = z.array(animeShort)
 
-//////////////////////////////// Manga Search
+// --- Manga Search ---
 export const mangeSearchQuery_order = z.enum([
   'id',
   'id_desc',
@@ -390,7 +390,7 @@ export const mangaSearchQuery = z
   })
   .partial()
 
-//////////////////////////////// Manga
+// --- Manga ---
 export const manga = z.object({
   id: ID,
   name: z.string().describe('The name of the manga'),
@@ -460,7 +460,7 @@ export const mangaShort = manga.pick({
 })
 export const mangaList = z.array(mangaShort)
 
-////////
+// ---
 export const characterFull = z.object({
   id: ID,
   name: z.string(),
@@ -603,7 +603,7 @@ export const topicsQuery = z
   })
   .partial()
 
-////////////////
+// ---
 export const genre = z.object({
   id: z.number().positive(),
   name: z.string(),
@@ -612,7 +612,6 @@ export const genre = z.object({
 })
 export const genres = z.array(genre)
 
-//
 export const achievement = z.object({
   user_id: userID,
   id: ID,
@@ -622,4 +621,5 @@ export const achievement = z.object({
   created_at: z.iso.datetime(),
   updated_at: z.iso.datetime(),
 })
+
 export const achievements = z.array(achievement)

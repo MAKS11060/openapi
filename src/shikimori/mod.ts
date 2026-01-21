@@ -41,6 +41,7 @@ import {
 
 export {doc} from './openapi.ts'
 
+// --- Global schemas ---
 doc.addSchemas({
   achievements,
   anime,
@@ -80,7 +81,7 @@ doc.addSchemas({
   videos,
 })
 
-//////////////////////////////// Responses
+// --- Global responses ---
 // const BadRequestResponse = doc.addResponse('BadRequest', (t) => {
 //   t.describe('The given parameters could not be parsed')
 //   t.content('application/json', z.any())
@@ -108,8 +109,7 @@ const NotFoundResponse = doc.addResponse('NotFound', (t) => {
   t.content('application/json', z.object())
 })
 
-//////////////////////////////// Paths
-//////////////// Achievements
+// --- Achievements ---
 doc.addPath('/api/achievements').get((t) => {
   t.tag('achievements')
   t.describe('List user achievements')
@@ -124,7 +124,7 @@ doc.addPath('/api/achievements').get((t) => {
   })
 })
 
-//////////////// Animes
+// --- Animes ---
 doc.addPath('/api/animes').get((t) => {
   t.tag('anime')
   t.describe('List animes')
@@ -235,7 +235,7 @@ doc.addPath('/api/animes/{id}/topics', {id: (t) => t.schema(animeID)}).get((t) =
   t.response(401, UnauthorizedResponse)
 })
 
-//////////////// Manga
+// --- Manga ---
 doc.addPath('/api/mangas').get((t) => {
   t.tag('manga')
   t.describe('list manga')
@@ -319,7 +319,7 @@ doc.addPath('/api/mangas/{id}/topics', {id: (t) => t.schema(ID)}).get((t) => {
   t.response(401, UnauthorizedResponse)
 })
 
-//////////////// Ranobe
+// --- Ranobe ---
 doc.addPath('/api/ranobe').get((t) => {
   t.tag('ranobe')
   t.describe('List ranobe')
@@ -401,7 +401,7 @@ doc.addPath('/api/ranobe/{id}/topics', {id: (t) => t.schema(ID)}).get((t) => {
   t.response(401, UnauthorizedResponse)
 })
 
-//////////////// Characters
+// --- Characters ---
 doc.addPath('/api/characters/{id}', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('characters')
   t.describe('Show a character')
@@ -422,7 +422,7 @@ doc.addPath('/api/characters/search').get((t) => {
   })
 })
 
-//////////////// Peoples / Persons
+// --- Peoples / Persons ---
 doc.addPath('/api/people/{id}', {id: (t) => t.schema(ID)}).get((t) => {
   t.tag('people')
   t.describe('Show a person')
@@ -434,7 +434,7 @@ doc.addPath('/api/people/search').get((t) => {
   t.operationId('find_person')
 })
 
-//////////////// Constants
+// --- Constants ---
 doc.addPath('/api/constants/anime').get((t) => {
   t.tag('constants')
   t.operationId('get_constants_anime')
@@ -508,7 +508,6 @@ doc.addPath('/api/constants/smileys').get((t) => {
   })
 })
 
-////////////////
 doc.addPath('/api/genres').get((t) => {
   t.tag('genres')
   t.operationId('list_genres')
@@ -528,9 +527,9 @@ doc.addPath('/api/studios').get((t) => {
   })
 })
 
-//////////////// Users
+// --- Users ---
 doc
-  .addPath('/api/users') //
+  .addPath('/api/users')
   .parameter('query', 'page', (t) => {
     t.schema(usersSearchQuery.shape.page)
   })
@@ -553,7 +552,7 @@ doc
 doc
   .addPath('/api/users/{id}', {
     id: (t) => t.schema(userID),
-  }) //
+  })
   .get((t) => {
     t.tag('v1_user')
     t.operationId('get_user')
@@ -565,7 +564,7 @@ doc
   })
 
 doc
-  .addPath('/api/users/whoami') //
+  .addPath('/api/users/whoami')
   .get((t) => {
     t.tag('v1_user')
     t.security(oauth2)
@@ -578,7 +577,7 @@ doc
     t.response(401, UnauthorizedResponse)
   })
 
-//////////////// User Rates
+// --- User Rates ---
 doc
   .addPath('/api/user_rates/{type}/cleanup', {
     type: (t) => t.schema(z.enum(['anime', 'manga'])),
@@ -607,9 +606,8 @@ doc
     })
   })
 
-//////////////// User Rates 2
-doc
-  .addPath('/api/v2/user_rates') //
+// --- User Rates 2 ---
+doc.addPath('/api/v2/user_rates')
   .parameter('query', 'user_id', (t) => t.schema(userRatesQuery.shape.user_id))
   .parameter('query', 'target_id', (t) => t.schema(userRatesQuery.shape.target_id))
   .parameter('query', 'target_type', (t) => t.schema(userRatesQuery.shape.target_type))
@@ -724,7 +722,7 @@ doc
     t.response(401, UnauthorizedResponse)
   })
 
-//////////////// Videos
+// --- Videos ---
 doc
   .addPath('/api/animes/{anime_id}/videos', {
     anime_id: (t) => t.schema(animeID),
