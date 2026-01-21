@@ -53,7 +53,7 @@ doc.addSchemas({
   externalLinks,
   franchise,
   genres,
-  ID,
+  // ID, Bug: https://github.com/colinhacks/zod/issues/5635
   manga,
   mangaList,
   mangaSearchQuery,
