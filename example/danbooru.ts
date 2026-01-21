@@ -1,9 +1,7 @@
-#!/usr/bin/env -S deno run -A
-
-import createClient, {createPathBasedClient} from 'npm:openapi-fetch'
+import createClient from 'openapi-fetch'
 import type {components, paths} from './danbooru.oas.ts'
 
-export type DanbooruComponents = components
+export type Danbooru = components['schemas']
 
 // Almost all GET requests do not require authorization.
 // To use 'saved searches', you need an ApiKey.
@@ -11,6 +9,12 @@ export type DanbooruComponents = components
 // const login = ''
 // const apiKey = ''
 // const authorization = new TextEncoder().encode(`${login}:${apiKey}`).toBase64()
+
+export const danbooruApi = createClient<paths>({
+  baseUrl: 'https://danbooru.donmai.us',
+  // headers: {authorization},
+  querySerializer,
+})
 
 // deep serializer / {search: {id: [1,2]}} => ?search[id]=1,2
 function querySerializer(
@@ -33,22 +37,6 @@ function querySerializer(
   }
 
   return params.toString()
-}
-
-export const danbooruApi = createClient<paths>({
-  baseUrl: 'https://danbooru.donmai.us',
-  // headers: {authorization},
-  querySerializer,
-})
-
-{ // or use path based client
-  const danbooruApi = createPathBasedClient<paths>({
-    baseUrl: 'https://danbooru.donmai.us',
-    // headers: {authorization},
-    querySerializer,
-  })
-
-  danbooruApi['/posts/random.json'].GET()
 }
 
 // --- Helpers

@@ -1,7 +1,7 @@
-#!/usr/bin/env -S deno run -A
+import createClient from 'openapi-fetch'
+import type {components, paths} from './shikimori.oas.ts'
 
-import createClient from 'npm:openapi-fetch'
-import type {paths} from './shikimori.oas.ts'
+export type Shikimori = components['schemas']
 
 // Requirements
 // Add your Oauth2 Application name to User-Agent requests header.
