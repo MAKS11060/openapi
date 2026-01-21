@@ -1,6 +1,6 @@
 import {z} from 'zod'
 
-//////////////// Error
+// --- error ---
 export const BadRequest = z.any().describe('The given parameters could not be parsed')
 export const unauthorized = z.any().describe('Authentication failed')
 export const forbidden = z.any().describe('Access denied')
@@ -12,7 +12,7 @@ export const notFound = z
   })
   .describe('Not found')
 
-////////////////
+// --- shared ---
 export const limit = z.int().positive().max(1000).describe('The number of results to show per page')
 export const page = z.int().positive().min(1).describe('The number of results to show per page')
 export const only = z.string().describe('Determines the list of attributes that will be returned')
@@ -307,6 +307,22 @@ export const autocomplete = z.union([
   autocompleteTags,
   autocompleteUsers,
 ])
+
+// --- Iqdb ---
+export const iqdbResult = z.object({
+  hash: z.string(),
+  post_id: postID,
+  score: z.number().min(0).max(100),
+  signature: z.object({
+    avglf: z.tuple([z.number(), z.number(), z.number()]),
+    sig: z.tuple([
+      z.array(z.number()),
+      z.array(z.number()),
+      z.array(z.number()),
+    ]),
+  }),
+  post,
+})
 
 // --- Source ---
 export const source = z.object({

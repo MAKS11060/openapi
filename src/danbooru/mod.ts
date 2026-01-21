@@ -7,6 +7,7 @@ import {
   artistUrls,
   autocomplete,
   forbidden,
+  iqdbResult,
   limit,
   notFound,
   only,
@@ -27,7 +28,7 @@ import {
 
 export {doc} from './openapi.ts'
 
-//////////////////////////////// Schemas
+// --- Global schemas ---
 doc.addSchemas({
   artist,
   artists,
@@ -35,6 +36,7 @@ doc.addSchemas({
   artistUrls,
   autocomplete,
   forbidden,
+  iqdbResult,
   limit,
   notFound,
   only,
@@ -53,7 +55,7 @@ doc.addSchemas({
   users,
 })
 
-//////////////////////////////// Responses
+// --- Global responses ---
 const BadRequest = doc.addResponse('BadRequest', (t) => {
   t.describe('The given parameters could not be parsed')
   t.content('application/json', z.any())
@@ -78,7 +80,7 @@ const NotFound = doc.addResponse('NotFound', (t) => {
   t.content('application/json', notFound)
 })
 
-//////////////////////////////// Parameters
+// --- Global parameters ---
 const limitQueryParam = doc.addParameter('Limit', 'query', 'limit', (t) => t.schema(z.int().positive().max(1000)))
 const postsLimitQueryParam = doc.addParameter('LimitPosts', 'query', 'limit', (t) => t.schema(postsLimit))
 const pageQueryParam = doc.addParameter('Page', 'query', 'page', (t) => t.schema(page))
@@ -95,11 +97,8 @@ const tagsQueryParam = doc.addParameter('Tags', 'query', 'tags', (t) => {
     .example('Saved searches', (t) => t.value('search:all'))
 })
 
-//////////////////////////////// Paths
-
 // --- Posts ---
-doc
-  .addPath('/posts.json')
+doc.addPath('/posts.json')
   .parameter(tagsQueryParam)
   .parameter(pageQueryParam)
   .parameter(postsLimitQueryParam)
@@ -131,8 +130,7 @@ doc
     t.response(404, NotFound)
   })
 
-doc
-  .addPath('/posts/{id}.json', {id: (t) => t.schema(postID)}) //
+doc.addPath('/posts/{id}.json', {id: (t) => t.schema(postID)}) //
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(post.keyof().array().or(z.string()))
@@ -151,8 +149,7 @@ doc
     t.response(404, NotFound)
   })
 
-doc
-  .addPath('/posts/random.json')
+doc.addPath('/posts/random.json')
   .parameter(tagsQueryParam)
   .parameter('query', 'only', (t) => {
     t.explode(false)
@@ -173,8 +170,7 @@ doc
   })
 
 // --- Users ---
-doc
-  .addPath('/users.json')
+doc.addPath('/users.json')
   .parameter('query', 'search', (t) => {
     t.style('deepObject')
     t.explode(false)
@@ -220,8 +216,7 @@ doc
     t.response(404, NotFound)
   })
 
-doc
-  .addPath('/users/{id}.json', {id: (t) => t.schema(userID)}) //
+doc.addPath('/users/{id}.json', {id: (t) => t.schema(userID)}) //
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(user.keyof().array().or(z.string()))
@@ -456,8 +451,7 @@ doc.addPath('/tags/{id}.json', {id: (t) => t.schema(tag.shape.id)})
   })
 
 // --- Reverse search ---
-doc
-  .addPath('/iqdb_queries.json')
+doc.addPath('/iqdb_queries.json')
   .parameter('query', 'search', (t) => {
     t.style('deepObject')
     t.explode(false)
@@ -480,30 +474,15 @@ doc
   .parameter(limitQueryParam)
   .get((t) => {
     t.tag('search image')
+    t.operationId('iqdb_query')
+
     t.response(200, (t) => {
-      t.content(
-        'application/json',
-        z.object({
-          hash: z.string(),
-          post_id: postID,
-          score: z.number().min(0).max(100),
-          signature: z.object({
-            avglf: z.tuple([z.number(), z.number(), z.number()]),
-            sig: z.tuple([
-              z.array(z.number()),
-              z.array(z.number()),
-              z.array(z.number()),
-            ]),
-          }),
-          post,
-        }),
-      )
+      t.content('application/json', iqdbResult)
     })
   })
 
 // --- Autocomplete ---
-doc
-  .addPath('/autocomplete.json')
+doc.addPath('/autocomplete.json')
   .parameter('query', 'search', (t) => {
     t.style('deepObject')
     t.explode(false)
@@ -533,8 +512,7 @@ doc
   })
 
 // --- Source ---
-doc
-  .addPath('/source.json')
+doc.addPath('/source.json')
   .parameter('query', 'url', (t) => {
     t.required()
     t.schema(z.string())
