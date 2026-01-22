@@ -17,23 +17,27 @@ export const rating = z.enum({
   Explicit: 'e',
 }).describe('The rating of the post')
 
-export const tagType = z.enum({
+export const tagType = z.enum({ // yande.re
   General: 'general',
   Artist: 'artist',
   Copyright: 'copyright',
   Character: 'character',
-  circle: 'circle', // TODO: it needs to be deleted, but it appears in the response
+  Circle: 'circle',
+  Faults: 'faults',
 })
 
-export const tagCategory = z.enum({
+export const tagCategory = z.enum({ // yande.re
   General: 0,
   Artist: 1,
   Copyright: 3,
   Character: 4,
+  Circle: 5,
+  Faults: 6,
 })
 
 export const status = z.enum({ // TODO: add more
   Active: 'active',
+  Deleted: 'deleted',
 })
 
 export const post = z.object({
