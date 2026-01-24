@@ -97,16 +97,7 @@ export const artist = z.object({
 
 export const artists = artist.array()
 
-// --- Posts --- https://danbooru.donmai.us/wiki_pages/api%3Aposts
-export const fileType = z.enum(['jpg', 'png', 'gif', 'avif', 'mp4', 'webp', 'webm', 'swf', /* 'ugoira', */ 'zip'])
-
-export const rating = z.enum({
-  General: 'g',
-  Sensitive: 's',
-  Questionable: 'q',
-  Explicit: 'e',
-}).describe('The rating of the post')
-
+// --- Media Asset ---
 export const mediaAssetVariant = z.object({
   type: z.string(),
   url: z.url(),
@@ -131,6 +122,28 @@ export const mediaAsset = z.object({
   pixel_hash: z.string(),
   variants: z.array(mediaAssetVariant),
 })
+
+export const mediaAssets = z.array(mediaAsset)
+
+export const mediaMetadata = z.object({
+  id: ID.describe('Media Metadata ID'),
+  created_at: z.iso.datetime(),
+  updated_at: z.iso.datetime(),
+  media_asset_id: mediaAsset.shape.id,
+  metadata: z.record(z.string(), z.unknown()),
+})
+
+export const mediaMetadataList = z.array(mediaMetadata)
+
+// --- Posts --- https://danbooru.donmai.us/wiki_pages/api%3Aposts
+export const fileType = z.enum(['jpg', 'png', 'gif', 'avif', 'mp4', 'webp', 'webm', 'swf', /* 'ugoira', */ 'zip'])
+
+export const rating = z.enum({
+  General: 'g',
+  Sensitive: 's',
+  Questionable: 'q',
+  Explicit: 'e',
+}).describe('The rating of the post')
 
 export const postID = ID.describe('The post ID')
 

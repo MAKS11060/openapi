@@ -9,6 +9,10 @@ import {
   forbidden,
   iqdbResult,
   limit,
+  mediaAsset,
+  mediaAssets,
+  mediaMetadata,
+  mediaMetadataList,
   notFound,
   only,
   page,
@@ -38,6 +42,10 @@ doc.addSchemas({
   forbidden,
   iqdbResult,
   limit,
+  mediaAsset,
+  mediaAssets,
+  mediaMetadata,
+  mediaMetadataList,
   notFound,
   only,
   page,
@@ -110,7 +118,8 @@ doc.addPath('/posts.json')
     t.style('form')
     t.explode(false)
     t.schema(post.keyof().array().or(z.string()))
-      .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
+      .example('Pick all', (t) => t.value(''))
+      .example('Pick id,score,rating,file_url', (t) => t.value(['id', 'score', 'rating', 'file_url']))
   })
   .get((t) => {
     t.tag('posts')
@@ -134,7 +143,8 @@ doc.addPath('/posts/{id}.json', {id: (t) => t.schema(postID)}) //
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(post.keyof().array().or(z.string()))
-      .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
+      .example('Pick all', (t) => t.value(''))
+      .example('Pick id,score,rating,file_url', (t) => t.value(['id', 'score', 'rating', 'file_url']))
   })
   .get((t) => {
     t.tag('posts')
@@ -154,7 +164,8 @@ doc.addPath('/posts/random.json')
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(post.keyof().array().or(z.string()))
-      .example('Pick id,file_url', (t) => t.value(['id', 'file_url']))
+      .example('Pick all', (t) => t.value(''))
+      .example('Pick id,score,rating,file_url', (t) => t.value(['id', 'score', 'rating', 'file_url']))
   })
   .get((t) => {
     t.tag('posts')
@@ -199,6 +210,7 @@ doc.addPath('/users.json')
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(user.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
       .example('Pick id,name', (t) => t.value(['id', 'name']))
   })
   .parameter(tagsQueryParam)
@@ -220,6 +232,7 @@ doc.addPath('/users/{id}.json', {id: (t) => t.schema(userID)}) //
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(user.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
       .example('Pick id,name', (t) => t.value(['id', 'name']))
   })
   .parameter(tagsQueryParam)
@@ -270,6 +283,7 @@ doc.addPath('/artists.json')
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(artist.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
       .example('Pick id,name', (t) => t.value(['id', 'name']))
       .example('Pick id,name,urls', (t) => t.value(['id', 'name', 'urls']))
   })
@@ -288,6 +302,7 @@ doc.addPath('/artists/{id}.json', {id: (t) => t.schema(artist.shape.id)})
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(artist.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
       .example('Pick id,name,urls', (t) => t.value(['id', 'name', 'urls']))
   })
   .get((t) => {
@@ -318,6 +333,7 @@ doc.addPath('/artist_urls.json')
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(artistUrl.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
       .example('Pick id,artist_id,url', (t) => t.value(['id', 'artist_id', 'url']))
   })
   .parameter(limitQueryParam)
@@ -374,6 +390,7 @@ doc.addPath('/tags.json')
     t.parameter('query', 'only', (t) => {
       t.explode(false)
       t.schema(tag.keyof().array().or(z.string()))
+        .example('Pick all', (t) => t.value(''))
         .example('Pick id,name', (t) => t.value(['id', 'name']))
         .example('Pick id,name,category', (t) => t.value(['id', 'name', 'category']))
     })
@@ -438,6 +455,7 @@ doc.addPath('/tags/{id}.json', {id: (t) => t.schema(tag.shape.id)})
   .parameter('query', 'only', (t) => {
     t.explode(false)
     t.schema(tag.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
       .example('Pick id,name,category', (t) => t.value(['id', 'name', 'category']))
   })
   .get((t) => {
@@ -524,5 +542,97 @@ doc.addPath('/source.json')
 
     t.response(200, (t) => {
       t.content('application/json', source)
+    })
+  })
+
+// --- Media Asset ---
+doc.addPath('/media_assets.json')
+  .parameter('query', 'search', (t) => {
+    t.style('deepObject')
+    t.explode(false)
+    t.schema(
+      z.object({
+        id: z.string(),
+        md5: z.string(),
+        ai_tags_match: z.string(),
+      }).partial(),
+    )
+      .example('Search by ids', (t) => t.value({id: '11129929,10725248'}))
+      .example('Search by md5', (t) => t.value({md5: '8bf66e895799c1b2f3ce3d6790cd086d'}))
+      .example(
+        'Search by tags',
+        (t) => t.value({ai_tags_match: 'md5:8bf66e895799c1b2f3ce3d6790cd086d,b49300d7926f373b582e174b240eaf4c'}),
+      )
+  })
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(mediaAsset.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
+      .example('Pick id,md5,file_ext,file_size', (t) => t.value(['id', 'md5', 'file_ext', 'file_size']))
+  })
+  .parameter(limitQueryParam)
+  .get((t) => {
+    t.tag('media')
+    t.describe('Get media assets')
+    t.operationId('get_media_assets')
+
+    t.response(404, NotFound)
+    t.response(200, (t) => {
+      t.content('application/json', mediaAssets)
+    })
+  })
+
+doc.addPath('/media_assets/{id}.json', {
+  id: (t) =>
+    t.schema(mediaAsset.shape.id)
+      .example('Example 1', (t) => t.value(11129929)),
+})
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(mediaAsset.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
+      .example('Pick id,md5,file_ext,file_size', (t) => t.value(['id', 'md5', 'file_ext', 'file_size']))
+  })
+  .get((t) => {
+    t.tag('media')
+    t.describe('Get media asset by id')
+    t.operationId('get_media_asset')
+
+    t.response(404, NotFound)
+    t.response(200, (t) => {
+      t.content('application/json', mediaAsset)
+    })
+  })
+
+doc.addPath('/media_metadata.json')
+  .parameter('query', 'search', (t) => {
+    t.style('deepObject')
+    t.explode(false)
+    t.schema(
+      z.object({
+        id: z.string(),
+        media_asset_id: z.string(),
+        metadata: z.string().or(z.record(z.string(), z.any())),
+      }).partial().or(z.record(z.string(), z.unknown())),
+    )
+      .example('Search by id', (t) => t.value({id: '11127511'}))
+      .example('Search by ids', (t) => t.value({id: '11127511,10722914'}))
+      .example('Search by metadata file:type', (t) => t.value({'metadata[File:FileType]': 'JPEG'}))
+  })
+  .parameter('query', 'only', (t) => {
+    t.explode(false)
+    t.schema(mediaMetadata.keyof().array().or(z.string()))
+      .example('Pick all', (t) => t.value(''))
+      .example('Pick id,media_asset_id', (t) => t.value(['id', 'media_asset_id']))
+  })
+  .parameter(limitQueryParam)
+  .get((t) => {
+    t.tag('media')
+    t.describe('')
+    t.operationId('get_media_metadata')
+
+    t.response(404, NotFound)
+    t.response(200, (t) => {
+      t.content('application/json', mediaMetadataList)
     })
   })
