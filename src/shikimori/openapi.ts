@@ -8,7 +8,7 @@ export const doc = createDoc({
     schema: [zodPlugin()],
   },
   info: {
-    title: 'Shikimori API',
+    title: 'Shikimori OpenAPI Spec',
     version: format(new Date(), 'yyyy.MM.dd'),
     description: README,
   },
@@ -36,10 +36,7 @@ export const doc = createDoc({
   ],
 })
 
-doc.server({
-  url: 'https://shikimori.one/',
-  description: 'Main server',
-})
+doc.server({url: 'https://shikimori.one/', description: 'Main server'})
 
 export const anon = doc.addSecuritySchema.anonymous()
 export const oauth2 = doc.addSecuritySchema.oauth2('OAuth2', {

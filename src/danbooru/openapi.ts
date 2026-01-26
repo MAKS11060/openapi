@@ -7,7 +7,7 @@ export const doc = createDoc({
     schema: [zodPlugin()],
   },
   info: {
-    title: 'Danbooru API',
+    title: 'Danbooru OpenAPI Spec',
     version: format(new Date(), 'yyyy.MM.dd'),
   },
   externalDocs: {
