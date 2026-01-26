@@ -163,6 +163,8 @@ npx openapi-typescript \
   -o ./shikimori.oas.ts
 ```
 
+2. Create openapi-fetch client
+
 ```ts
 // shikimori.ts
 import createClient from 'openapi-fetch'
