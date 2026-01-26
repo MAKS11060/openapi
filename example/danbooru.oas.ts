@@ -255,50 +255,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: {
-            parameters: {
-                query?: {
-                    search?: {
-                        id?: components["schemas"]["postID"];
-                        url?: string;
-                        hash?: string;
-                    };
-                    limit?: components["parameters"]["Limit"];
-                };
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Response 200 */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": {
-                            hash: string;
-                            post_id: components["schemas"]["postID"];
-                            score: number;
-                            signature: {
-                                avglf: [
-                                    number,
-                                    number,
-                                    number
-                                ];
-                                sig: [
-                                    number[],
-                                    number[],
-                                    number[]
-                                ];
-                            };
-                            post: components["schemas"]["post"];
-                        };
-                    };
-                };
-            };
-        };
+        get: operations["iqdb_query"];
         put?: never;
         post?: never;
         delete?: never;
@@ -341,6 +298,80 @@ export interface paths {
         };
         /** @description Get source info by URL */
         get: operations["get_source_info"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/media_assets.json": {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: string;
+                    md5?: string;
+                    ai_tags_match?: string;
+                };
+                only?: ("id" | "created_at" | "updated_at" | "md5" | "file_ext" | "file_size" | "image_width" | "image_height" | "duration" | "status" | "file_key" | "is_public" | "pixel_hash" | "variants")[] | string;
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Get media assets */
+        get: operations["get_media_assets"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/media_assets/{id}.json": {
+        parameters: {
+            query?: {
+                only?: ("id" | "created_at" | "updated_at" | "md5" | "file_ext" | "file_size" | "image_width" | "image_height" | "duration" | "status" | "file_key" | "is_public" | "pixel_hash" | "variants")[] | string;
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        /** @description Get media asset by id */
+        get: operations["get_media_asset"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/media_metadata.json": {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: string;
+                    media_asset_id?: string;
+                    metadata?: string | {
+                        [key: string]: unknown;
+                    };
+                } | {
+                    [key: string]: unknown;
+                };
+                only?: ("id" | "created_at" | "updated_at" | "media_asset_id" | "metadata")[] | string;
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["get_media_metadata"];
         put?: never;
         post?: never;
         delete?: never;
@@ -450,8 +481,67 @@ export interface components {
         }[];
         /** @description Access denied */
         forbidden: unknown;
+        iqdbResult: {
+            hash: string;
+            post_id: components["schemas"]["postID"];
+            score: number;
+            signature: {
+                avglf: [
+                    number,
+                    number,
+                    number
+                ];
+                sig: [
+                    number[],
+                    number[],
+                    number[]
+                ];
+            };
+            post: components["schemas"]["post"];
+        };
         /** @description The number of results to show per page */
         limit: number;
+        mediaAsset: {
+            /** @description Asset ID */
+            id: number;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            md5: string;
+            file_ext: string;
+            file_size: number;
+            image_width: number;
+            image_height: number;
+            duration?: number | null;
+            status: string;
+            file_key: string;
+            is_public: boolean;
+            pixel_hash: string;
+            variants: {
+                type: string;
+                /** Format: uri */
+                url: string;
+                width: number;
+                height: number;
+                file_ext: string;
+            }[];
+        };
+        mediaAssets: components["schemas"]["mediaAsset"][];
+        mediaMetadata: {
+            /** @description Media Metadata ID */
+            id: number;
+            /** Format: date-time */
+            created_at: string;
+            /** Format: date-time */
+            updated_at: string;
+            /** @description Asset ID */
+            media_asset_id: number;
+            metadata: {
+                [key: string]: unknown;
+            };
+        };
+        mediaMetadataList: components["schemas"]["mediaMetadata"][];
         /** @description Not found */
         notFound: {
             success: boolean;
@@ -493,32 +583,7 @@ export interface components {
              */
             preview_file_url: string;
             /** @description The media asset associated with the post */
-            media_asset: {
-                /** @description Asset ID */
-                id: number;
-                /** Format: date-time */
-                created_at: string;
-                /** Format: date-time */
-                updated_at: string;
-                md5: string;
-                file_ext: string;
-                file_size: number;
-                image_width: number;
-                image_height: number;
-                duration?: number | null;
-                status: string;
-                file_key: string;
-                is_public: boolean;
-                pixel_hash: string;
-                variants: {
-                    type: string;
-                    /** Format: uri */
-                    url: string;
-                    width: number;
-                    height: number;
-                    file_ext: string;
-                }[];
-            };
+            media_asset: components["schemas"]["mediaAsset"];
             /** @description The height of the image */
             image_height: number;
             /** @description The width of the image */
@@ -605,7 +670,7 @@ export interface components {
         /** @description The post ID */
         postID: number;
         posts: components["schemas"]["post"][];
-        postsLimit: number;
+        postsLimit: components["schemas"]["limit"];
         source: {
             page_url: string | null;
             image_urls: string[];
@@ -1139,6 +1204,33 @@ export interface operations {
             };
         };
     };
+    iqdb_query: {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: components["schemas"]["postID"];
+                    url?: string;
+                    hash?: string;
+                };
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["iqdbResult"];
+                };
+            };
+        };
+    };
     get_autocomplete: {
         parameters: {
             query?: {
@@ -1188,6 +1280,93 @@ export interface operations {
                     "application/json": components["schemas"]["source"];
                 };
             };
+        };
+    };
+    get_media_assets: {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: string;
+                    md5?: string;
+                    ai_tags_match?: string;
+                };
+                only?: ("id" | "created_at" | "updated_at" | "md5" | "file_ext" | "file_size" | "image_width" | "image_height" | "duration" | "status" | "file_key" | "is_public" | "pixel_hash" | "variants")[] | string;
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["mediaAssets"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    get_media_asset: {
+        parameters: {
+            query?: {
+                only?: ("id" | "created_at" | "updated_at" | "md5" | "file_ext" | "file_size" | "image_width" | "image_height" | "duration" | "status" | "file_key" | "is_public" | "pixel_hash" | "variants")[] | string;
+            };
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["mediaAsset"];
+                };
+            };
+            404: components["responses"]["NotFound"];
+        };
+    };
+    get_media_metadata: {
+        parameters: {
+            query?: {
+                search?: {
+                    id?: string;
+                    media_asset_id?: string;
+                    metadata?: string | {
+                        [key: string]: unknown;
+                    };
+                } | {
+                    [key: string]: unknown;
+                };
+                only?: ("id" | "created_at" | "updated_at" | "media_asset_id" | "metadata")[] | string;
+                limit?: components["parameters"]["Limit"];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Response 200 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["mediaMetadataList"];
+                };
+            };
+            404: components["responses"]["NotFound"];
         };
     };
 }

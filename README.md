@@ -179,6 +179,9 @@ const shikimoriUserAgent = ''
 export const shikimoriApi = createClient<paths>({
   baseUrl: 'https://shikimori.one',
   headers: {'user-agent': shikimoriUserAgent},
+  querySerializer: {
+    array: {explode: false, style: 'form'},
+  },
 })
 ```
 

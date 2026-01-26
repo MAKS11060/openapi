@@ -213,8 +213,12 @@ export const studio = z
 
 export const studios = z.array(studio)
 
-// --- Anime Search ---
-export const animeSearchQuery_order = z.enum([
+// --- Search (Anime/Manga/Ranobe) ---
+export const searchQueryPage = z.int().min(1).max(100000).describe('The page number')
+export const searchQueryLimit = z.int().min(1).max(50).describe('The limit of results per page')
+
+// --- Search Anime ---
+export const animeSearchQueryOrder = z.enum([
   'id',
   'id_desc',
   'ranked',
@@ -228,7 +232,7 @@ export const animeSearchQuery_order = z.enum([
   'created_at',
   'created_at_desc',
 ])
-export const animeSearchQuery_kind = z.enum([
+export const animeSearchQueryKind = z.enum([
   'tv',
   'movie',
   'ova',
@@ -242,38 +246,28 @@ export const animeSearchQuery_kind = z.enum([
   'tv_24',
   'tv_48',
 ])
+export const searchAnimeDuration = z.enum(['S', 'D', 'F'])
 export const animeSearchQuery = z
   .object({
-    page: z.int().min(1).max(100000).describe('The page number'),
-    limit: z.int().min(1).max(50).describe('The limit of results per page'),
-    order: animeSearchQuery_order.describe('The order of the results'),
-    kind: animeSearchQuery_kind.describe('The kind of the anime'),
+    page: searchQueryPage,
+    limit: searchQueryLimit,
+    order: animeSearchQueryOrder.describe('The order of the results'),
+    kind: animeSearchQueryKind.describe('The kind of the anime'),
     status: animeStatus.describe('The status of the anime'),
-    season: z
-      .string()
-      .describe('The season of the anime')
-      .meta({
-        examples: {
-          Example1: {value: 'summer_2017'},
-          Example2: {value: '2016'},
-          Example3: {value: '2014_2016'},
-          Example4: {value: '199x'},
-        },
-      }),
+    season: z.string().or(z.string().array()).describe('The season of the anime'),
     score: z.number().describe('The minimal anime score, must be a number'),
-    duration: z.enum(['S', 'D', 'F']).describe('The duration of the anime'),
+    duration: searchAnimeDuration.describe('The duration of the anime'),
     rating: animeRating.describe('The rating of the anime'),
-    genre: z.string().describe('List of genre ids separated by comma'),
-    genre_v2: z.string().describe('List of genre v2 ids separated by comma'),
-    studio: z.string().describe('List of studio ids separated by comma'),
-    franchise: z.string().describe('List of franchises separated by comma'),
+    genre: z.string().or(z.string().array()).describe('List of genre ids separated by comma'),
+    genre_v2: z.string().or(z.string().array()).describe('List of genre v2 ids separated by comma'),
+    studio: z.string().or(z.string().array()).describe('List of studio ids separated by comma'),
+    franchise: z.string().or(z.string().array()).describe('List of franchises separated by comma'),
     censored: z.enum(['true', 'false']).describe('Set to false to allow hentai, yaoi and yuri'),
     mylist: userAnimeStatus.describe('Status of anime in current user list'),
-    ids: z.string().describe('List of anime ids separated by comma'),
-    exclude_ids: z.string().describe('List of anime ids separated by comma'),
+    ids: z.string().or(z.string().array()).describe('List of anime ids separated by comma'),
+    exclude_ids: z.string().or(z.string().array()).describe('List of anime ids separated by comma'),
     search: z.string().describe('Search phrase to filter animes by name'),
   })
-  .partial()
 
 export const anime = z.object({
   id: animeID,
@@ -341,8 +335,8 @@ export const animeShort = anime.pick({
 })
 export const animeList = z.array(animeShort)
 
-// --- Manga Search ---
-export const mangeSearchQuery_order = z.enum([
+// --- Search Manga ---
+export const mangeSearchQueryOrder = z.enum([
   'id',
   'id_desc',
   'ranked',
@@ -357,38 +351,27 @@ export const mangeSearchQuery_order = z.enum([
   'created_at',
   'created_at_desc',
 ])
-export const mangeSearchQuery_kind = z.enum(['manga', 'manhwa', 'manhua', 'light_novel', 'novel', 'one_shot', 'doujin'])
-export const mangeSearchQuery_status = z.enum(['anons', 'ongoing', 'released', 'paused', 'discontinued'])
+export const mangeSearchQueryKind = z.enum(['manga', 'manhwa', 'manhua', 'light_novel', 'novel', 'one_shot', 'doujin'])
+export const mangeSearchQueryStatus = z.enum(['anons', 'ongoing', 'released', 'paused', 'discontinued'])
 export const mangaSearchQuery = z
   .object({
-    page: z.int().min(1).max(100000).describe('The page number'),
-    limit: z.int().min(1).max(50).describe('The limit of results per page'),
-    order: mangeSearchQuery_order.describe('The order of the results'),
-    kind: mangeSearchQuery_kind.describe('The kind of the manga'),
-    status: mangeSearchQuery_status.describe('The status of the manga'),
-    season: z
-      .string()
-      .describe('The season of the anime')
-      .meta({
-        examples: {
-          Example1: {value: 'summer_2017'},
-          Example2: {value: '2016'},
-          Example3: {value: '2014_2016'},
-          Example4: {value: '199x'},
-        },
-      }),
+    page: searchQueryPage,
+    limit: searchQueryLimit,
+    order: mangeSearchQueryOrder.describe('The order of the results'),
+    kind: mangeSearchQueryKind.describe('The kind of the manga'),
+    status: mangeSearchQueryStatus.describe('The status of the manga'),
+    season: z.string().or(z.string().array()).describe('The season of the anime'),
     score: z.number().describe('The minimal score, must be a number'),
-    genre: z.string().describe('List of genre ids separated by comma'),
-    genre_v2: z.string().describe('List of genre v2 ids separated by comma'),
-    publisher: z.string().describe('List of publisher ids separated by comma'),
-    franchise: z.string().describe('List of franchises separated by comma'),
+    genre: z.string().or(z.string().array()).describe('List of genre ids separated by comma'),
+    genre_v2: z.string().or(z.string().array()).describe('List of genre v2 ids separated by comma'),
+    publisher: z.string().or(z.string().array()).describe('List of publisher ids separated by comma'),
+    franchise: z.string().or(z.string().array()).describe('List of franchises separated by comma'),
     censored: z.enum(['true', 'false']).describe('Set to false to allow hentai, yaoi and yuri'),
     mylist: userAnimeStatus.describe('Status of manga in current user list'),
-    ids: z.string().describe('List of anime ids separated by comma'),
-    exclude_ids: z.string().describe('List of anime ids separated by comma'),
+    ids: z.string().or(z.string().array()).describe('List of anime ids separated by comma'),
+    exclude_ids: z.string().or(z.string().array()).describe('List of anime ids separated by comma'),
     search: z.string().describe('Search phrase to filter animes by name'),
   })
-  .partial()
 
 // --- Manga ---
 export const manga = z.object({
@@ -397,10 +380,10 @@ export const manga = z.object({
   russian: z.string().describe('The Russian name of the manga'),
   image: image.describe('The image details of the manga'),
   url: z.string().describe('The URL of the manga'),
-  kind: mangeSearchQuery_kind.describe('The kind of the manga'),
+  kind: mangeSearchQueryKind.describe('The kind of the manga'),
   score: z.string().describe('The score of the manga'),
   // status: z.string().describe('The status of the manga (e.g., released)'),
-  status: mangeSearchQuery_status.describe('The status of the manga'),
+  status: mangeSearchQueryStatus.describe('The status of the manga'),
 
   volumes: z.int().positive().describe('The total number of volumes'),
   chapters: z.int().positive().describe('The total number of chapters'),

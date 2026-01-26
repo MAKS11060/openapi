@@ -47,7 +47,6 @@ doc.addSchemas({
   anime,
   animeID,
   animeList,
-  animeSearchQuery,
   character,
   characterFull,
   externalLinks,
@@ -56,7 +55,6 @@ doc.addSchemas({
   // ID, Bug: https://github.com/colinhacks/zod/issues/5635
   manga,
   mangaList,
-  mangaSearchQuery,
   related,
   relatedList,
   roles,
@@ -73,10 +71,8 @@ doc.addSchemas({
   userRates,
   userRatesCreateParams,
   userRatesList,
-  userRatesQuery,
   userRatesUpdateParams,
   users,
-  usersSearchQuery,
   video,
   videos,
 })
@@ -131,24 +127,79 @@ doc.addPath('/api/animes').get((t) => {
   t.operationId('list_anime')
   t.externalDocs({url: 'https://shikimori.one/api/doc/1.0/animes/index.html'})
 
-  t.parameter('query', 'page', (t) => t.schema(animeSearchQuery.shape.page))
-  t.parameter('query', 'limit', (t) => t.schema(animeSearchQuery.shape.limit))
-  t.parameter('query', 'order', (t) => t.schema(animeSearchQuery.shape.order))
-  t.parameter('query', 'kind', (t) => t.schema(animeSearchQuery.shape.kind))
-  t.parameter('query', 'status', (t) => t.schema(animeSearchQuery.shape.status))
-  t.parameter('query', 'season', (t) => t.schema(animeSearchQuery.shape.season))
-  t.parameter('query', 'score', (t) => t.schema(animeSearchQuery.shape.score))
-  t.parameter('query', 'duration', (t) => t.schema(animeSearchQuery.shape.duration))
-  t.parameter('query', 'rating', (t) => t.schema(animeSearchQuery.shape.rating))
-  t.parameter('query', 'genre', (t) => t.schema(animeSearchQuery.shape.genre))
-  t.parameter('query', 'genre_v2', (t) => t.schema(animeSearchQuery.shape.genre_v2))
-  t.parameter('query', 'studio', (t) => t.schema(animeSearchQuery.shape.studio))
-  t.parameter('query', 'franchise', (t) => t.schema(animeSearchQuery.shape.franchise))
-  t.parameter('query', 'censored', (t) => t.schema(animeSearchQuery.shape.censored))
-  t.parameter('query', 'mylist', (t) => t.schema(animeSearchQuery.shape.mylist))
-  t.parameter('query', 'ids', (t) => t.schema(animeSearchQuery.shape.ids))
-  t.parameter('query', 'exclude_ids', (t) => t.schema(animeSearchQuery.shape.exclude_ids))
-  t.parameter('query', 'search', (t) => t.schema(animeSearchQuery.shape.search))
+  t.parameter('query', 'page', (t) => {
+    t.schema(animeSearchQuery.shape.page)
+  })
+  t.parameter('query', 'limit', (t) => {
+    t.schema(animeSearchQuery.shape.limit)
+  })
+  t.parameter('query', 'order', (t) => {
+    t.schema(animeSearchQuery.shape.order)
+  })
+  t.parameter('query', 'kind', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.kind.array().or(animeSearchQuery.shape.kind))
+      .example('All kind', (t) => t.value([]))
+      .example('Select movie,special', (t) => t.value(['movie', 'special']))
+  })
+  t.parameter('query', 'status', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.status.array().or(animeSearchQuery.shape.status))
+  })
+  t.parameter('query', 'season', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.season.array().or(animeSearchQuery.shape.season))
+      .example('Default', (t) => t.value(''))
+      .example('Example 1', (t) => t.value('summer_2017'))
+      .example('Example 2', (t) => t.value('2016'))
+      .example('Example 3', (t) => t.value('2014_2016'))
+      .example('Example 4', (t) => t.value('199x'))
+  })
+  t.parameter('query', 'score', (t) => {
+    t.schema(animeSearchQuery.shape.score)
+  })
+  t.parameter('query', 'duration', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.duration.array().or(animeSearchQuery.shape.duration))
+  })
+  t.parameter('query', 'rating', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.rating.array().or(animeSearchQuery.shape.rating))
+  })
+  t.parameter('query', 'genre', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.genre)
+  })
+  t.parameter('query', 'genre_v2', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.genre_v2)
+  })
+  t.parameter('query', 'studio', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.studio)
+  })
+  t.parameter('query', 'franchise', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.franchise)
+  })
+  t.parameter('query', 'censored', (t) => {
+    t.schema(animeSearchQuery.shape.censored)
+  })
+  t.parameter('query', 'mylist', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.mylist.array().or(animeSearchQuery.shape.mylist))
+  })
+  t.parameter('query', 'ids', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.ids)
+  })
+  t.parameter('query', 'exclude_ids', (t) => {
+    t.explode(false)
+    t.schema(animeSearchQuery.shape.exclude_ids)
+  })
+  t.parameter('query', 'search', (t) => {
+    t.schema(animeSearchQuery.shape.search)
+  })
 
   t.response(200, (t) => {
     t.content('application/json', animeList)
@@ -241,22 +292,64 @@ doc.addPath('/api/mangas').get((t) => {
   t.describe('list manga')
   t.operationId('list_manga')
 
-  t.parameter('query', 'page', (t) => t.schema(mangaSearchQuery.shape.page))
-  t.parameter('query', 'limit', (t) => t.schema(mangaSearchQuery.shape.limit))
-  t.parameter('query', 'order', (t) => t.schema(mangaSearchQuery.shape.order))
-  t.parameter('query', 'kind', (t) => t.schema(mangaSearchQuery.shape.kind))
-  t.parameter('query', 'status', (t) => t.schema(mangaSearchQuery.shape.status))
-  t.parameter('query', 'season', (t) => t.schema(mangaSearchQuery.shape.season))
-  t.parameter('query', 'score', (t) => t.schema(mangaSearchQuery.shape.score))
-  t.parameter('query', 'genre', (t) => t.schema(mangaSearchQuery.shape.genre))
-  t.parameter('query', 'genre_v2', (t) => t.schema(mangaSearchQuery.shape.genre_v2))
-  t.parameter('query', 'publisher', (t) => t.schema(mangaSearchQuery.shape.publisher))
-  t.parameter('query', 'franchise', (t) => t.schema(mangaSearchQuery.shape.franchise))
-  t.parameter('query', 'censored', (t) => t.schema(mangaSearchQuery.shape.censored))
-  t.parameter('query', 'mylist', (t) => t.schema(mangaSearchQuery.shape.mylist))
-  t.parameter('query', 'ids', (t) => t.schema(mangaSearchQuery.shape.ids))
-  t.parameter('query', 'exclude_ids', (t) => t.schema(mangaSearchQuery.shape.exclude_ids))
-  t.parameter('query', 'search', (t) => t.schema(mangaSearchQuery.shape.search))
+  t.parameter('query', 'page', (t) => {
+    t.schema(mangaSearchQuery.shape.page)
+  })
+  t.parameter('query', 'limit', (t) => {
+    t.schema(mangaSearchQuery.shape.limit)
+  })
+  t.parameter('query', 'order', (t) => {
+    t.schema(mangaSearchQuery.shape.order)
+  })
+  t.parameter('query', 'kind', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.kind.array().or(mangaSearchQuery.shape.kind))
+  })
+  t.parameter('query', 'status', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.status.array().or(mangaSearchQuery.shape.status))
+  })
+  t.parameter('query', 'season', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.season)
+  })
+  t.parameter('query', 'score', (t) => {
+    t.schema(mangaSearchQuery.shape.score)
+  })
+  t.parameter('query', 'genre', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.genre)
+  })
+  t.parameter('query', 'genre_v2', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.genre_v2)
+  })
+  t.parameter('query', 'publisher', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.publisher)
+  })
+  t.parameter('query', 'franchise', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.franchise)
+  })
+  t.parameter('query', 'censored', (t) => {
+    t.schema(mangaSearchQuery.shape.censored)
+  })
+  t.parameter('query', 'mylist', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.mylist.array().or(mangaSearchQuery.shape.mylist))
+  })
+  t.parameter('query', 'ids', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.ids)
+  })
+  t.parameter('query', 'exclude_ids', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.exclude_ids)
+  })
+  t.parameter('query', 'search', (t) => {
+    t.schema(mangaSearchQuery.shape.search)
+  })
 
   t.response(200, (t) => t.content('application/json', mangaList))
   t.response(401, UnauthorizedResponse)
@@ -325,20 +418,56 @@ doc.addPath('/api/ranobe').get((t) => {
   t.describe('List ranobe')
   t.operationId('list_ranobe')
 
-  t.parameter('query', 'page', (t) => t.schema(mangaSearchQuery.shape.page))
-  t.parameter('query', 'limit', (t) => t.schema(mangaSearchQuery.shape.limit))
-  t.parameter('query', 'order', (t) => t.schema(mangaSearchQuery.shape.order))
-  t.parameter('query', 'status', (t) => t.schema(mangaSearchQuery.shape.status))
-  t.parameter('query', 'season', (t) => t.schema(mangaSearchQuery.shape.season))
-  t.parameter('query', 'score', (t) => t.schema(mangaSearchQuery.shape.score))
-  t.parameter('query', 'genre', (t) => t.schema(mangaSearchQuery.shape.genre))
-  t.parameter('query', 'publisher', (t) => t.schema(mangaSearchQuery.shape.publisher))
-  t.parameter('query', 'franchise', (t) => t.schema(mangaSearchQuery.shape.franchise))
-  t.parameter('query', 'censored', (t) => t.schema(mangaSearchQuery.shape.censored))
-  t.parameter('query', 'mylist', (t) => t.schema(mangaSearchQuery.shape.mylist))
-  t.parameter('query', 'ids', (t) => t.schema(mangaSearchQuery.shape.ids))
-  t.parameter('query', 'exclude_ids', (t) => t.schema(mangaSearchQuery.shape.exclude_ids))
-  t.parameter('query', 'search', (t) => t.schema(mangaSearchQuery.shape.search))
+  t.parameter('query', 'page', (t) => {
+    t.schema(mangaSearchQuery.shape.page)
+  })
+  t.parameter('query', 'limit', (t) => {
+    t.schema(mangaSearchQuery.shape.limit)
+  })
+  t.parameter('query', 'order', (t) => {
+    t.schema(mangaSearchQuery.shape.order)
+  })
+  t.parameter('query', 'status', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.status.array().or(mangaSearchQuery.shape.status))
+  })
+  t.parameter('query', 'season', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.season)
+  })
+  t.parameter('query', 'score', (t) => {
+    t.schema(mangaSearchQuery.shape.score)
+  })
+  t.parameter('query', 'genre', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.genre)
+  })
+  t.parameter('query', 'publisher', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.publisher)
+  })
+  t.parameter('query', 'franchise', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.franchise)
+  })
+  t.parameter('query', 'censored', (t) => {
+    t.schema(mangaSearchQuery.shape.censored)
+  })
+  t.parameter('query', 'mylist', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.mylist.array().or(mangaSearchQuery.shape.mylist))
+  })
+  t.parameter('query', 'ids', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.ids)
+  })
+  t.parameter('query', 'exclude_ids', (t) => {
+    t.explode(false)
+    t.schema(mangaSearchQuery.shape.exclude_ids)
+  })
+  t.parameter('query', 'search', (t) => {
+    t.schema(mangaSearchQuery.shape.search)
+  })
 
   t.response(200, (t) => t.content('application/json', mangaList))
   t.response(401, UnauthorizedResponse)
@@ -528,8 +657,7 @@ doc.addPath('/api/studios').get((t) => {
 })
 
 // --- Users ---
-doc
-  .addPath('/api/users')
+doc.addPath('/api/users')
   .parameter('query', 'page', (t) => {
     t.schema(usersSearchQuery.shape.page)
   })
@@ -549,10 +677,7 @@ doc
     })
   })
 
-doc
-  .addPath('/api/users/{id}', {
-    id: (t) => t.schema(userID),
-  })
+doc.addPath('/api/users/{id}', {id: (t) => t.schema(userID)})
   .get((t) => {
     t.tag('v1_user')
     t.operationId('get_user')
@@ -563,8 +688,7 @@ doc
     })
   })
 
-doc
-  .addPath('/api/users/whoami')
+doc.addPath('/api/users/whoami')
   .get((t) => {
     t.tag('v1_user')
     t.security(oauth2)
@@ -578,10 +702,7 @@ doc
   })
 
 // --- User Rates ---
-doc
-  .addPath('/api/user_rates/{type}/cleanup', {
-    type: (t) => t.schema(z.enum(['anime', 'manga'])),
-  })
+doc.addPath('/api/user_rates/{type}/cleanup', {type: (t) => t.schema(z.enum(['anime', 'manga']))})
   .delete((t) => {
     t.tag('v1_user')
     t.describe('Delete entire user rates and history')
@@ -592,10 +713,7 @@ doc
     })
   })
 
-doc
-  .addPath('/api/user_rates/{type}/reset', {
-    type: (t) => t.schema(z.enum(['anime', 'manga'])),
-  })
+doc.addPath('/api/user_rates/{type}/reset', {type: (t) => t.schema(z.enum(['anime', 'manga']))})
   .delete((t) => {
     t.tag('v1_user')
     t.describe('Reset all user scores to 0')
@@ -608,16 +726,17 @@ doc
 
 // --- User Rates 2 ---
 doc.addPath('/api/v2/user_rates')
-  .parameter('query', 'user_id', (t) => t.schema(userRatesQuery.shape.user_id))
-  .parameter('query', 'target_id', (t) => t.schema(userRatesQuery.shape.target_id))
-  .parameter('query', 'target_type', (t) => t.schema(userRatesQuery.shape.target_type))
-  .parameter('query', 'status', (t) => t.schema(userRatesQuery.shape.status))
-  .parameter('query', 'page', (t) => t.schema(userRatesQuery.shape.page))
-  .parameter('query', 'limit', (t) => t.schema(userRatesQuery.shape.limit))
   .get((t) => {
     t.tag('v2_user')
     t.describe('List user rates')
     t.operationId('list_user_rates')
+
+    t.parameter('query', 'user_id', (t) => t.schema(userRatesQuery.shape.user_id))
+    t.parameter('query', 'target_id', (t) => t.schema(userRatesQuery.shape.target_id))
+    t.parameter('query', 'target_type', (t) => t.schema(userRatesQuery.shape.target_type))
+    t.parameter('query', 'status', (t) => t.schema(userRatesQuery.shape.status))
+    t.parameter('query', 'page', (t) => t.schema(userRatesQuery.shape.page))
+    t.parameter('query', 'limit', (t) => t.schema(userRatesQuery.shape.limit))
 
     t.response(200, (t) => {
       t.content('application/json', userRatesList)
@@ -654,10 +773,7 @@ doc.addPath('/api/v2/user_rates')
     t.response(401, UnauthorizedResponse)
   })
 
-doc
-  .addPath('/api/v2/user_rates/{id}', {
-    id: (t) => t.schema(userRates.shape.id),
-  })
+doc.addPath('/api/v2/user_rates/{id}', {id: (t) => t.schema(userRates.shape.id)})
   .get((t) => {
     t.tag('v2_user')
     t.describe('Show an user rate')
@@ -706,10 +822,7 @@ doc
     t.response(204, (t) => {})
   })
 
-doc
-  .addPath('/api/v2/user_rates/{id}/increment', {
-    id: (t) => t.schema(userRates.shape.id),
-  })
+doc.addPath('/api/v2/user_rates/{id}/increment', {id: (t) => t.schema(userRates.shape.id)})
   .post((t) => {
     t.tag('v2_user')
     t.describe('Increment episodes/chapters by 1')
@@ -723,10 +836,7 @@ doc
   })
 
 // --- Videos ---
-doc
-  .addPath('/api/animes/{anime_id}/videos', {
-    anime_id: (t) => t.schema(animeID),
-  })
+doc.addPath('/api/animes/{anime_id}/videos', {anime_id: (t) => t.schema(animeID)})
   .get((t) => {
     t.tag('videos')
     t.describe('List videos')
@@ -757,11 +867,10 @@ doc
     })
   })
 
-doc
-  .addPath('/api/animes/{anime_id}/videos/{id}', {
-    anime_id: (t) => t.schema(animeID),
-    id: (t) => t.schema(ID),
-  })
+doc.addPath('/api/animes/{anime_id}/videos/{id}', {
+  anime_id: (t) => t.schema(animeID),
+  id: (t) => t.schema(ID),
+})
   .delete((t) => {
     t.tag('videos')
     t.describe('Destroy a video')

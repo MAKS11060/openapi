@@ -206,7 +206,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -225,7 +225,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -243,7 +243,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -261,7 +261,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -279,7 +279,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -297,7 +297,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -315,7 +315,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -333,7 +333,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -368,7 +368,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -387,7 +387,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -405,7 +405,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -423,7 +423,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -441,7 +441,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -459,7 +459,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -477,7 +477,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -495,7 +495,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -513,7 +513,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -549,7 +549,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -786,14 +786,7 @@ export interface paths {
     };
     "/api/v2/user_rates": {
         parameters: {
-            query?: {
-                user_id?: components["schemas"]["userID"];
-                target_id?: number;
-                target_type?: "Anime" | "Mange";
-                status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                page?: number;
-                limit?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -876,7 +869,7 @@ export interface paths {
             header?: never;
             path: {
                 anime_id: components["schemas"]["animeID"];
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -896,7 +889,8 @@ export interface components {
     schemas: {
         achievements: {
             user_id: components["schemas"]["userID"];
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             neko_id: string;
             level: number;
             progress: number;
@@ -974,11 +968,11 @@ export interface components {
             /** @description Indicates whether the anime is ongoing */
             ongoing: boolean;
             /** @description The thread ID of the anime */
-            thread_id: components["schemas"]["ID"];
+            thread_id: number;
             /** @description The topic ID of the anime */
-            topic_id: components["schemas"]["ID"];
+            topic_id: number;
             /** @description The MyAnimeList ID of the anime */
-            myanimelist_id: components["schemas"]["ID"];
+            myanimelist_id: number;
             /** @description The rates scores stats of the anime */
             rates_scores_stats: {
                 name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
@@ -1005,7 +999,8 @@ export interface components {
             licensors: string[];
             /** @description The genres of the anime */
             genres: {
-                id: components["schemas"]["ID"];
+                /** @description The ID */
+                id: number;
                 name: string;
                 russian: string;
                 /** @constant */
@@ -1070,67 +1065,9 @@ export interface components {
             /** @description The date when the anime was released */
             released_on?: string | null;
         }[];
-        animeSearchQuery: {
-            /** @description The page number */
-            page?: number;
-            /** @description The limit of results per page */
-            limit?: number;
-            /**
-             * @description The order of the results
-             * @enum {string}
-             */
-            order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "episodes" | "status" | "random" | "created_at" | "created_at_desc";
-            /**
-             * @description The kind of the anime
-             * @enum {string}
-             */
-            kind?: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48";
-            /**
-             * @description The status of the anime
-             * @enum {string}
-             */
-            status?: "anons" | "ongoing" | "released";
-            /** @description The season of the anime */
-            season?: string;
-            /** @description The minimal anime score, must be a number */
-            score?: number;
-            /**
-             * @description The duration of the anime
-             * @enum {string}
-             */
-            duration?: "S" | "D" | "F";
-            /**
-             * @description The rating of the anime
-             * @enum {string}
-             */
-            rating?: "none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx";
-            /** @description List of genre ids separated by comma */
-            genre?: string;
-            /** @description List of genre v2 ids separated by comma */
-            genre_v2?: string;
-            /** @description List of studio ids separated by comma */
-            studio?: string;
-            /** @description List of franchises separated by comma */
-            franchise?: string;
-            /**
-             * @description Set to false to allow hentai, yaoi and yuri
-             * @enum {string}
-             */
-            censored?: "true" | "false";
-            /**
-             * @description Status of anime in current user list
-             * @enum {string}
-             */
-            mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-            /** @description List of anime ids separated by comma */
-            ids?: string;
-            /** @description List of anime ids separated by comma */
-            exclude_ids?: string;
-            /** @description Search phrase to filter animes by name */
-            search?: string;
-        };
         character: {
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             name: string;
             russian: string;
             image: {
@@ -1146,7 +1083,8 @@ export interface components {
             url: string;
         };
         characterFull: {
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             name: string;
             russian: string;
             image: {
@@ -1166,8 +1104,10 @@ export interface components {
             description_html: string | null;
             description_source: string | null;
             favoured: boolean;
-            thread_id: components["schemas"]["ID"];
-            topic_id: components["schemas"]["ID"];
+            /** @description The ID */
+            thread_id: number;
+            /** @description The ID */
+            topic_id: number;
             /** Format: date-time */
             updated_at: string;
             seyu: components["schemas"]["character"][];
@@ -1263,11 +1203,12 @@ export interface components {
             }[];
         };
         externalLinks: {
-            id: components["schemas"]["ID"] | null;
+            id: number | null;
             kind: string;
             url: string;
             source: string;
-            entry_id: components["schemas"]["ID"];
+            /** @description The ID */
+            entry_id: number;
             entry_type: string;
             created_at: string | null;
             updated_at: string | null;
@@ -1276,16 +1217,20 @@ export interface components {
         franchise: {
             current_id: components["schemas"]["animeID"];
             links: {
-                id: components["schemas"]["ID"];
-                source_id: components["schemas"]["ID"];
-                target_id: components["schemas"]["ID"];
+                /** @description The ID */
+                id: number;
+                /** @description The ID */
+                source_id: number;
+                /** @description The ID */
+                target_id: number;
                 source: number;
                 target: number;
                 weight: number;
                 relation: string;
             }[];
             nodes: {
-                id: components["schemas"]["ID"];
+                /** @description The ID */
+                id: number;
                 date: number;
                 name: string;
                 image_url: string;
@@ -1302,10 +1247,9 @@ export interface components {
             /** @enum {string} */
             kind: "anime" | "manga";
         }[];
-        /** @description The ID */
-        ID: number;
         manga: {
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             /** @description The name of the manga */
             name: string;
             /** @description The Russian name of the manga */
@@ -1369,11 +1313,11 @@ export interface components {
             /** @description Indicates whether the manga is ongoing */
             ongoing: boolean;
             /** @description The thread ID of the manga */
-            thread_id: components["schemas"]["ID"];
+            thread_id: number;
             /** @description The topic ID of the manga */
-            topic_id: components["schemas"]["ID"];
+            topic_id: number;
             /** @description The MyAnimeList ID of the manga */
-            myanimelist_id: components["schemas"]["ID"];
+            myanimelist_id: number;
             /** @description The rates scores stats of the manga */
             rates_scores_stats: {
                 name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
@@ -1400,7 +1344,8 @@ export interface components {
             licensors: string[];
             /** @description The genres of the manga */
             genres: {
-                id: components["schemas"]["ID"];
+                /** @description The ID */
+                id: number;
                 name: string;
                 russian: string;
                 /** @constant */
@@ -1418,7 +1363,8 @@ export interface components {
             user_rate?: number | null;
         };
         mangaList: {
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             /** @description The name of the manga */
             name: string;
             /** @description The Russian name of the manga */
@@ -1460,55 +1406,6 @@ export interface components {
             /** @description The date when the manga was released */
             released_on?: string | null;
         }[];
-        mangaSearchQuery: {
-            /** @description The page number */
-            page?: number;
-            /** @description The limit of results per page */
-            limit?: number;
-            /**
-             * @description The order of the results
-             * @enum {string}
-             */
-            order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "volumes" | "chapters" | "status" | "random" | "created_at" | "created_at_desc";
-            /**
-             * @description The kind of the manga
-             * @enum {string}
-             */
-            kind?: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
-            /**
-             * @description The status of the manga
-             * @enum {string}
-             */
-            status?: "anons" | "ongoing" | "released" | "paused" | "discontinued";
-            /** @description The season of the anime */
-            season?: string;
-            /** @description The minimal score, must be a number */
-            score?: number;
-            /** @description List of genre ids separated by comma */
-            genre?: string;
-            /** @description List of genre v2 ids separated by comma */
-            genre_v2?: string;
-            /** @description List of publisher ids separated by comma */
-            publisher?: string;
-            /** @description List of franchises separated by comma */
-            franchise?: string;
-            /**
-             * @description Set to false to allow hentai, yaoi and yuri
-             * @enum {string}
-             */
-            censored?: "true" | "false";
-            /**
-             * @description Status of manga in current user list
-             * @enum {string}
-             */
-            mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-            /** @description List of anime ids separated by comma */
-            ids?: string;
-            /** @description List of anime ids separated by comma */
-            exclude_ids?: string;
-            /** @description Search phrase to filter animes by name */
-            search?: string;
-        };
         related: {
             relation: string;
             relation_russian: string;
@@ -1556,7 +1453,8 @@ export interface components {
                 released_on?: string | null;
             } | null;
             manga: {
-                id: components["schemas"]["ID"];
+                /** @description The ID */
+                id: number;
                 /** @description The name of the manga */
                 name: string;
                 /** @description The Russian name of the manga */
@@ -1656,7 +1554,8 @@ export interface components {
             released_on?: string | null;
         }[];
         similarManga: {
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             /** @description The name of the manga */
             name: string;
             /** @description The Russian name of the manga */
@@ -1707,7 +1606,8 @@ export interface components {
             image: string | null;
         }[];
         topics: {
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             topic_title: string;
             body: string;
             html_body: string;
@@ -1724,7 +1624,8 @@ export interface components {
             };
             user: components["schemas"]["user"];
             type: string;
-            linked_id: components["schemas"]["ID"];
+            /** @description The ID */
+            linked_id: number;
             linked_type: string;
             linked: {
                 id: components["schemas"]["animeID"];
@@ -1769,7 +1670,8 @@ export interface components {
                 /** @description The date when the anime was released */
                 released_on?: string | null;
             } | {
-                id: components["schemas"]["ID"];
+                /** @description The ID */
+                id: number;
                 /** @description The name of the manga */
                 name: string;
                 /** @description The Russian name of the manga */
@@ -1845,7 +1747,7 @@ export interface components {
          * @description The user ID
          * @example 406192
          */
-        userID: components["schemas"]["ID"];
+        userID: number;
         userInfo: {
             id: components["schemas"]["userID"];
             nickname: string;
@@ -1898,18 +1800,6 @@ export interface components {
             text?: string | null;
         };
         userRatesList: components["schemas"]["userRates"][];
-        userRatesQuery: {
-            user_id: components["schemas"]["userID"];
-            target_id: number;
-            /** @enum {string} */
-            target_type: "Anime" | "Mange";
-            /** @enum {string} */
-            status: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-            /** @description This field is ignored when user_id is set */
-            page?: number;
-            /** @description This field is ignored when user_id is set */
-            limit?: number;
-        };
         userRatesUpdateParams: {
             /** @enum {string} */
             status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
@@ -1921,13 +1811,9 @@ export interface components {
             text?: string | null;
         };
         users: components["schemas"]["user"][];
-        usersSearchQuery: {
-            page?: number;
-            limit?: number;
-            search?: string;
-        };
         video: {
-            id: components["schemas"]["ID"];
+            /** @description The ID */
+            id: number;
             url: string;
             image_url: string;
             player_url: string;
@@ -2003,20 +1889,20 @@ export interface operations {
                 page?: number;
                 limit?: number;
                 order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "episodes" | "status" | "random" | "created_at" | "created_at_desc";
-                kind?: "tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48";
-                status?: "anons" | "ongoing" | "released";
-                season?: string;
+                kind?: ("tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48")[] | ("tv" | "movie" | "ova" | "ona" | "special" | "tv_special" | "music" | "pv" | "cm" | "tv_13" | "tv_24" | "tv_48");
+                status?: ("anons" | "ongoing" | "released")[] | ("anons" | "ongoing" | "released");
+                season?: (string | string[])[] | (string | string[]);
                 score?: number;
-                duration?: "S" | "D" | "F";
-                rating?: "none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx";
-                genre?: string;
-                genre_v2?: string;
-                studio?: string;
-                franchise?: string;
+                duration?: ("S" | "D" | "F")[] | ("S" | "D" | "F");
+                rating?: ("none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx")[] | ("none" | "g" | "pg" | "pg_13" | "r" | "r_plus" | "rx");
+                genre?: string | string[];
+                genre_v2?: string | string[];
+                studio?: string | string[];
+                franchise?: string | string[];
                 censored?: "true" | "false";
-                mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                ids?: string;
-                exclude_ids?: string;
+                mylist?: ("planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped")[] | ("planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped");
+                ids?: string | string[];
+                exclude_ids?: string | string[];
                 search?: string;
             };
             header?: never;
@@ -2232,18 +2118,18 @@ export interface operations {
                 page?: number;
                 limit?: number;
                 order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "volumes" | "chapters" | "status" | "random" | "created_at" | "created_at_desc";
-                kind?: "manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin";
-                status?: "anons" | "ongoing" | "released" | "paused" | "discontinued";
-                season?: string;
+                kind?: ("manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin")[] | ("manga" | "manhwa" | "manhua" | "light_novel" | "novel" | "one_shot" | "doujin");
+                status?: ("anons" | "ongoing" | "released" | "paused" | "discontinued")[] | ("anons" | "ongoing" | "released" | "paused" | "discontinued");
+                season?: string | string[];
                 score?: number;
-                genre?: string;
-                genre_v2?: string;
-                publisher?: string;
-                franchise?: string;
+                genre?: string | string[];
+                genre_v2?: string | string[];
+                publisher?: string | string[];
+                franchise?: string | string[];
                 censored?: "true" | "false";
-                mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                ids?: string;
-                exclude_ids?: string;
+                mylist?: ("planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped")[] | ("planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped");
+                ids?: string | string[];
+                exclude_ids?: string | string[];
                 search?: string;
             };
             header?: never;
@@ -2269,7 +2155,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2292,7 +2178,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2315,7 +2201,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2338,7 +2224,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2361,7 +2247,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2384,7 +2270,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2407,7 +2293,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2430,7 +2316,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2454,16 +2340,16 @@ export interface operations {
                 page?: number;
                 limit?: number;
                 order?: "id" | "id_desc" | "ranked" | "kind" | "popularity" | "name" | "aired_on" | "volumes" | "chapters" | "status" | "random" | "created_at" | "created_at_desc";
-                status?: "anons" | "ongoing" | "released" | "paused" | "discontinued";
-                season?: string;
+                status?: ("anons" | "ongoing" | "released" | "paused" | "discontinued")[] | ("anons" | "ongoing" | "released" | "paused" | "discontinued");
+                season?: string | string[];
                 score?: number;
-                genre?: string;
-                publisher?: string;
-                franchise?: string;
+                genre?: string | string[];
+                publisher?: string | string[];
+                franchise?: string | string[];
                 censored?: "true" | "false";
-                mylist?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                ids?: string;
-                exclude_ids?: string;
+                mylist?: ("planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped")[] | ("planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped");
+                ids?: string | string[];
+                exclude_ids?: string | string[];
                 search?: string;
             };
             header?: never;
@@ -2489,7 +2375,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2512,7 +2398,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2535,7 +2421,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2558,7 +2444,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2581,7 +2467,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2604,7 +2490,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2627,7 +2513,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2650,7 +2536,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2673,7 +2559,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -2717,7 +2603,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
@@ -3035,14 +2921,7 @@ export interface operations {
     };
     update_user_rates: {
         parameters: {
-            query?: {
-                user_id?: components["schemas"]["userID"];
-                target_id?: number;
-                target_type?: "Anime" | "Mange";
-                status?: "planned" | "watching" | "rewatching" | "completed" | "on_hold" | "dropped";
-                page?: number;
-                limit?: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
@@ -3245,7 +3124,7 @@ export interface operations {
             header?: never;
             path: {
                 anime_id: components["schemas"]["animeID"];
-                id: components["schemas"]["ID"];
+                id: number;
             };
             cookie?: never;
         };
