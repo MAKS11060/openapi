@@ -22,7 +22,7 @@ Deno.test('Test 691467', async (t) => {
     (await shikimoriApi.GET('/api/animes', {
       params: {
         query: {
-          kind: ['movie', 'special',],
+          kind: ['movie', 'special'],
           status: 'released',
           limit: 5,
         },
