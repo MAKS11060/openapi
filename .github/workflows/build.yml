@@ -60,7 +60,7 @@ jobs:
           for FILE in $FILES; do
             FILENAME=$(basename "$FILE")
             FILE_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${FINAL_TAG}/${FILENAME}"
-            SWAGGER_URL="https://editor-next.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL}"
+            SWAGGER_URL="https://editor.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL}"
             OUTPUT="$OUTPUT- [Swagger Editor ($FILENAME)]($SWAGGER_URL)\n"
           done
 
