@@ -1,38 +1,57 @@
 #!/usr/bin/env -S deno run -A --env-file
 
-import {OpenAPI} from '@maks11060/openapi'
+import {getInternal, OpenAPI} from '@maks11060/openapi'
 import {parseArgs} from '@std/cli/parse-args'
 import {promptSelect} from 'jsr:@std/cli/unstable-prompt-select'
 import {expandGlobSync} from 'jsr:@std/fs'
 import {basename, resolve, toFileUrl} from 'jsr:@std/path'
 import {Hono} from 'npm:hono'
 import {cors} from 'npm:hono/cors'
+import {logger} from 'npm:hono/logger'
 
-const serve = (doc: OpenAPI) => {
-  const app = new Hono() //
-    // .use(cors({origin: (origin) => origin}))
-    .use(cors({
-      origin: '*',
-    }))
-    .get('/openapi.json', (c) => c.text(doc.toJSON(true), {headers: {'Content-Type': 'application/json'}}))
-    .get('/openapi.yaml', (c) => c.text(doc.toYAML({lineWidth: 120 + 1})))
+// proxy requests in case of problems with CORS
+const proxyServices = new Set([
+  'moebooru',
+])
+
+const serve = (doc: OpenAPI, config?: {proxy?: boolean; logger?: boolean}) => {
+  const app = new Hono()
+  app.use(cors({origin: '*'}))
+  app.get('/openapi.json', (c) => c.text(doc.toJSON(true), {headers: {'Content-Type': 'application/json'}}))
+  app.get('/openapi.yaml', (c) => c.text(doc.toYAML({lineWidth: 120 + 1})))
+
+  if (config?.proxy) {
+    if (config?.logger) app.use(logger())
+    app.all('*', async (c) => {
+      const url = new URL(c.req.url)
+      const target = url.href.slice(url.origin.length + 1)
+
+      const res = await fetch(target, {
+        method: c.req.method,
+        headers: c.req.raw.headers,
+        body: c.req.raw.body,
+      })
+      return res
+    })
+  }
 
   const onListen = (localAddr: Deno.NetAddr) => {
     const baseUrl = `${localAddr.port === 443 ? 'https' : 'http'}://localhost:${localAddr.port}`
     const docUrl = `${baseUrl}/openapi.yaml`
 
+    if (config?.proxy) {
+      const servers = getInternal(doc).servers
+      const originalServers = structuredClone(servers)
+      for (const server of servers) server.url = `${baseUrl}/${server.url}`
+      for (const server of originalServers) servers.add(server)
+    }
+
+    if (config?.proxy) console.log(`%cProxy on %c${baseUrl}/`, 'color: blue', 'color: green')
     console.log(`%chttps://swagger-next.deno.dev/?url=${docUrl}`, 'color: orange')
     console.log(`%chttps://redocly.github.io/redoc/?url=${docUrl}&nocors`, 'color: orange')
   }
 
   Deno.serve({onListen}, app.fetch)
-  // if (Deno.env.has('KEY') && Deno.env.has('CERT')) {
-  //   const key = Deno.readTextFileSync(Deno.env.get('KEY')!)
-  //   const cert = Deno.readTextFileSync(Deno.env.get('CERT')!)
-  //   Deno.serve({port: 443, key, cert, onListen}, app.fetch)
-  // } else {
-  //   Deno.serve({onListen}, app.fetch)
-  // }
 }
 
 const stats = (doc: OpenAPI) => {
@@ -81,6 +100,6 @@ if (!args.service) { // main
     toFileUrl(resolve(`./src/${args.service}/mod.ts`)).toString()
   ) as {doc: OpenAPI}
 
-  serve(doc)
+  serve(doc, {proxy: proxyServices.has(args.service)})
   stats(doc)
 }
