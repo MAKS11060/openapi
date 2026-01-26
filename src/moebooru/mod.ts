@@ -23,15 +23,12 @@ const limitQueryParam = doc.addParameter('Limit', 'query', 'limit', (t) => {
 })
 const pageQueryParam = doc.addParameter('Page', 'query', 'page', (t) => t.schema(page))
 const tagsQueryParam = doc.addParameter('Tags', 'query', 'tags', (t) => {
+  t.explode(false)
   t.style('spaceDelimited')
   t.schema(z.string().or(z.string().array()))
-    //     .example('No tags', (t) => t.value(''))
+    .example('No tags', (t) => t.value(''))
     .example('Post by ID', (t) => t.value('id:3,1252961'))
     .example('Post by MD5', (t) => t.value('md5:04399f2ed1c932d9bb8f848bf995f1f7'))
-  //     .example('Daily top', (t) => t.value('order:rank'))
-  //     .example('Weekly top by score', (t) => t.value('order:score is:sfw age:<7d'))
-  //     .example('Weekly top by favorites', (t) => t.value('order:favcount is:sfw age:<7d'))
-  //     .example('Saved searches', (t) => t.value('search:all'))
 })
 
 // --- Posts ---
