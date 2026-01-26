@@ -206,7 +206,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -225,7 +225,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -243,7 +243,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -261,7 +261,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -279,7 +279,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -297,7 +297,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -315,7 +315,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -333,7 +333,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -368,7 +368,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -387,7 +387,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -405,7 +405,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -423,7 +423,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -441,7 +441,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -459,7 +459,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -477,7 +477,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -495,7 +495,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -513,7 +513,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -549,7 +549,7 @@ export interface paths {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -869,7 +869,7 @@ export interface paths {
             header?: never;
             path: {
                 anime_id: components["schemas"]["animeID"];
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -889,8 +889,7 @@ export interface components {
     schemas: {
         achievements: {
             user_id: components["schemas"]["userID"];
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             neko_id: string;
             level: number;
             progress: number;
@@ -968,11 +967,11 @@ export interface components {
             /** @description Indicates whether the anime is ongoing */
             ongoing: boolean;
             /** @description The thread ID of the anime */
-            thread_id: number;
+            thread_id: components["schemas"]["ID"];
             /** @description The topic ID of the anime */
-            topic_id: number;
+            topic_id: components["schemas"]["ID"];
             /** @description The MyAnimeList ID of the anime */
-            myanimelist_id: number;
+            myanimelist_id: components["schemas"]["ID"];
             /** @description The rates scores stats of the anime */
             rates_scores_stats: {
                 name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
@@ -999,8 +998,7 @@ export interface components {
             licensors: string[];
             /** @description The genres of the anime */
             genres: {
-                /** @description The ID */
-                id: number;
+                id: components["schemas"]["ID"];
                 name: string;
                 russian: string;
                 /** @constant */
@@ -1066,8 +1064,7 @@ export interface components {
             released_on?: string | null;
         }[];
         character: {
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             name: string;
             russian: string;
             image: {
@@ -1083,8 +1080,7 @@ export interface components {
             url: string;
         };
         characterFull: {
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             name: string;
             russian: string;
             image: {
@@ -1104,10 +1100,8 @@ export interface components {
             description_html: string | null;
             description_source: string | null;
             favoured: boolean;
-            /** @description The ID */
-            thread_id: number;
-            /** @description The ID */
-            topic_id: number;
+            thread_id: components["schemas"]["ID"];
+            topic_id: components["schemas"]["ID"];
             /** Format: date-time */
             updated_at: string;
             seyu: components["schemas"]["character"][];
@@ -1203,12 +1197,11 @@ export interface components {
             }[];
         };
         externalLinks: {
-            id: number | null;
+            id: components["schemas"]["ID"] | null;
             kind: string;
             url: string;
             source: string;
-            /** @description The ID */
-            entry_id: number;
+            entry_id: components["schemas"]["ID"];
             entry_type: string;
             created_at: string | null;
             updated_at: string | null;
@@ -1217,20 +1210,16 @@ export interface components {
         franchise: {
             current_id: components["schemas"]["animeID"];
             links: {
-                /** @description The ID */
-                id: number;
-                /** @description The ID */
-                source_id: number;
-                /** @description The ID */
-                target_id: number;
+                id: components["schemas"]["ID"];
+                source_id: components["schemas"]["ID"];
+                target_id: components["schemas"]["ID"];
                 source: number;
                 target: number;
                 weight: number;
                 relation: string;
             }[];
             nodes: {
-                /** @description The ID */
-                id: number;
+                id: components["schemas"]["ID"];
                 date: number;
                 name: string;
                 image_url: string;
@@ -1247,9 +1236,10 @@ export interface components {
             /** @enum {string} */
             kind: "anime" | "manga";
         }[];
+        /** @description The ID */
+        ID: number;
         manga: {
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             /** @description The name of the manga */
             name: string;
             /** @description The Russian name of the manga */
@@ -1313,11 +1303,11 @@ export interface components {
             /** @description Indicates whether the manga is ongoing */
             ongoing: boolean;
             /** @description The thread ID of the manga */
-            thread_id: number;
+            thread_id: components["schemas"]["ID"];
             /** @description The topic ID of the manga */
-            topic_id: number;
+            topic_id: components["schemas"]["ID"];
             /** @description The MyAnimeList ID of the manga */
-            myanimelist_id: number;
+            myanimelist_id: components["schemas"]["ID"];
             /** @description The rates scores stats of the manga */
             rates_scores_stats: {
                 name: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
@@ -1344,8 +1334,7 @@ export interface components {
             licensors: string[];
             /** @description The genres of the manga */
             genres: {
-                /** @description The ID */
-                id: number;
+                id: components["schemas"]["ID"];
                 name: string;
                 russian: string;
                 /** @constant */
@@ -1363,8 +1352,7 @@ export interface components {
             user_rate?: number | null;
         };
         mangaList: {
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             /** @description The name of the manga */
             name: string;
             /** @description The Russian name of the manga */
@@ -1453,8 +1441,7 @@ export interface components {
                 released_on?: string | null;
             } | null;
             manga: {
-                /** @description The ID */
-                id: number;
+                id: components["schemas"]["ID"];
                 /** @description The name of the manga */
                 name: string;
                 /** @description The Russian name of the manga */
@@ -1554,8 +1541,7 @@ export interface components {
             released_on?: string | null;
         }[];
         similarManga: {
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             /** @description The name of the manga */
             name: string;
             /** @description The Russian name of the manga */
@@ -1606,8 +1592,7 @@ export interface components {
             image: string | null;
         }[];
         topics: {
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             topic_title: string;
             body: string;
             html_body: string;
@@ -1624,8 +1609,7 @@ export interface components {
             };
             user: components["schemas"]["user"];
             type: string;
-            /** @description The ID */
-            linked_id: number;
+            linked_id: components["schemas"]["ID"];
             linked_type: string;
             linked: {
                 id: components["schemas"]["animeID"];
@@ -1670,8 +1654,7 @@ export interface components {
                 /** @description The date when the anime was released */
                 released_on?: string | null;
             } | {
-                /** @description The ID */
-                id: number;
+                id: components["schemas"]["ID"];
                 /** @description The name of the manga */
                 name: string;
                 /** @description The Russian name of the manga */
@@ -1747,7 +1730,7 @@ export interface components {
          * @description The user ID
          * @example 406192
          */
-        userID: number;
+        userID: components["schemas"]["ID"];
         userInfo: {
             id: components["schemas"]["userID"];
             nickname: string;
@@ -1812,8 +1795,7 @@ export interface components {
         };
         users: components["schemas"]["user"][];
         video: {
-            /** @description The ID */
-            id: number;
+            id: components["schemas"]["ID"];
             url: string;
             image_url: string;
             player_url: string;
@@ -2155,7 +2137,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2178,7 +2160,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2201,7 +2183,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2224,7 +2206,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2247,7 +2229,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2270,7 +2252,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2293,7 +2275,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2316,7 +2298,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2375,7 +2357,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2398,7 +2380,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2421,7 +2403,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2444,7 +2426,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2467,7 +2449,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2490,7 +2472,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2513,7 +2495,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2536,7 +2518,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2559,7 +2541,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -2603,7 +2585,7 @@ export interface operations {
             query?: never;
             header?: never;
             path: {
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
@@ -3124,7 +3106,7 @@ export interface operations {
             header?: never;
             path: {
                 anime_id: components["schemas"]["animeID"];
-                id: number;
+                id: components["schemas"]["ID"];
             };
             cookie?: never;
         };
