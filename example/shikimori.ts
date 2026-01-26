@@ -17,28 +17,14 @@ export const shikimoriApi = createClient<paths>({
   },
 })
 
-shikimoriApi.use({
-  onRequest({request}) {
-    for (const [k, v] of new URL(request.url).searchParams) {
-      console.log([k, v])
-    }
-  },
-})
-
 Deno.test('Test 691467', async (t) => {
   console.dir(
     (await shikimoriApi.GET('/api/animes', {
       params: {
         query: {
-          // kind: [
-          //   'movie',
-          //   'special',
-          // ],
-          // kind: 'movie',
-          // status: 'released',
-          // status: ['released'],
+          kind: ['movie', 'special',],
+          status: 'released',
           limit: 5,
-          kind: ['movie'],
         },
       },
     })).data,
