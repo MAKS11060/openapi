@@ -105,6 +105,11 @@ const NotFoundResponse = doc.addResponse('NotFound', (t) => {
   t.content('application/json', z.object())
 })
 
+const UnprocessableEntityResponse = doc.addResponse('UnprocessableEntity', (t) => {
+  t.describe('Unprocessable Entity')
+  t.content('application/json', z.object({errors: z.array(z.string())}))
+})
+
 // --- Achievements ---
 doc.addPath('/api/achievements').get((t) => {
   t.tag('achievements')
@@ -752,25 +757,39 @@ doc.addPath('/api/v2/user_rates')
 
     t.requestBody((t) => {
       t.content('application/json', userRatesCreateParams) //
-        .example('Example', (t) => {
+        .example('Example 1', (t) => {
           t.value({
-            user_id: 23456789,
-            target_id: 15,
-            target_type: 'Anime',
-            status: 'completed',
-            score: 10,
-            chapters: 4,
-            episodes: 2,
-            volumes: 3,
-            rewatches: 5,
-            text: 'test',
+            user_rate: {
+              user_id: 1234567,
+              target_id: 15,
+              target_type: 'Anime',
+              status: 'completed',
+              score: 10,
+            },
+          })
+        })
+        .example('Example full', (t) => {
+          t.value({
+            user_rate: {
+              user_id: 23456789,
+              target_id: 15,
+              target_type: 'Anime',
+              status: 'completed',
+              score: 10,
+              chapters: 4,
+              episodes: 2,
+              volumes: 3,
+              rewatches: 5,
+              text: 'test',
+            },
           })
         })
     })
-    t.response(200, (t) => {
+    t.response(201, (t) => {
       t.content('application/json', userRates)
     })
     t.response(401, UnauthorizedResponse)
+    t.response(422, UnprocessableEntityResponse)
   })
 
 doc.addPath('/api/v2/user_rates/{id}', {id: (t) => t.schema(userRates.shape.id)})

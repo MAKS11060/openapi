@@ -95,10 +95,12 @@ export const userRatesUpdateParams = userRates
   .partial()
 
 export const userRatesCreateParams = z.object({
-  user_id: userID,
-  target_id: z.number().positive(),
-  target_type: userAnimeTarget,
-  ...userRatesUpdateParams.shape,
+  user_rate: z.object({
+    user_id: userID,
+    target_id: z.number().positive(),
+    target_type: userAnimeTarget,
+    ...userRatesUpdateParams.shape,
+  }),
 })
 
 // --- Anime ---
