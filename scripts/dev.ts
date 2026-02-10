@@ -14,6 +14,14 @@ const proxyServices = new Set([
   'moebooru',
 ])
 
+const getCodespaceUrl = (port: number = 8000) => {
+  const domain = Deno.env.get('GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN')
+  const name = Deno.env.get('CODESPACE_NAME') // app.github.dev
+  if (!name || !domain) return undefined
+
+  return `https://${name}-${port}.${domain}`
+}
+
 const serve = (doc: OpenAPI, config?: {proxy?: boolean; logger?: boolean}) => {
   const app = new Hono()
   app.use(cors({origin: '*'}))
@@ -36,7 +44,7 @@ const serve = (doc: OpenAPI, config?: {proxy?: boolean; logger?: boolean}) => {
   }
 
   const onListen = (localAddr: Deno.NetAddr) => {
-    const baseUrl = `${localAddr.port === 443 ? 'https' : 'http'}://localhost:${localAddr.port}`
+    const baseUrl = getCodespaceUrl() ?? `${localAddr.port === 443 ? 'https' : 'http'}://localhost:${localAddr.port}`
     const docUrl = `${baseUrl}/openapi.yaml`
 
     if (config?.proxy) {
