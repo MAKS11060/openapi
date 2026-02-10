@@ -82,17 +82,19 @@ export const userRatesQuery = z.object({
   limit: z.number().min(1).max(1000).optional().describe('This field is ignored when user_id is set'),
 })
 
-export const userRatesUpdateParams = userRates
-  .pick({
-    status: true,
-    score: true,
-    chapters: true,
-    episodes: true,
-    volumes: true,
-    rewatches: true,
-    text: true,
-  })
-  .partial()
+export const userRatesUpdateParams = z.object({
+  user_rate: userRates
+    .pick({
+      status: true,
+      score: true,
+      chapters: true,
+      episodes: true,
+      volumes: true,
+      rewatches: true,
+      text: true,
+    })
+    .partial(),
+})
 
 export const userRatesCreateParams = z.object({
   user_rate: z.object({
