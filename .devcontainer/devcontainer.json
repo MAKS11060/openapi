@@ -1,0 +1,15 @@
+{
+  "name": "openapi",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu",
+  "features": {
+    "ghcr.io/devcontainers/features/deno:1": {}
+  },
+  "postCreateCommand": "deno task init",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "denoland.vscode-deno"
+      ]
+    }
+  }
+}
