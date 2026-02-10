@@ -1,13 +1,13 @@
 #!/usr/bin/env -S deno run -A --env-file
 
-import {getInternal, OpenAPI} from '@maks11060/openapi'
+import {getInternal, type OpenAPI} from '@maks11060/openapi'
 import {parseArgs} from '@std/cli/parse-args'
-import {promptSelect} from 'jsr:@std/cli/unstable-prompt-select'
-import {expandGlobSync} from 'jsr:@std/fs'
-import {basename, resolve, toFileUrl} from 'jsr:@std/path'
-import {Hono} from 'npm:hono'
-import {cors} from 'npm:hono/cors'
-import {logger} from 'npm:hono/logger'
+import {promptSelect} from '@std/cli/unstable-prompt-select'
+import {expandGlobSync} from '@std/fs'
+import {basename, resolve, toFileUrl} from '@std/path'
+import {Hono} from 'hono'
+import {cors} from 'hono/cors'
+import {logger} from 'hono/logger'
 
 // proxy requests in case of problems with CORS
 const proxyServices = new Set([

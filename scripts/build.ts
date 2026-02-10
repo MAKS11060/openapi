@@ -1,9 +1,9 @@
 #!/usr/bin/env -S deno run -A
 
 import {OpenAPI} from '@maks11060/openapi'
-import {parseArgs} from 'jsr:@std/cli/parse-args'
-import {ensureDirSync, expandGlobSync} from 'jsr:@std/fs'
-import {basename, join, normalize, resolve, toFileUrl} from 'jsr:@std/path'
+import {parseArgs} from '@std/cli/parse-args'
+import {ensureDirSync, expandGlobSync} from '@std/fs'
+import {basename, join, normalize, resolve, toFileUrl} from '@std/path'
 
 const c = {
   green: 'color: green',
