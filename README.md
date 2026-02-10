@@ -56,6 +56,22 @@ Online preview:
 
 ## Releases
 
+All OpenAPI schemas are **automatically built and published** to
+[GitHub Releases.](https://github.com/MAKS11060/openapi/releases)
+
+Each release contains standalone `.yaml` and `.json` files ready to be used with:
+
+- Client generators
+- Documentation generators
+- API explorers
+- Validators
+
+### Client Generator
+
+- Typescript
+  - [heyapi.dev](https://heyapi.dev)
+  - [openapi-ts.dev](https://openapi-ts.dev)
+
 [dl.json.danbooru]: https://github.com/MAKS11060/openapi/releases/latest/download/danbooru.openapi.json
 [dl.json.kemono]: https://github.com/MAKS11060/openapi/releases/latest/download/kemono.openapi.json
 [dl.json.moebooru]: https://github.com/MAKS11060/openapi/releases/latest/download/moebooru.openapi.json
@@ -72,13 +88,3 @@ Online preview:
 [swagger.kemono]: https://editor.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/kemono.openapi.yaml
 [swagger.moebooru]: https://editor.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/moebooru.openapi.yaml
 [swagger.shikimori]: https://editor.swagger.io/?url=https://no-cors.deno.dev/https://github.com/MAKS11060/openapi/releases/latest/download/shikimori.openapi.yaml
-
-All OpenAPI schemas are **automatically built and published** to
-[GitHub Releases.](https://github.com/MAKS11060/openapi/releases)
-
-Each release contains standalone `.yaml` and `.json` files ready to be used with:
-
-- Client generators
-- Documentation generators
-- API explorers
-- Validators
