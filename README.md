@@ -12,7 +12,7 @@ The repository does **not** aim to provide SDKs or client implementations.
 
 ## Available APIs
 
-| Service                 |          `YAML`           |          `JSON`           |          Swagger          |          Redoc          |
+| Service                 |          `JSON`           |          `YAML`           |          Swagger          |          Redoc          |
 | ----------------------- | :-----------------------: | :-----------------------: | :-----------------------: | :---------------------: |
 | [Danbooru](#danbooru)   | [yaml][dl.yaml.danbooru]  | [json][dl.json.danbooru]  | [Open][swagger.danbooru]  | [Open][redoc.danbooru]  |
 | [Moebooru](#moebooru)   | [yaml][dl.yaml.moebooru]  | [json][dl.json.moebooru]  | [Open][swagger.moebooru]  | [Open][redoc.moebooru]  |
@@ -26,11 +26,6 @@ The repository does **not** aim to provide SDKs or client implementations.
   - [Search Cheatsheet](https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet)
   - [Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide:~:text=Danbooru%20Issues-,Developer%20Guide,-Danbooru%20API)
 
-Online preview:
-
-- [Swagger Editor][swagger.danbooru]
-- [Redoc][redoc.danbooru]
-
 ## Moebooru
 
 [Moebooru-based](https://github.com/moebooru/moebooru) services:
@@ -39,20 +34,10 @@ Online preview:
   - [Developer API](https://yande.re/help/api)
 - [konachan.com](https://konachan.com) | [konachan.net](https://konachan.net)
 
-Online preview:
-
-- [Swagger Editor][swagger.moebooru]
-- [Redoc][redoc.moebooru]
-
 ## Shikimori
 
 - [Shiki](https://shiki.one/) | [Shikimori](https://shikimori.one/)
   - [Developer API](https://shikimori.one/api/doc)
-
-Online preview:
-
-- [Swagger Editor][swagger.shikimori]
-- [Redoc][redoc.shikimori]
 
 ## Releases
 

@@ -54,17 +54,33 @@ jobs:
         run: |
           set -eu
 
-          OUTPUT=""
-          FILES=$(find gen -type f -name "*.openapi.yaml")
+          OUTPUT="| Service | JSON | YAML | Swagger | Redoc |\n"
+          OUTPUT="$OUTPUT| --- | :---: | :---: | :---: | :---: |\n"
+          REFS=""
+
+          FILES=$(find gen -type f -name "*.openapi.yaml" | sort)
 
           for FILE in $FILES; do
             FILENAME=$(basename "$FILE")
-            FILE_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${FINAL_TAG}/${FILENAME}"
-            SWAGGER_URL="https://editor.swagger.io/?url=https://no-cors.deno.dev/${FILE_URL}"
-            OUTPUT="$OUTPUT- [Swagger Editor ($FILENAME)]($SWAGGER_URL)\n"
+            SERVICE=$(echo "$FILENAME" | sed 's/\.openapi\.yaml//')
+
+            JSON_FILE="${SERVICE}.openapi.json"
+            YAML_FILE="${SERVICE}.openapi.yaml"
+
+            DL_JSON_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${FINAL_TAG}/${JSON_FILE}"
+            DL_YAML_URL="https://github.com/${GITHUB_REPOSITORY}/releases/download/${FINAL_TAG}/${YAML_FILE}"
+            REDOC_URL="https://redocly.github.io/redoc/?url=${DL_YAML_URL}"
+            SWAGGER_URL="https://editor.swagger.io/?url=https://no-cors.deno.dev/${DL_YAML_URL}"
+
+            OUTPUT="$OUTPUT| $SERVICE | [\`json\`][dl.json.$SERVICE] | [\`yaml\`][dl.yaml.$SERVICE] | [Open][swagger.$SERVICE] | [Open][redoc.$SERVICE] |\n"
+
+            REFS="$REFS[dl.json.$SERVICE]: $DL_JSON_URL\n"
+            REFS="$REFS[dl.yaml.$SERVICE]: $DL_YAML_URL\n"
+            REFS="$REFS[redoc.$SERVICE]: $REDOC_URL\n"
+            REFS="$REFS[swagger.$SERVICE]: $SWAGGER_URL\n"
           done
 
-          echo -e "$OUTPUT" > ${{ github.workspace }}-RELEASE.md
+          echo -e "$OUTPUT\n$REFS" > ${{ github.workspace }}-RELEASE.md
           cat ${{ github.workspace }}-RELEASE.md
 
       - name: Release
