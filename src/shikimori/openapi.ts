@@ -36,8 +36,9 @@ export const doc = createDoc({
   ],
 })
 
-doc.server({url: 'https://shiki.one/', description: 'Main server'})
-doc.server({url: 'https://shikimori.one/', description: 'Mirror server'})
+doc.server({url: 'https://shikimori.one/', description: 'Main server'})
+doc.server({url: 'https://shikimori.io/', description: 'Alt server'})
+doc.server({url: 'https://shiki.one/', description: 'Alt server'})
 
 export const anon = doc.addSecuritySchema.anonymous()
 export const httpBearer = doc.addSecuritySchema.http('OAuth2-Token', 'bearer')

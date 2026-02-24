@@ -21,7 +21,7 @@ The repository does **not** aim to provide SDKs or client implementations.
 
 ## Danbooru
 
-- [Danbooru](https://danbooru.donmai.us/)
+- [danbooru.donmai.us](https://danbooru.donmai.us/)
   - [Developer API](https://danbooru.donmai.us/wiki_pages/help:api)
   - [Search Cheatsheet](https://danbooru.donmai.us/wiki_pages/help%3Acheatsheet)
   - [Help Table of Contents](https://danbooru.donmai.us/wiki_pages/help:toc#dtext-developer_guide:~:text=Danbooru%20Issues-,Developer%20Guide,-Danbooru%20API)
@@ -36,8 +36,9 @@ The repository does **not** aim to provide SDKs or client implementations.
 
 ## Shikimori
 
-- [Shiki](https://shiki.one/) | [Shikimori](https://shikimori.one/)
+- [shikimori.one](https://shikimori.one/) | [shikimori.io](https://shikimori.io/) | [shiki.one](https://shiki.one/)
   - [Developer API](https://shikimori.one/api/doc)
+  - [Graphql API](https://shikimori.io/api/doc/graphql)
 
 ## Releases
 
