@@ -14,10 +14,10 @@ The repository does **not** aim to provide SDKs or client implementations.
 
 | Service                 |          `JSON`           |          `YAML`           |          Swagger          |          Redoc          |
 | ----------------------- | :-----------------------: | :-----------------------: | :-----------------------: | :---------------------: |
-| [Danbooru](#danbooru)   | [yaml][dl.yaml.danbooru]  | [json][dl.json.danbooru]  | [Open][swagger.danbooru]  | [Open][redoc.danbooru]  |
-| [Moebooru](#moebooru)   | [yaml][dl.yaml.moebooru]  | [json][dl.json.moebooru]  | [Open][swagger.moebooru]  | [Open][redoc.moebooru]  |
-| [Shikimori](#shikimori) | [yaml][dl.yaml.shikimori] | [json][dl.json.shikimori] | [Open][swagger.shikimori] | [Open][redoc.shikimori] |
-| Kemono                  |  [yaml][dl.yaml.kemono]   |  [json][dl.json.kemono]   |  [Open][swagger.kemono]   |  [Open][redoc.kemono]   |
+| [Danbooru](#danbooru)   | [json][dl.json.danbooru]  | [yaml][dl.yaml.danbooru]  | [Open][swagger.danbooru]  | [Open][redoc.danbooru]  |
+| [Moebooru](#moebooru)   | [json][dl.json.moebooru]  | [yaml][dl.yaml.moebooru]  | [Open][swagger.moebooru]  | [Open][redoc.moebooru]  |
+| [Shikimori](#shikimori) | [json][dl.json.shikimori] | [yaml][dl.yaml.shikimori] | [Open][swagger.shikimori] | [Open][redoc.shikimori] |
+| Kemono                  |  [json][dl.json.kemono]   |  [yaml][dl.yaml.kemono]   |  [Open][swagger.kemono]   |  [Open][redoc.kemono]   |
 
 ## Danbooru
 
